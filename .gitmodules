@@ -1,0 +1,6 @@
+[submodule "middleclass"]
+	path = middleclass
+	url = https://github.com/kikito/middleclass
+[submodule "slam"]
+	path = slam
+	url = https://github.com/vrld/slam
