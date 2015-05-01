@@ -6,6 +6,7 @@ Scene = require 'Scene'
 Entity = require 'Entity'
 Vector = require 'hump/vector-light'
 ResourceManager = require 'ResourceManager'
+Animation = require 'Animation'
 
 local TestScene = require 'scenes/TestScene'
 
