@@ -3,6 +3,7 @@ local Level = Class('Level',Entity)
 function Level:initialize(lvl,x,y,scene)
 	Entity:initialize(x,y,scene)
 	self.levelCanvas = love.graphics.newCanvas(lvl.width*lvl.tilewidth,lvl.height*lvl.tileheight)
+	self.levelCanvas:setFilter("nearest","nearest")
 
 	self.resmgr = scene.resmgr	
 
