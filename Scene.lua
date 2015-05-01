@@ -50,23 +50,6 @@ function Scene:draw()
 	end
 end
 
---[[
-function Scene:compare(a,b)
-	print(a,b,c)
-	if a.layer < b.layer then
-		return true
-	elseif a.layer == b.layer then
-		if a.id < b.id then
-			return true
-		else
-			return false
-		end
-	else
-		return false
-	end
-end
-]]
-
 function Scene:addEntity(e,layer)
 	if not layer then
 		layer = self.layers.default
