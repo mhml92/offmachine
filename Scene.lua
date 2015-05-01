@@ -27,6 +27,22 @@ function Scene:update(dt)
 end
 
 function Scene:draw()
+	
+	table.sort(self.entities,
+		function(a,b) 
+			if a.layer < b.layer then 
+				return true 
+			elseif a.layer == b.layer then 
+				if a.id < b.id then 
+					return true 
+				else 
+					return false 
+				end 
+			else 
+				return false 
+			end 
+		end)
+	
 	for i, v in ipairs(self.entities) do
 		if v:isActive() then
 			v:draw()
@@ -34,15 +50,30 @@ function Scene:draw()
 	end
 end
 
+--[[
+function Scene:compare(a,b)
+	print(a,b,c)
+	if a.layer < b.layer then
+		return true
+	elseif a.layer == b.layer then
+		if a.id < b.id then
+			return true
+		else
+			return false
+		end
+	else
+		return false
+	end
+end
+]]
+
 function Scene:addEntity(e,layer)
-	print(layer)
 	if not layer then
 		layer = self.layers.default
 	end
 
 	e:setId(self:getNewId())
-	e:setLayer(layer)
-	
+	e:setLayer(layer)	
 	table.insert(self.entities, e)
 	return e
 end
