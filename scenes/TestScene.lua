@@ -2,6 +2,7 @@ local TestScene = Class("TestScene", Scene)
 local Player = require 'entities/Player'
 local Level = require 'Level'
 local CameraManager = require 'CameraManager'
+local TimeManager = require 'TimeManager'
 
 -- levels
 local TestLevel = require 'levels/TestLevel'
@@ -14,6 +15,7 @@ local TestLevel = require 'levels/TestLevel'
 function TestScene:initialize(resmgr)
 	Scene:initialize(resmgr)
 	self.cammgr = CameraManager:new(self)
+	self.timemgr = TimeManager:new(self)
 	self:defineLayers()
 
 	self:addEntity(Level:new(TestLevel,0,0,self))	
@@ -27,6 +29,7 @@ end
 --										UPDATE
 ---------------------------------------------------------------------
 function Scene:update(dt)
+	dt = self.timemgr:update(dt)
 	for i, v in ipairs(self.entities) do
 		if v:isActive() then
 			v:update(dt)
