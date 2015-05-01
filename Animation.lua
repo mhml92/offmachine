@@ -28,6 +28,10 @@ function Animation:setCoordinateSource(src)
 	self.coord = src
 end
 
+function Animation:setPosition(x, y)
+	self.x, self.y = x, y
+end
+
 function Animation:setFPS(fps)
 	self.fps = fps
 end
@@ -37,7 +41,7 @@ function Animation:update(dt)
 end
 
 function Animation:draw()
-	local x, y = self.coord and self.coord.x, self.coord.y or 0, 0
+	local x, y = self.coord and self.coord.x, self.coord.y or self.x, self.y
 	local frame = math.floor(self.step%self.frames)
 	love.graphics.draw(self.src, self.quads[frame], x, y)
 end
