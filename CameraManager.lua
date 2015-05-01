@@ -17,7 +17,7 @@ function CameraManager:initialize(scene)
    self.y = nil
 	
    -- camera loosness multiplyer
-   self.clm = 0.2
+   self.clm = 0.1
 end
 
 function CameraManager:update(x,y)

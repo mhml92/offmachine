@@ -2,24 +2,24 @@ local Player = Class("Player", Entity)
 function Player:initialize(x,y,scene)
 	
 	Entity:initialize(x,y,scene)
-	self.speed = 5	
+	self.speed = 300	
 end
 
 function Player:update(dt)
 	if self.key["up"] then
-		self.y = self.y - self.speed
+		self.y = self.y - self.speed * dt
 	end
 		
 	if self.key["down"] then
-		self.y = self.y + self.speed
+		self.y = self.y + self.speed * dt
 	end
 
 	if self.key["left"] then
-		self.x = self.x - self.speed
+		self.x = self.x - self.speed * dt
 	end
 		
 	if self.key["right"] then
-		self.x = self.x + self.speed
+		self.x = self.x + self.speed * dt
 	end
 
 	self.scene.cammgr:update(self.x,self.y)
