@@ -1,6 +1,9 @@
-local Scene = class("Scene")
+local Scene = Class("Scene")
 
-function Scene:initialize()
+function Scene:initialize(resmgr)
+	self.resmgr = resmgr
+	self.key = {}
+	self.entitiesId = 0
 	self.entities = {}
 end
 
@@ -15,7 +18,6 @@ function Scene:update(dt)
          if self.entities[i].body then
             self.entities[i].body:destroy()
          end
-
 			table.remove(self.entities, i);
 		end
 	end
@@ -30,41 +32,25 @@ function Scene:draw()
 end
 
 function Scene:addEntity(e)
+	e:setId(self:getNewId())
 	table.insert(self.entities, e)
 	return e
 end
 
 function Scene:keypressed(key, isrepeat)
-	for i, v in ipairs(self.entities) do
-		if v:isActive() then
-			v:keypressed(key, isrepeat)
-		end
-	end
+	self.key[key] = true
 end
 
 function Scene:keyreleased(key, isrepeat)
-	for i, v in ipairs(self.entities) do
-		if v:isActive() then
-			v:keyreleased(key, isrepeat)
-		end
-	end
+	self.key[key] = false
 end
 
-function Scene:mousepressed(x, y, button)
-	for i, v in ipairs(self.entities) do
-		if v:isActive() then
-			v:mousepressed(x, y, button)
-		end
-	end
+function Scene:getNewId()
+	local nid = self.entitiesId
+	self.entitiesId = self.entitiesId + 1
+	return nid
 end
 
-function Scene:mousereleased(x, y, button)
-	for i, v in ipairs(self.entities) do
-		if v:isActive() then
-			v:mousereleased(x, y, button)
-		end
-	end
-end
 
 function Scene:beginContact(a,b,coll)
 end
