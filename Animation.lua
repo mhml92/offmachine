@@ -41,7 +41,12 @@ function Animation:update(dt)
 end
 
 function Animation:draw()
-	local x, y = self.coord and self.coord.x, self.coord.y or self.x, self.y
+	local x, y
+	if self.coord then
+		x, y = self.coord.x, self.coord.y
+	else
+		x, y = self.x, self.y
+	end
 	local frame = math.floor(self.step%self.frames)
 	love.graphics.draw(self.src, self.quads[frame], x, y)
 end

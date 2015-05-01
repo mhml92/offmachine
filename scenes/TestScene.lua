@@ -1,8 +1,10 @@
 local TestScene = Class("TestScene", Scene)
 local Player = require 'entities/Player'
+local StaticObject = require 'entities/StaticObject'
 local Level = require 'Level'
 local CameraManager = require 'CameraManager'
 local TimeManager = require 'TimeManager'
+
 
 -- levels
 local TestLevel = require 'levels/TestLevel'
@@ -19,6 +21,7 @@ function TestScene:initialize(resmgr)
 	self:defineLayers()
 
 	self:addEntity(Level:new(TestLevel,0,0,self))	
+	self:addEntity(StaticObject:new(64, 64, self))
 	self:addEntity(Player:new(16,16,self))	
 end
 
