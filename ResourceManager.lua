@@ -9,6 +9,7 @@ function ResourceManager:initialize()
 	All .mp3 files in sounds/ and subfolders
 	All .png files in images/ and subfolders
 	Note that all files of the same type must have unique names]])
+	love.graphics.setDefaultFilter("nearest", "nearest")
 	self:loadAssets("sounds")
 	self:loadAssets("images")
 end

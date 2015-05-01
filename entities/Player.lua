@@ -2,6 +2,11 @@ local Player = Class("Player", Entity)
 function Player:initialize(x,y,scene)
 	
 	Entity:initialize(x,y,scene)
+
+	self.animation = Animation:new("legs.png", 18, true, scene)
+	self.animation:setCoordinateSource(self)
+	self.animation:setFPS(6.5)
+
 	self.speed = 300	
 end
 
