@@ -59,6 +59,28 @@ return {
       }
     },
     {
+      type = "tilelayer",
+      name = "Tile Layer 2",
+      x = 0,
+      y = 0,
+      width = 8,
+      height = 8,
+      visible = true,
+      opacity = 1,
+      properties = {},
+      encoding = "lua",
+      data = {
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 3, 3, 3, 0, 0, 0,
+        0, 0, 3, 3, 3, 0, 0, 0,
+        0, 0, 0, 3, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0
+      }
+    },
+    {
       type = "objectgroup",
       name = "Object Layer 1",
       visible = true,
