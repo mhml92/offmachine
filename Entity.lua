@@ -4,6 +4,7 @@ function Entity:initialize(x, y, scene)
 	self.x = x
 	self.y = y
 	self.id = nil
+	self.layer = nil
 	self.active = true
 	self.alive  = true
 	self.scene = scene
@@ -39,6 +40,10 @@ end
 
 function Entity:setId(id)
 	self.id = id
+end
+
+function Entity:setLayer(layer)
+	self.layer = layer
 end
 
 

@@ -10,11 +10,18 @@ local TestLevel = require 'levels/TestLevel'
 
 function TestScene:initialize(resmgr)
 	Scene:initialize(resmgr)
+	self:defineLayers()
 
 	self:addEntity(Level:new(TestLevel,0,0,self))	
 	self:addEntity(Player:new(16,16,self))	
 
+
+
 end
+
+function Scene:defineLayers()
+end
+
 
 function Scene:update(dt)
 	for i, v in ipairs(self.entities) do

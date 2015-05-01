@@ -5,6 +5,9 @@ function Scene:initialize(resmgr)
 	self.key = {}
 	self.entitiesId = 0
 	self.entities = {}
+	self.layers = {}
+	self.layers.default = 0
+	self.layerId = 0
 end
 
 function Scene:update(dt)
@@ -31,8 +34,15 @@ function Scene:draw()
 	end
 end
 
-function Scene:addEntity(e)
+function Scene:addEntity(e,layer)
+	print(layer)
+	if not layer then
+		layer = self.layers.default
+	end
+
 	e:setId(self:getNewId())
+	e:setLayer(layer)
+	
 	table.insert(self.entities, e)
 	return e
 end
@@ -43,6 +53,16 @@ end
 
 function Scene:keyreleased(key, isrepeat)
 	self.key[key] = false
+end
+
+function Scene:addLayer(name)
+	self.layers[name] = self:getNewLayerId()
+end
+
+function Scene:getNewLayerId()
+	local nid = self.layerId
+	self.layerId = self.layerId + 1
+	return nid
 end
 
 function Scene:getNewId()
