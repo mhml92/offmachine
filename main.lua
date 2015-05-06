@@ -5,6 +5,7 @@ Class = require 'middleclass/middleclass'
 Scene = require 'Scene'
 Entity = require 'Entity'
 Vector = require 'hump/vector-light'
+Timer = require 'hump/timer'
 ResourceManager = require 'ResourceManager'
 Animation = require 'Animation'
 
@@ -27,6 +28,7 @@ function love.load()
 end
 
 function love.update(dt)
+	Timer.update(dt)
    time.accum = time.accum + dt 
    while time.accum >= time.fdt do
       self.scene:update(time.fdt)

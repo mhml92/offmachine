@@ -17,15 +17,16 @@ function CameraManager:initialize(scene)
    self.y = nil
 	
    -- camera loosness multiplyer
-   self.clm = 0.1
+   self.clm = 0.1*60
 end
 
-function CameraManager:update(x,y)
+function CameraManager:update(x,y,dt)
    if self.x == nil then
       self.x,self.y = x,y
    end
    local dx,dy = x-self.x,y-self.y
-   self.x,self.y = self.x + (dx*self.clm),self.y + (dy*self.clm)
+	local clm = self.clm*dt
+   self.x,self.y = self.x + (dx*clm),self.y + (dy*clm)
 
    if self.shakeStrength > 1 then
       local sdir = math.random()*2*math.pi

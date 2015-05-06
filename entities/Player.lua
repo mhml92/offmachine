@@ -27,7 +27,7 @@ function Player:update(dt)
 		self.x = self.x + self.speed * dt
 	end
 
-	self.scene.cammgr:update(self.x,self.y)
+	self.scene.cammgr:update(self.x,self.y,dt)
 end
 
 function Player:draw()
