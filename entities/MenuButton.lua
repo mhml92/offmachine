@@ -20,8 +20,13 @@ function MenuButton:setAction(action)
 end
 
 function MenuButton:update(dt)
-	if self.mouse.button["l"] then
-		
+	if self.mouse["l"] then
+		local mx, my = love.mouse.getPosition()
+		if mx < self.x or mx > self.x+self.width or my < self.y or my > self.y+self.height then
+			return
+		end
+		self.mouse["l"] = false
+		self.action()
 	end
 end
 

@@ -3,6 +3,7 @@ local Scene = Class("Scene")
 function Scene:initialize()
 	self.resmgr = resmgr
 	self.key = {}
+	self.mouse = {}
 	self.entitiesId = 0
 	self.entities = {}
 	self.layers = {}
@@ -18,31 +19,31 @@ function Scene:update(dt)
 	end
 	for i=#self.entities, 1, -1 do
 		if self.entities[i]:isAlive() == false then
-         if self.entities[i].body then
-            self.entities[i].body:destroy()
-         end
+			if self.entities[i].body then
+				self.entities[i].body:destroy()
+			end
 			table.remove(self.entities, i);
 		end
 	end
 end
 
 function Scene:draw()
-	
+
 	table.sort(self.entities,
-		function(a,b) 
-			if a.layer < b.layer then 
+	function(a,b) 
+		if a.layer < b.layer then 
+			return true 
+		elseif a.layer == b.layer then 
+			if a.id < b.id then 
 				return true 
-			elseif a.layer == b.layer then 
-				if a.id < b.id then 
-					return true 
-				else 
-					return false 
-				end 
 			else 
 				return false 
 			end 
-		end)
-	
+		else 
+			return false 
+		end 
+	end)
+
 	for i, v in ipairs(self.entities) do
 		if v:isActive() then
 			v:draw()
@@ -67,6 +68,14 @@ end
 
 function Scene:keyreleased(key, isrepeat)
 	self.key[key] = false
+end
+
+function Scene:mousepressed(x,y,button)
+	self.mouse[button] = true
+end
+
+function Scene:mousereleased(x,y,button)
+	self.mouse[button] = false
 end
 
 function Scene:addLayer(name)
