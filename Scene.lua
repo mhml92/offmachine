@@ -1,6 +1,6 @@
 local Scene = Class("Scene")
 
-function Scene:initialize(resmgr)
+function Scene:initialize()
 	self.resmgr = resmgr
 	self.key = {}
 	self.entitiesId = 0
