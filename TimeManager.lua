@@ -23,7 +23,7 @@ function TimeManager:update(dt)
 		self:tweenTimeScalar(2)
 	end
 	if self.key["5"] then
-		self:tweenTimeScalar(1/5)
+		self:tweenTimeScalar(1/60)
 	end
 
 	local newDT = dt*self.timeScalar

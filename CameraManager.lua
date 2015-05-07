@@ -1,5 +1,6 @@
 local humpCamera  = require 'hump/camera'
 
+local Shake = require 'Shake'
 local CameraManager = Class('CameraManager')
 
 function CameraManager:initialize(scene)
@@ -35,7 +36,14 @@ function CameraManager:update(x,y,dt)
    self.x,self.y = self.x + (dx*clm),self.y + (dy*clm)
 	self.offX = 0
 	self.offY = 0
-
+	for i = #self.shakes,1,-1 do
+		if self.shakes[i]:isDone() == false then
+			self.offX = self.offX + self.shakes[i]:getOffX()
+			self.offY = self.offX + self.shakes[i]:getOffY()
+		else
+			table.remove(self.shakes,i)	
+		end
+	end
    self.cam:lookAt(self.x + self.offX,self.y + self.offY)
 end
 
@@ -48,11 +56,14 @@ function CameraManager:detach()
 end
 
 function CameraManager:shake(time,strength)
+	table.insert(self.shakes,Shake:new(self.scene,time,strength))
 end
 
 function CameraManager:debugFunction(x,y,dt)
 	local db = self.debug
 	if self.scene.key[" "] then
+		self:shake(0.5,3)
+		--self.scene.key[" "] = false
 	end
 end
 
