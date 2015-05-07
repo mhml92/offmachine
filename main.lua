@@ -24,8 +24,8 @@ function love.load()
    love.mouse.setVisible(false)
    local w,h = love.graphics.getDimensions()
    love.graphics.setScissor( 0, 0, w, h)
-	self.resmgr = ResourceManager:new()
-	self.scene = TestScene:new(self.resmgr)
+	resmgr = ResourceManager:new()
+	self.scene = TestScene:new()
 end
 
 function love.update(dt)
@@ -51,6 +51,14 @@ end
 
 function love.keyreleased( key, isrepeat )
    self.scene:keyreleased(key,isrepeat)
+end
+
+function love.mousepressed(x,y,button)
+	self.scene:mousepressed(x,y,button)
+end
+
+function love.mousereleased(x,y,button)
+	self.scene:mousereleased(x,y,button)
 end
 
 function beginContact(a,b,coll)

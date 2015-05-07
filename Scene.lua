@@ -1,8 +1,9 @@
 local Scene = Class("Scene")
 
-function Scene:initialize(resmgr)
+function Scene:initialize()
 	self.resmgr = resmgr
 	self.key = {}
+	self.mouse = {}
 	self.entitiesId = 0
 	self.entities = {}
 	self.layers = {}
@@ -67,6 +68,14 @@ end
 
 function Scene:keyreleased(key, isrepeat)
 	self.key[key] = false
+end
+
+function Scene:mousepressed(x,y,button)
+	self.mouse[button] = true
+end
+
+function Scene:mousereleased(x,y,button)
+	self.mouse[button] = false
 end
 
 function Scene:addLayer(name)

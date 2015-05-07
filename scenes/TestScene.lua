@@ -14,12 +14,14 @@ local TestLevel = require 'levels/TestLevel'
 ---------------------------------------------------------------------
 --										INITIALIZE
 ---------------------------------------------------------------------
-function TestScene:initialize(resmgr)
+function TestScene:initialize()
 	Scene:initialize(resmgr)
 	self.cammgr = CameraManager:new(self)
 	self.timemgr = TimeManager:new(self)
 
 	self:defineLayers()
+	self.world = love.physics.newWorld(0,0,true)
+	love.physics.setMeter(32)
 
 	self:addEntity(Level:new(TestLevel,0,0,self))	
 	self:addEntity(StaticObject:new(64, 64, self))
@@ -27,12 +29,14 @@ function TestScene:initialize(resmgr)
 end
 
 function Scene:defineLayers()
+
 end
 ---------------------------------------------------------------------
 --										UPDATE
 ---------------------------------------------------------------------
 function Scene:update(dt)
 	dt = self.timemgr:update(dt)
+	self.world:update(dt)
 	for i, v in ipairs(self.entities) do
 		if v:isActive() then
 			v:update(dt)

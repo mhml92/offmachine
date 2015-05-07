@@ -10,6 +10,7 @@ function Entity:initialize(x, y, scene)
 	self.scene = scene
 	self.localTimer = scene.timemgr.localTimer
 	self.key = self.scene.key
+	self.mouse = self.scene.mouse
 	self.flags = {}
 end
 
