@@ -8,32 +8,33 @@ function CameraManager:initialize(scene)
 
 
    self.cam:zoomTo(2)
+	self.shakes = {}
    -- shake vars
-   self.rate = 0
-   self.shakeStrength = 0
    self.offX = 0
    self.offY = 0
    self.x = nil
    self.y = nil
 	
    -- camera loosness multiplyer
-   self.clm = 0.1*60
+   self.clm = 6
+
+	self.debug = {}
+	self.debug.shakeWaite = 60
+	self.debug.shakeCount = 0
 end
 
 function CameraManager:update(x,y,dt)
-   if self.x == nil then
+
+   if DEBUG then self:debugFunction(x,y,dt) end
+	
+	if self.x == nil then
       self.x,self.y = x,y
    end
    local dx,dy = x-self.x,y-self.y
 	local clm = self.clm*dt
    self.x,self.y = self.x + (dx*clm),self.y + (dy*clm)
-
-   if self.shakeStrength > 1 then
-      local sdir = math.random()*2*math.pi
-      self.offX = math.cos(sdir)*self.shakeStrength
-      self.offY = math.sin(sdir)*self.shakeStrength
-      self.shakeStrength = self.shakeStrength*self.rate
-   end
+	self.offX = 0
+	self.offY = 0
 
    self.cam:lookAt(self.x + self.offX,self.y + self.offY)
 end
@@ -46,9 +47,13 @@ function CameraManager:detach()
    self.cam:detach()
 end
 
-function CameraManager:shake(rate,strength)
-   self.rate = math.max(rate,self.rate)
-   self.shakeStrength = math.max(strength,self.shakeStrength)
+function CameraManager:shake(time,strength)
+end
+
+function CameraManager:debugFunction(x,y,dt)
+	local db = self.debug
+	if self.scene.key[" "] then
+	end
 end
 
 

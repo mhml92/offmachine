@@ -18,6 +18,7 @@ function TestScene:initialize(resmgr)
 	Scene:initialize(resmgr)
 	self.cammgr = CameraManager:new(self)
 	self.timemgr = TimeManager:new(self)
+
 	self:defineLayers()
 
 	self:addEntity(Level:new(TestLevel,0,0,self))	
@@ -27,7 +28,6 @@ end
 
 function Scene:defineLayers()
 end
-
 ---------------------------------------------------------------------
 --										UPDATE
 ---------------------------------------------------------------------

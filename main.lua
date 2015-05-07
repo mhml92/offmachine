@@ -1,6 +1,7 @@
 require 'slam/slam'
 math.random = love.math.random
 
+DEBUG = true
 Class = require 'middleclass/middleclass'
 Scene = require 'Scene'
 Entity = require 'Entity'

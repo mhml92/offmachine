@@ -8,6 +8,7 @@ function Entity:initialize(x, y, scene)
 	self.active = true
 	self.alive  = true
 	self.scene = scene
+	self.localTimer = scene.timemgr.localTimer
 	self.key = self.scene.key
 	self.flags = {}
 end
