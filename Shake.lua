@@ -8,7 +8,7 @@ function Shake:initialize(scene,time,strength)
 	self.offX = 0
 	self.offY = 0
 	self.done = false
-	self.localTimer.tween(time,self,{strength = 0},'out-quint')
+	self.localTimer.tween(time,self,{strength = 0.1},'in-back')
 	self:newShake()
 end
 
@@ -16,7 +16,7 @@ function Shake:newShake()
 	if self.time > 0 then
 
 		self.time = self.time-(1/60)
-		local sdir = math.random()*2*math.pi
+		local sdir = math.random()*(2*math.pi)
 		local loffX,loffY = math.cos(sdir)*self.strength,math.sin(sdir)*self.strength
 		self.localTimer.tween(1/60,self,{offX = loffX,offY = loffY},'in-out-quad',function() self:newShake() end)
 	else

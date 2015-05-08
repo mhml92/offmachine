@@ -6,11 +6,12 @@ function Player:initialize(x,y,scene)
 	self.body = lp.newBody(self.scene.world,self.x,self.y,'dynamic')
 	self.shape = lp.newCircleShape(16)
 	self.fixture = lp.newFixture(self.body,self.shape)
-	self.body:setLinearDamping(15)
+	self.body:setLinearDamping(12)
 	
 	local mx,my = love.mouse.getPosition()
 	self.lookr = Vector.angleTo(mx-self.x,my-self.y)
-	self.speed = 300	
+	self.maxspeed = 350	
+	self.force = 4000
 end
 
 function Player:update(dt)
@@ -35,8 +36,14 @@ function Player:update(dt)
 		dir.x,dir.y = Vector.normalize(dir.x,dir.y)
 		local r,mx,my
 		r = Vector.angleTo(dir.x,dir.y)
-		mx = math.cos(r) * self.speed
-		my = math.sin(r) * self.speed
+		mx = math.cos(r) * self.force
+		my = math.sin(r) * self.force
+		self.body:applyForce(mx,my)--setLinearVelocity(mx,my)
+	end
+	if Vector.len(self.body:getLinearVelocity()) > self.maxspeed then
+		local mx,my = self.body:getLinearVelocity()
+		mx,my = Vector.normalize(mx,my)
+		mx,my = mx*self.maxspeed,my*self.maxspeed
 		self.body:setLinearVelocity(mx,my)
 	end
 

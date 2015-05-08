@@ -39,7 +39,7 @@ function CameraManager:update(x,y,dt)
 	for i = #self.shakes,1,-1 do
 		if self.shakes[i]:isDone() == false then
 			self.offX = self.offX + self.shakes[i]:getOffX()
-			self.offY = self.offX + self.shakes[i]:getOffY()
+			self.offY = self.offY + self.shakes[i]:getOffY()
 		else
 			table.remove(self.shakes,i)	
 		end
@@ -62,7 +62,7 @@ end
 function CameraManager:debugFunction(x,y,dt)
 	local db = self.debug
 	if self.scene.key[" "] then
-		self:shake(0.5,3)
+		self:shake(0.1,2)
 		--self.scene.key[" "] = false
 	end
 end
