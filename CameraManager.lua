@@ -17,7 +17,7 @@ function CameraManager:initialize(scene)
    self.y = nil
 	
    -- camera loosness multiplyer
-   self.clm = 6
+   self.clm = 8/60
 
 	self.debug = {}
 	self.debug.shakeWaite = 60
@@ -32,8 +32,11 @@ function CameraManager:update(x,y,dt)
       self.x,self.y = x,y
    end
    local dx,dy = x-self.x,y-self.y
-	local clm = self.clm*dt
-   self.x,self.y = self.x + (dx*clm),self.y + (dy*clm)
+
+	local clm = self.clm
+   self.x,self.y = self.x + (clm*dx),self.y + (clm*dy)
+   --self.x,self.y = self.x + (dx),self.y + (dy)
+	
 	self.offX = 0
 	self.offY = 0
 	for i = #self.shakes,1,-1 do
@@ -62,7 +65,8 @@ end
 function CameraManager:debugFunction(x,y,dt)
 	local db = self.debug
 	if self.scene.key[" "] then
-		self:shake(0.1,2)
+		--time,strength
+		self:shake(0.5,2)
 		--self.scene.key[" "] = false
 	end
 end

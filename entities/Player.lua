@@ -10,8 +10,9 @@ function Player:initialize(x,y,scene)
 	
 	local mx,my = love.mouse.getPosition()
 	self.lookr = Vector.angleTo(mx-self.x,my-self.y)
-	self.maxspeed = 350	
+	self.maxspeed = 300	
 	self.force = 4000
+	self.lookahead = 50
 end
 
 function Player:update(dt)
@@ -50,8 +51,15 @@ function Player:update(dt)
 	self.x = self.body:getX()
 	self.y = self.body:getY()
 	local mx,my = self.scene.cammgr.cam:worldCoords(love.mouse.getPosition())
+	--mx,my = math.floor(mx+0.5),math.floor(my+0.5)
 	self.lookr = Vector.angleTo(Vector.normalize(mx-self.x,my-self.y))
-	self.scene.cammgr:update(self.x,self.y,dt)
+	--print(self.lookr)
+	mx,my = (mx-self.x)/2,(my-self.y)/2
+	if Vector.len(mx,my) > self.lookahead then
+		mx,my = Vector.normalize(mx,my)
+		mx,my = mx*self.lookahead,my*self.lookahead
+	end
+	self.scene.cammgr:update(self.x + mx,self.y + my,dt)
 end
 
 
