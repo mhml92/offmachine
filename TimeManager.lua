@@ -35,7 +35,7 @@ function TimeManager:tweenTimeScalar(t)
 	if self.tweenHandle then
 		Timer.cancel(self.tweenHandle)
 	end
-	self.tweenHandle = Timer.tween(self.tweenTime, self,{timeScalar = t})
+	self.tweenHandle = Timer.tween(self.tweenTime, self,{timeScalar = t},'in-sine')
 end
 
 

@@ -1,3 +1,5 @@
+local ProjectileWeapon = require 'ProjectileWeapon'
+
 local Player = Class("Player", Entity)
 function Player:initialize(x,y,scene)
 	Entity:initialize(x,y,scene)
@@ -13,6 +15,8 @@ function Player:initialize(x,y,scene)
 	self.maxspeed = 300	
 	self.force = 4000
 	self.lookahead = 75
+	
+	self.weapon = ProjectileWeapon:new(self.scene)	
 end
 
 function Player:update(dt)
@@ -60,6 +64,14 @@ function Player:update(dt)
 		mx,my = mx*self.lookahead,my*self.lookahead
 	end
 	self.scene.cammgr:update(self.x + mx,self.y + my,dt)
+
+	if self.mouse["l"] then
+		self.mouse["l"] = false
+
+		self.weapon:shoot(self.x,self.y,self.lookr)
+
+	end
+
 end
 
 

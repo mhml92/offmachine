@@ -18,6 +18,11 @@ function Entity:update(dt)
 end
 
 function Entity:draw()
+--[[	local lg = love.graphics
+	lg.setColor(255,0,0)
+	lg.circle('fill', self.x, self.y, 4, 16)
+	lg.setColor(255,255,255)
+	]]
 end
 
 function Entity:kill()
