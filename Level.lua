@@ -2,13 +2,25 @@ local Level = Class('Level',Entity)
 
 function Level:initialize(lvl,x,y,scene)
 	Entity:initialize(x,y,scene)
+	self.lvl = lvl
 	self.levelCanvas = love.graphics.newCanvas(lvl.width*lvl.tilewidth,lvl.height*lvl.tileheight)
 	self.levelCanvas:setFilter("nearest","nearest")
 
 	self.resmgr = scene.resmgr	
 
 	self.quads = {}
-	for k,v in ipairs(lvl.tilesets) do
+	self:loadTileSets()
+	self.layers = {}
+	self:loadLayers()
+
+	love.graphics.setCanvas(self.levelCanvas)
+	self:drawLayer("Tile Layer 1")
+	love.graphics.setCanvas()
+
+end
+
+function Level:loadTileSets()
+	for k,v in ipairs(self.lvl.tilesets) do
 		-- fix image name
 		local img = self.scene.resmgr:split(v.image,"/")	
 		v.image = self.scene.resmgr:getImg(img[#img])
@@ -28,9 +40,17 @@ function Level:initialize(lvl,x,y,scene)
 			ypos = ypos + 1
 		end
 	end
+end
 
-	love.graphics.setCanvas(self.levelCanvas)
-	local tilelayer = lvl.layers[1]
+function Level:loadLayers()
+	for k,v in ipairs(self.lvl.layers) do
+		self.layers[v.name] = v
+	end
+end
+
+
+function Level:drawLayer(name)
+	local tilelayer = self.layers[name]
 	for i = 1,tilelayer.height do
 
 		for j = 1,tilelayer.width do
@@ -38,11 +58,10 @@ function Level:initialize(lvl,x,y,scene)
 			local dataval = tilelayer.data[((i-1)*tilelayer.width)+j]
 			if dataval ~= 0 then
 				
-				
 				-- tileset number
 				local tilesetval = 0
-				if #lvl.tilesets > 1 then
-					for k,v in ipairs(lvl.tilesets) do
+				if #self.lvl.tilesets > 1 then
+					for k,v in ipairs(self.lvl.tilesets) do
 						local first = v.firstgid
 						local last = (v.firstgid-1) + ((v.imagewidth/v.tilewidth) * (v.imageheight/v.tileheight))
 						if first <= dataval and dataval <= last then
@@ -55,14 +74,15 @@ function Level:initialize(lvl,x,y,scene)
 				end
 
 				-- draw dat sjiiit
-				local imgsrc = lvl.tilesets[tilesetval].image
-				love.graphics.draw(imgsrc, self.quads[dataval], (j-1)*lvl.tilewidth, (i-1)*lvl.tileheight)
+				local imgsrc = self.lvl.tilesets[tilesetval].image
+				love.graphics.draw(imgsrc, self.quads[dataval], (j-1)*self.lvl.tilewidth, (i-1)*self.lvl.tileheight)
 			end
 		end
 	end
-	love.graphics.setCanvas()
-
 end
+
+
+
 
 function Level:getQuads()
 end

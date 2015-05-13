@@ -17,7 +17,7 @@ function CameraManager:initialize(scene)
    self.y = nil
 	
    -- camera loosness multiplyer
-   self.clm = 8/60
+   self.clm = 6/60
 
 	self.debug = {}
 	self.debug.shakeWaite = 60
@@ -28,15 +28,14 @@ function CameraManager:update(x,y,dt)
 
    if DEBUG then self:debugFunction(x,y,dt) end
 	
+	-- Set new cam coords
 	if self.x == nil then
       self.x,self.y = x,y
    end
    local dx,dy = x-self.x,y-self.y
+   self.x,self.y = self.x + (self.clm*dx),self.y + (self.clm*dy)
 
-	local clm = self.clm
-   self.x,self.y = self.x + (clm*dx),self.y + (clm*dy)
-   --self.x,self.y = self.x + (dx),self.y + (dy)
-	
+	-- Update cam shake
 	self.offX = 0
 	self.offY = 0
 	for i = #self.shakes,1,-1 do
@@ -47,6 +46,8 @@ function CameraManager:update(x,y,dt)
 			table.remove(self.shakes,i)	
 		end
 	end
+
+	-- Update camera
    self.cam:lookAt(self.x + self.offX,self.y + self.offY)
 end
 

@@ -3,16 +3,16 @@ function Player:initialize(x,y,scene)
 	Entity:initialize(x,y,scene)
 
 	local lp = love.physics
-	self.body = lp.newBody(self.scene.world,self.x,self.y,'dynamic')
-	self.shape = lp.newCircleShape(16)
-	self.fixture = lp.newFixture(self.body,self.shape)
+	self.body 		= lp.newBody(self.scene.world,self.x,self.y,'dynamic')
+	self.shape 		= lp.newCircleShape(16)
+	self.fixture 	= lp.newFixture(self.body,self.shape)
 	self.body:setLinearDamping(12)
 	
 	local mx,my = love.mouse.getPosition()
 	self.lookr = Vector.angleTo(mx-self.x,my-self.y)
 	self.maxspeed = 300	
 	self.force = 4000
-	self.lookahead = 50
+	self.lookahead = 75
 end
 
 function Player:update(dt)
@@ -47,9 +47,9 @@ function Player:update(dt)
 		mx,my = mx*self.maxspeed,my*self.maxspeed
 		self.body:setLinearVelocity(mx,my)
 	end
-
 	self.x = self.body:getX()
 	self.y = self.body:getY()
+	
 	local mx,my = self.scene.cammgr.cam:worldCoords(love.mouse.getPosition())
 	--mx,my = math.floor(mx+0.5),math.floor(my+0.5)
 	self.lookr = Vector.angleTo(Vector.normalize(mx-self.x,my-self.y))
