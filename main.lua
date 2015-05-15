@@ -27,6 +27,7 @@ function love.load()
    love.graphics.setScissor( 0, 0, w, h)
 	resmgr = ResourceManager:new()
 	self.scene = TestScene:new(self.resmgr)
+	love.graphics.setBackgroundColor(255/5,255/5,255/2)
 --	self.scene = MenuScene:new()
 end
 
