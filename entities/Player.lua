@@ -16,7 +16,7 @@ function Player:initialize(x,y,scene)
 	self.force = 4000
 	self.lookahead = 75
 	
-	self.weapon = ProjectileWeapon:new(self.scene)	
+	self.weapon = ProjectileWeapon:new(self.scene)
 end
 
 function Player:update(dt)

@@ -4,7 +4,7 @@ local StaticObject = require 'entities/StaticObject'
 local Level = require 'Level'
 local CameraManager = require 'CameraManager'
 local TimeManager = require 'TimeManager'
-
+local SoundManager = require 'SoundManager'
 
 -- levels
 local TestLevel = require 'levels/wallsTest'
@@ -18,6 +18,7 @@ function TestScene:initialize()
 	Scene:initialize(resmgr)
 	self.cammgr = CameraManager:new(self)
 	self.timemgr = TimeManager:new(self)
+	self.soundmgr = SoundManager:new(self)
 
 	self:defineLayers()
 	self.world = love.physics.newWorld(0,0,true)
@@ -25,7 +26,10 @@ function TestScene:initialize()
 
 	self:addEntity(Level:new(TestLevel,0,0,self))	
 	self:addEntity(StaticObject:new(64, 64, self))
-	self:addEntity(Player:new(16,16,self))	
+	self:addEntity(Player:new(16,16,self))
+	
+	self.bgmusic = self.soundmgr:addSound("hyperfun.mp3", true, 0.8)
+	self.soundmgr:playSound(self.bgmusic)
 end
 
 function Scene:defineLayers()
@@ -36,6 +40,7 @@ end
 ---------------------------------------------------------------------
 function Scene:update(dt)
 	dt = self.timemgr:update(dt)
+	self.soundmgr:update(dt)
 	self.world:update(dt)
 	for i, v in ipairs(self.entities) do
 		if v:isActive() then
