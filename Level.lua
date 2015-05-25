@@ -13,10 +13,19 @@ function Level:initialize(lvl,x,y,scene)
 	self.layers = {}
 	self:loadLayers()
 
+	-- load wall collisions
+	self:loadWallColliders()
+
+
 	love.graphics.setCanvas(self.levelCanvas)
 	self:drawLayer("walls")
 	love.graphics.setCanvas()
 
+end
+
+function Level:loadWallColliders()
+	local l = self.layers["walls"]
+	
 end
 
 function Level:loadTileSets()
