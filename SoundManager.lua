@@ -23,8 +23,8 @@ function SoundManager:playSound(sound)
 end
 
 function SoundManager:update(dt)
-	local pitch = self.timemgr.timeScalar*1.2
-	pitch = math.max(0.2, math.min(1, pitch))
+	local pitch = self.timemgr.timeScalar
+	pitch = math.max(0.2, math.min(2, pitch))
 	for k, v in pairs(self.sounds) do
 		v:setPitch(pitch)
 	end
