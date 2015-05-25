@@ -14,7 +14,7 @@ function Level:initialize(lvl,x,y,scene)
 	self:loadLayers()
 
 	love.graphics.setCanvas(self.levelCanvas)
-	self:drawLayer("Tile Layer 1")
+	self:drawLayer("walls")
 	love.graphics.setCanvas()
 
 end
@@ -80,9 +80,6 @@ function Level:drawLayer(name)
 		end
 	end
 end
-
-
-
 
 function Level:getQuads()
 end
