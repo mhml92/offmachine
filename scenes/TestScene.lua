@@ -23,10 +23,12 @@ function TestScene:initialize()
 	self:defineLayers()
 	self.world = love.physics.newWorld(0,0,true)
 	love.physics.setMeter(32)
+   self.world:setCallbacks(beginContact, endContact, preSolve, postSolve)
+
 
 	self:addEntity(Level:new(TestLevel,0,0,self))	
 	self:addEntity(StaticObject:new(64, 64, self))
-	self:addEntity(Player:new(16,16,self))
+	self:addEntity(Player:new(32,32,self))
 	
 	self.bgmusic = self.soundmgr:addSound("hyperfun.mp3", true, 0.8)
 	self.soundmgr:playSound(self.bgmusic)
@@ -49,6 +51,7 @@ function Scene:update(dt)
 	end
 	for i=#self.entities, 1, -1 do
 		if self.entities[i]:isAlive() == false then
+         self.entities[i]:exit()
          if self.entities[i].body then
             self.entities[i].body:destroy()
          end

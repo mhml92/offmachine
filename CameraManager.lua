@@ -65,7 +65,7 @@ end
 
 function CameraManager:debugFunction(x,y,dt)
 	local db = self.debug
-	if self.scene.key[" "] then
+	if self.scene.keyDown[" "] then
 		--time,strength
 		self:shake(0.5,2)
 		--self.scene.key[" "] = false

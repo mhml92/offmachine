@@ -1,14 +1,19 @@
 local Scene = Class("Scene")
 
+local Collision = require 'Collision'
+
 function Scene:initialize()
 	self.resmgr = resmgr
-	self.key = {}
-	self.mouse = {}
+	self.keyDown = {}
+	self.keyUp = {}
+	self.mouseDown = {}
+	self.mouseUp = {}
 	self.entitiesId = 0
 	self.entities = {}
 	self.layers = {}
 	self.layers.default = 0
 	self.layerId = 0
+   self.collision = Collision:new(self)
 end
 
 function Scene:update(dt)
@@ -62,20 +67,36 @@ function Scene:addEntity(e,layer)
 	return e
 end
 
+function Scene:resetInput()
+   for key,v in pairs(self.keyDown) do
+      if self.keyUp[key] then
+         self.keyDown[key] = nil
+         self.keyUp[key] = nil
+      end
+   end
+
+   for key,v in pairs(self.mouseDown) do
+      if self.mouseUp[key] then
+         self.mouseDown[key] = nil
+         self.mouseUp[key] = nil
+      end
+   end
+end
+
 function Scene:keypressed(key, isrepeat)
-	self.key[key] = true
+	self.keyDown[key] = true
 end
 
 function Scene:keyreleased(key, isrepeat)
-	self.key[key] = false
+	self.keyUp[key] = true
 end
 
 function Scene:mousepressed(x,y,button)
-	self.mouse[button] = true
+	self.mouseDown[button] = true
 end
 
 function Scene:mousereleased(x,y,button)
-	self.mouse[button] = false
+	self.mouseUp[button] = true
 end
 
 function Scene:addLayer(name)
@@ -96,6 +117,7 @@ end
 
 
 function Scene:beginContact(a,b,coll)
+   self.collision:resolve(a,b,coll)
 end
 
 function Scene:endContact(a,b,coll)

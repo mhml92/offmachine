@@ -9,8 +9,8 @@ function Entity:initialize(x, y, scene)
 	self.alive  = true
 	self.scene = scene
 	self.localTimer = scene.timemgr and scene.timemgr.localTimer or nil
-	self.key = self.scene.key
-	self.mouse = self.scene.mouse
+	self.keyDown = self.scene.keyDown
+	self.mouseDown = self.scene.mouseDown
 	self.flags = {}
 end
 

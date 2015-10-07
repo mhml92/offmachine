@@ -8,6 +8,7 @@ function Player:initialize(x,y,scene)
 	self.body 		= lp.newBody(self.scene.world,self.x,self.y,'dynamic')
 	self.shape 		= lp.newCircleShape(16)
 	self.fixture 	= lp.newFixture(self.body,self.shape)
+   self.fixture:setUserData(self)
 	self.body:setLinearDamping(12)
 	
 	local mx,my = love.mouse.getPosition()
@@ -21,19 +22,19 @@ end
 
 function Player:update(dt)
 	local dir = {x = 0,y = 0}
-	if self.key["w"] then
+	if self.keyDown["w"] then
 		dir.y = dir.y - 1 	
 	end
 
-	if self.key["s"] then
+	if self.keyDown["s"] then
 		dir.y = dir.y + 1 	
 	end
 
-	if self.key["a"] then
+	if self.keyDown["a"] then
 		dir.x = dir.x - 1 	
 	end
 
-	if self.key["d"] then
+	if self.keyDown["d"] then
 		dir.x = dir.x + 1 	
 	end
 	if Vector.len2(dir.x,dir.y) > 0 then
@@ -64,13 +65,10 @@ function Player:update(dt)
 		mx,my = mx*self.lookahead,my*self.lookahead
 	end
 	self.scene.cammgr:update(self.x + mx,self.y + my,dt)
+   if self.mouseDown["l"] then
+	   self.weapon:shoot(self.x,self.y,self.lookr)
+   end
 
-	if self.mouse["l"] then
-		self.mouse["l"] = false
-
-		self.weapon:shoot(self.x,self.y,self.lookr)
-
-	end
 
 end
 

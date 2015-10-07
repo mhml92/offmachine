@@ -8,7 +8,8 @@ function Projectile:initialize(x,y,scene,speed,dir)
 	self.shape 		= lp.newCircleShape(4)
 	self.fixture 	= lp.newFixture(self.body,self.shape)
 	self.fixture:setSensor(true)
-
+   self.body:setBullet(true)
+   self.fixture:setUserData(self)
 	self.body:setLinearVelocity(math.cos(dir)*speed,math.sin(dir)*speed)
 
 	self.debug = {}
@@ -29,8 +30,12 @@ end
 function Projectile:draw()
 	local lg = love.graphics
 	lg.setColor(255,0,0)
-	lg.circle('fill', self.x, self.y, 16, 32)
+	lg.circle('fill', self.x, self.y, 8, 32)
 	lg.setColor(255,255,255)
+end
+
+function Projectile:exit()
+   print("mooojn0")
 end
 
 return Projectile
