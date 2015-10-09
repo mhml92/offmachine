@@ -12,6 +12,7 @@ function Projectile:initialize(x,y,scene,speed,dir)
    self.fixture:setUserData(self)
 	self.body:setLinearVelocity(math.cos(dir)*speed,math.sin(dir)*speed)
 
+   self.sound = scene.soundmgr:addSound("bullet_impact.mp3", false, 1)
 	self.debug = {}
 	self.debug.time = 0
 end
@@ -35,6 +36,8 @@ function Projectile:draw()
 end
 
 function Projectile:exit()
+      self.scene.soundmgr:playSound(self.sound)
+   
    print("mooojn0")
 end
 

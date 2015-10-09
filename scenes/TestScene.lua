@@ -7,7 +7,8 @@ local TimeManager = require 'TimeManager'
 local SoundManager = require 'SoundManager'
 
 -- levels
-local TestLevel = require 'levels/wallsTest'
+--local TestLevel = require 'levels/wallsTest'
+local TestLevel = require 'levels/wallsTest2'
 
 
 
