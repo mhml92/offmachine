@@ -28,7 +28,7 @@ function TestScene:initialize()
 
 	self:addEntity(Level:new(TestLevel,0,0,self))	
 	self:addEntity(StaticObject:new(64, 64, self))
-	self:addEntity(Player:new(32,32,self))
+	self:addEntity(Player:new(G.PLAYER_START_TEST_LEVEL.x,G.PLAYER_START_TEST_LEVEL.y,self))
 	
 	self.bgmusic = self.soundmgr:addSound("hyperfun.mp3", true, 0.8)
 	self.soundmgr:playSound(self.bgmusic)

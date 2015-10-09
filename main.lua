@@ -3,6 +3,7 @@ print(math)
 math.random = love.math.random
 
 DEBUG = true
+G = require 'Globals'
 Class = require 'middleclass/middleclass'
 Scene = require 'Scene'
 Entity = require 'Entity'

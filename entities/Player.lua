@@ -6,16 +6,16 @@ function Player:initialize(x,y,scene)
 
 	local lp = love.physics
 	self.body 		= lp.newBody(self.scene.world,self.x,self.y,'dynamic')
-	self.shape 		= lp.newCircleShape(16)
+	self.shape 		= lp.newCircleShape(G.PLAYER_SIZE)
 	self.fixture 	= lp.newFixture(self.body,self.shape)
    self.fixture:setUserData(self)
 	self.body:setLinearDamping(12)
 	
 	local mx,my = love.mouse.getPosition()
 	self.lookr = Vector.angleTo(mx-self.x,my-self.y)
-	self.maxspeed = 300	
-	self.force = 4000
-	self.lookahead = 75
+	self.maxspeed = G.PLAYER_MAX_SPEED
+	self.force = G.PLAYER_FORCE
+	self.lookahead = G.PLAYER_LOOKAHEAD
 	
 	self.weapon = ProjectileWeapon:new(self.scene)
 end
