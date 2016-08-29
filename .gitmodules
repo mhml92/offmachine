@@ -6,4 +6,5 @@
 	url = https://github.com/vrld/slam
 [submodule "hump"]
 	path = hump
-	url = https://github.com/vrld/hump
+	url = https://github.com/vrld/hump.git
+	branch = master
