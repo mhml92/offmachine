@@ -25,15 +25,20 @@ time.accum = 0
 
 
 local self = {}
-
+local canvas
+local SCALE
+local OFFSET_X
 
 function love.load()
    --love.mouse.setVisible(false)
-   local w,h = love.graphics.getDimensions()
-   love.graphics.setScissor( 0, 0, w, h)
+	win_w, win_h = love.window.getDesktopDimensions()
+	SCALE = win_h/G.HEIGHT
+	OFFSET_X = (win_w - G.WIDTH*SCALE)/2 / SCALE
+   --love.graphics.setScissor( 0, 0, w, h)
    resmgr = ResourceManager:new()
    self.scene = TestScene:new()
-   love.graphics.setBackgroundColor(255/5,255/5,255/2)
+	canvas = love.graphics.newCanvas( G.WIDTH, G.HEIGHT)
+   love.graphics.setBackgroundColor(255,100,100)
    --	self.scene = MenuScene:new()
 	fontmgr = FontManager:new()
 	
@@ -51,7 +56,9 @@ end
 
 function love.draw()
    self.scene:draw()
-	fontmgr:setFont("coders_crux.ttf")
+	love.graphics.setColor(0,0,0)
+	love.graphics.rectangle( "fill", 0, 0, G.WIDTH, G.HEIGHT )
+	love.graphics.setColor(255,255,255)
    love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10) 
 end 
 
@@ -101,7 +108,18 @@ function love.run()
 		if love.graphics and love.graphics.isActive() then
 			love.graphics.clear(love.graphics.getBackgroundColor())
 			love.graphics.origin()
+			love.graphics.push()
+			love.graphics.setCanvas(canvas)
 			if love.draw then love.draw() end
+			love.graphics.pop()
+			love.graphics.push()
+
+			love.graphics.scale(SCALE, SCALE)
+
+			love.graphics.setCanvas()
+			love.graphics.draw(canvas, OFFSET_X, 0)
+
+			love.graphics.pop()
 			love.graphics.present()
 		end
 

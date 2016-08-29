@@ -1,4 +1,4 @@
 return {
-	SCREEN_HEIGHT = 640,
-	SCREEN_WIDTH = 480,
+	WIDTH = 320,
+	HEIGHT = 240
 }
