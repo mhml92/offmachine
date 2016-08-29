@@ -15,6 +15,8 @@ MouseController = require 'controllers/MouseController'
 ControllerController = require 'controllers/ControllerController'
 KeyboardController = require 'controllers/KeyboardController'
 
+FontManager = require 'managers/FontManager'
+
 local TestScene = require 'scenes/TestScene'
 
 local time = {}
@@ -33,6 +35,9 @@ function love.load()
    self.scene = TestScene:new()
    love.graphics.setBackgroundColor(255/5,255/5,255/2)
    --	self.scene = MenuScene:new()
+	fontmgr = FontManager:new()
+	
+	
 end
 
 function love.update(dt)
@@ -46,6 +51,7 @@ end
 
 function love.draw()
    self.scene:draw()
+	fontmgr:setFont("coders_crux.ttf")
    love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10) 
 end 
 

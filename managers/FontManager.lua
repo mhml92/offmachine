@@ -24,3 +24,5 @@ end
 function FontManager:getScreenCenteringCoordinates(line, offsetX, offsetY)
 	return FontManager:getScreenCenteringCoordinates(line, 0, 0, G.WIDTH, G.HEIGHT, offsetX, offsetY)
 end
+
+return FontManager
