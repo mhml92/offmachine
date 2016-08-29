@@ -27,7 +27,7 @@ function TimeManager:update(dt)
 	end
 	]]
 	local newDT = dt*self.timeScalar
-	self.localTimer.update(newDT)
+	self.localTimer:update(newDT)
 	return newDT
 end
 

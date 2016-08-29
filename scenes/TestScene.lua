@@ -29,7 +29,7 @@ function TestScene:initialize()
 
 
 
-	self:addEntity(StaticObject:new(64, 64, self))
+	self:addEntity(StaticObject:new(0, 0, self))
 	self:addEntity(Player:new(100,100,self))
 	
 	self.bgmusic = self.soundmgr:addSound("hyperfun.mp3", true, 0.8)
@@ -87,6 +87,7 @@ function Scene:draw()
 			v:draw()
 		end
 	end
+   love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), self.cammgr.cam:worldCoords(10, 10)) 
 	self.cammgr:detach()
 end
 
