@@ -7,4 +7,8 @@ function StaticObject:initialize(x,y,scene)
 	self.animation:setFPS(12.5)
 end
 
+function StaticObject:draw()
+	self.animation:draw()
+end
+
 return StaticObject

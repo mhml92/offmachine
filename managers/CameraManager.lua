@@ -8,7 +8,7 @@ function CameraManager:initialize(scene)
    self.cam = humpCamera(0,0)
 
 
-   self.cam:zoomTo(2)
+   self.cam:zoomTo(1)
 	self.shakes = {}
    -- shake vars
    self.offX = 0

@@ -1,4 +1,4 @@
 return {
-	WIDTH = 320,
+	WIDTH = 600,
 	HEIGHT = 240
 }
