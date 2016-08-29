@@ -11,6 +11,10 @@ Timer = require 'hump/timer'
 ResourceManager = require 'managers/ResourceManager'
 Animation = require 'entities/Animation'
 
+MouseController = require 'MouseController'
+ControllerController = require 'ControllerController'
+KeyboardController = require 'KeyboardController'
+
 local TestScene = require 'scenes/TestScene'
 
 local time = {}
@@ -29,10 +33,13 @@ function love.load()
    self.scene = TestScene:new()
    love.graphics.setBackgroundColor(255/5,255/5,255/2)
    --	self.scene = MenuScene:new()
+	print("HEY")
+	mousectrl = ControllerController:new()
 end
 
 function love.update(dt)
    Timer.update(dt)
+	mousectrl:jump()
    time.accum = time.accum + dt 
    if time.accum >= time.fdt then
       self.scene:update(time.fdt)

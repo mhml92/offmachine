@@ -3,9 +3,10 @@ local ControllerController = Class("ControllerController")
 function ControllerController:initialize()
 	local joysticks = love.joystick.getJoysticks()
 	for i, joystick in ipairs(joysticks) do
-		print(joystick:getName())
+		print(i..": "..joystick:getName())
 	end
-	self.joystick = joysticks[1]
+	self.joystick = joysticks[2]
+	print(self.joystick:getName())
 end
 
 function ControllerController:jump()
@@ -17,3 +18,5 @@ end
 function love.gamepadpressed(joystick, button)
 	print("Joystick: "..joystick:getName()..", Button: "..button)
 end
+
+return ControllerController

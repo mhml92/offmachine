@@ -12,3 +12,5 @@ end
 function love.mousepressed(x, y, button, istouch)
 	print("Mouse, Button: "..button)
 end
+
+return MouseController

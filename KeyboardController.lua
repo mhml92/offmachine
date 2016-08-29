@@ -9,6 +9,4 @@ function KeyboardController:jump()
 	end
 end
 
-function love.keypressed(key, scancode, isrepeat)
-	print("Keyboard, key: "..key)
-end
+return KeyboardController
