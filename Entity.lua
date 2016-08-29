@@ -53,6 +53,19 @@ function Entity:setLayer(layer)
 	self.layer = layer
 end
 
+function Entity:beginContact(obj,coll)
+	--[[
+	local obj_type = obj.class.name
+	if obj_type == "Projectile" then
+		if obj_type == "wall" then   
+			obj:kill()
+		end
+	elseif obj_type == "din mor" then
+		obj:flatten()
+	end
+	--]]
+end
+
 
 function Entity:exit()
 

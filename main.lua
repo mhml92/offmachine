@@ -2,16 +2,14 @@ require 'slam/slam'
 print(math)
 math.random = love.math.random
 
-DEBUG = true
 G = require 'Globals'
 Class = require 'middleclass/middleclass'
 Scene = require 'Scene'
 Entity = require 'Entity'
 Vector = require 'hump/vector-light'
 Timer = require 'hump/timer'
-ResourceManager = require 'ResourceManager'
-Animation = require 'Animation'
-MenuScene = require 'scenes/MenuScene'
+ResourceManager = require 'managers/ResourceManager'
+Animation = require 'entities/Animation'
 
 local TestScene = require 'scenes/TestScene'
 
@@ -28,7 +26,7 @@ function love.load()
    local w,h = love.graphics.getDimensions()
    love.graphics.setScissor( 0, 0, w, h)
    resmgr = ResourceManager:new()
-   self.scene = TestScene:new(self.resmgr)
+   self.scene = TestScene:new()
    love.graphics.setBackgroundColor(255/5,255/5,255/2)
    --	self.scene = MenuScene:new()
 end
@@ -38,7 +36,6 @@ function love.update(dt)
    time.accum = time.accum + dt 
    if time.accum >= time.fdt then
       self.scene:update(time.fdt)
-      self.scene:resetInput()
       time.accum = 0--time.accum - time.fdt
    end
 end
@@ -52,19 +49,55 @@ function love.keypressed( key, isrepeat )
    if key == "escape" then
       love.event.quit()
    end
-   self.scene:keypressed(key,isrepeat)
 end
 
-function love.keyreleased( key, isrepeat )
-   self.scene:keyreleased(key,isrepeat)
-end
+function love.run()
+	 
+	if love.math then
+		love.math.setRandomSeed(os.time())
+	end
 
-function love.mousepressed(x,y,button)
-   self.scene:mousepressed(x,y,button)
-end
+	if love.load then love.load(arg) end
 
-function love.mousereleased(x,y,button)
-   self.scene:mousereleased(x,y,button)
+	-- We don't want the first frame's dt to include time taken by love.load.
+	if love.timer then love.timer.step() end
+
+	local dt = 0
+
+	-- Main loop time.
+	while true do
+		-- Process events.
+		if love.event then
+			love.event.pump()
+			for name, a,b,c,d,e,f in love.event.poll() do
+				if name == "quit" then
+					if not love.quit or not love.quit() then
+						return a
+					end
+				end
+				love.handlers[name](a,b,c,d,e,f)
+			end
+		end
+
+		-- Update dt, as we'll be passing it to update
+		if love.timer then
+			love.timer.step()
+			dt = love.timer.getDelta()
+		end
+
+		-- Call update and draw
+		if love.update then love.update(dt) end -- will pass 0 if love.timer is disabled
+
+		if love.graphics and love.graphics.isActive() then
+			love.graphics.clear(love.graphics.getBackgroundColor())
+			love.graphics.origin()
+			if love.draw then love.draw() end
+			love.graphics.present()
+		end
+
+		if love.timer then love.timer.sleep(0.001) end
+	end
+
 end
 
 function beginContact(a,b,coll)

@@ -2,7 +2,7 @@ local Animation = Class("Animation", Entity)
 
 function Animation:initialize(filename, frames, horizontal, scene)
 	Entity.initialize(self, 0, 0, scene)
-	self.src = scene.resmgr:getImg(filename)
+	self.src = resmgr:getImg(filename)
 	self.frames = frames
 	self.step = 0;
 	self.fps = 1;
@@ -47,6 +47,7 @@ function Animation:draw()
 	else
 		x, y = self.x, self.y
 	end
+	-- holy shit maan
 	local frame = math.floor(self.step%self.frames)
 	love.graphics.draw(self.src, self.quads[frame], x, y)
 end

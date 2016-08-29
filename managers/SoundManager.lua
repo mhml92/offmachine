@@ -11,7 +11,7 @@ function SoundManager:initialize(scene)
 end
 
 function SoundManager:addSound(filename, looping, volume)
-	local sound = self.resmgr:getSound(filename)
+	local sound = resmgr:getSound(filename)
 	sound:setVolume(volume)
 	sound:setLooping(looping)
 	sound:setPitch(self.pitch)

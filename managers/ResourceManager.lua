@@ -53,7 +53,6 @@ function ResourceManager:loadSoundGroup(dir,v,name)
 	end
 end
 
-
 function ResourceManager:loadSound(dir,name)
 	self.sounds[name] = love.audio.newSource(dir .. "/".. name)
 end
