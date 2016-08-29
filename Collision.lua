@@ -24,7 +24,6 @@ function Collision:handleCollision(a,b,coll)
          a:kill()
       end
    end
-
 end
 
 return Collision

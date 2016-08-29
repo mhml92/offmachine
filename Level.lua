@@ -44,51 +44,10 @@ function Level:stupidColliders()
    for i = 1, l.height do
       for j = 1,l.width do
          local index = ((i-1)*l.width) + j
-
       end
    end
 end
 
---[[
-function Level:loadWallColliders()
-   local l = self.layers["walls"]
-   local vertical = {}	
-   local horizontal = {}	
-   -- find vertical lines
-
-   for i = 1,l.height do
-      for j = 1,l.width do
-         local index = ((i-1)*l.width) + j
-         if l.data[index] > 0 then
-            if j == 1 then
-               vertical[j] = (j-1)*self.lvl.tilewidth
-            elseif l.data[index-1] == 0 then 
-               vertical[j] = (j-1)*self.lvl.tilewidth
-            end
-         elseif j > 1 and l.data[index-1] > 0 then
-            vertical[j] = (j-1)*self.lvl.tilewidth
-         end
-      end
-   end
-
-   for i = 1,l.width do
-      for j = 1,l.height do
-         local index = ((j-1)*l.width) + i
-         if l.data[index] > 0 then
-            if j == 1 then
-               horizontal[j] = (j-1)*self.lvl.tileheight
-            elseif l.data[index-(l.width)] == 0 then 
-               horizontal[j] = (j-1)*self.lvl.tileheight
-            end
-         elseif j > 1 and l.data[index-(l.width)] > 0 then
-            horizontal[j] = (j-1)*self.lvl.tileheight
-         end
-      end
-   end
-   return vertical,horizontal
-   -- find vertical lines
-end
-]]
 function Level:loadTileSets()
    for k,v in ipairs(self.lvl.tilesets) do
       -- fix image name

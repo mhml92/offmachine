@@ -65,7 +65,8 @@ function Player:update(dt)
 		mx,my = mx*self.lookahead,my*self.lookahead
 	end
 	self.scene.cammgr:update(self.x + mx,self.y + my,dt)
-   if self.mouseDown["l"] then
+   --if self.mouseDown["l"] then
+   if self.keyDown["space"] then
 	   self.weapon:shoot(self.x,self.y,self.lookr)
    end
 

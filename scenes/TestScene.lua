@@ -8,7 +8,7 @@ local SoundManager = require 'SoundManager'
 
 -- levels
 --local TestLevel = require 'levels/wallsTest'
-local TestLevel = require 'levels/wallsTest2'
+local TestLevel = require 'levels/wallsTest'
 
 
 
