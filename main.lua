@@ -33,13 +33,10 @@ function love.load()
    self.scene = TestScene:new()
    love.graphics.setBackgroundColor(255/5,255/5,255/2)
    --	self.scene = MenuScene:new()
-	print("HEY")
-	mousectrl = ControllerController:new()
 end
 
 function love.update(dt)
    Timer.update(dt)
-	mousectrl:jump()
    time.accum = time.accum + dt 
    if time.accum >= time.fdt then
       self.scene:update(time.fdt)

@@ -2,11 +2,12 @@ local ControllerController = Class("ControllerController")
 
 function ControllerController:initialize()
 	local joysticks = love.joystick.getJoysticks()
-	for i, joystick in ipairs(joysticks) do
-		print(i..": "..joystick:getName())
+	if joysticks ~= nil then
+		for i, joystick in ipairs(joysticks) do
+			print(i..": "..joystick:getName())
+		end
+		self.joystick = joysticks[2]
 	end
-	self.joystick = joysticks[2]
-	print(self.joystick:getName())
 end
 
 function ControllerController:jump()
