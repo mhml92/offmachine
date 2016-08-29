@@ -6,7 +6,7 @@ local CameraManager = Class('CameraManager')
 function CameraManager:initialize(scene)
    self.scene = scene
    self.cam = humpCamera(0,0)
-
+	self.smoother = humpCamera.smooth.linear(100)
 
    self.cam:zoomTo(1)
 	self.shakes = {}
@@ -24,17 +24,20 @@ function CameraManager:initialize(scene)
 	self.debug.shakeCount = 0
 end
 
-function CameraManager:update(x,y,dt)
+function CameraManager:update(dt)
 
-   if DEBUG then self:debugFunction(x,y,dt) end
+   --if DEBUG then self:debugFunction(x,y,dt) end
 	
 	-- Set new cam coords
+	--[[
 	if self.x == nil then
       self.x,self.y = x,y
    end
    local dx,dy = x-self.x,y-self.y
    self.x,self.y = self.x + (self.clm*dx),self.y + (self.clm*dy)
-
+	]]
+	self.cam:lockPosition(love.mouse.getX(), love.mouse.getY(), self.smoother)
+	--print(self.cam)
 	-- Update cam shake
 	self.offX = 0
 	self.offY = 0
@@ -48,7 +51,7 @@ function CameraManager:update(x,y,dt)
 	end
 
 	-- Update camera
-   self.cam:lookAt(self.x + self.offX,self.y + self.offY)
+   --self.cam:lookAt(self.x + self.offX,self.y + self.offY)
 end
 
 function CameraManager:attach()

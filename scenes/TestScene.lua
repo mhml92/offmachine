@@ -45,6 +45,7 @@ end
 function Scene:update(dt)
 	dt = self.timemgr:update(dt)
 	self.soundmgr:update(dt)
+	self.cammgr:update(dt)
 	--self.world:update(dt)
 	for i, v in ipairs(self.entities) do
 		if v:isActive() then
