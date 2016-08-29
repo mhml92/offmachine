@@ -4,7 +4,7 @@ function StaticObject:initialize(x,y,scene)
 	Entity:initialize(x,y,scene)
 	self.animation = Animation:new("conveyor_belt.png", 4, false, scene)
 	self.animation:setPosition(x, y)
-	self.animation:setFPS(10)
+	self.animation:setFPS(12.5)
 end
 
 return StaticObject

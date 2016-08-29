@@ -1,6 +1,6 @@
 local humpCamera  = require 'hump/camera'
 
-local Shake = require 'Shake'
+local Shake = require 'managers/Shake'
 local CameraManager = Class('CameraManager')
 
 function CameraManager:initialize(scene)
