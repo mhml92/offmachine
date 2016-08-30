@@ -8,3 +8,7 @@
 	path = hump
 	url = https://github.com/vrld/hump.git
 	branch = master
+[submodule "HC"]
+	path = HC
+	url = git://github.com/vrld/HC.git
+	branch = master
