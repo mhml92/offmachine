@@ -9,8 +9,6 @@ function Entity:initialize(x, y, scene)
 	self.alive  = true
 	self.scene = scene
 	self.localTimer = scene.timemgr and scene.timemgr.localTimer or nil
-	self.keyDown = self.scene.keyDown
-	self.mouseDown = self.scene.mouseDown
 	self.flags = {}
 end
 
@@ -66,10 +64,17 @@ function Entity:beginContact(obj,coll)
 	--]]
 end
 
+function Entity:gamepadpressed(joystick,button)
+end
+
+function Entity:keypressed(key,scancode,isrepeat)
+end
+
+function Entity:keyreleased(key,scancode)
+end
 
 function Entity:exit()
 
 end
-
 
 return Entity

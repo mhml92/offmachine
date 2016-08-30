@@ -54,10 +54,20 @@ function love.draw()
    self.scene:draw()
 end 
 
-function love.keypressed( key, isrepeat )
+function love.keypressed( key,scancode,isrepeat )
    if key == "escape" then
       love.event.quit()
    end
+	self.scene:keypressed(key,scancode ,isrepeat)
+end
+
+function love.keyreleased(key,scancode)
+	self.scene:keyreleased(key,scancode)
+end
+
+
+function love.gamepadpressed(joystick, button)
+	self.scene.gamepadpressed(joystick,button)
 end
 
 function beginContact(a,b,coll)

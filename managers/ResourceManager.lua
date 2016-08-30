@@ -32,7 +32,6 @@ function ResourceManager:loadAssets(dir)
 				elseif token == "png" then
 					self:loadImage(dir,v)
 				elseif token == "ttf" then
-					print("HELLO HER ResourceManager linie 35")
 					self:loadFont(dir,v)
 				end
 			end

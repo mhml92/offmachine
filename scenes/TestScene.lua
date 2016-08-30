@@ -92,4 +92,24 @@ function Scene:draw()
 	self.cammgr:detach()
 end
 
+
+function TestScene:gamepadpressed(joystick,button)
+	Scene.gamepadpressed(self,joystick,button)
+end
+
+function TestScene:keypressed( key,scancode,isrepeat )
+	Scene.keypressed(self,key,scancode,isrepeat)
+	if key == "z" then
+		self.cammgr.zoom = (((self.cammgr.zoom ))%4)+1
+	end
+	if key == "t" then
+		self.timemgr:tweenTimeScalar(t)
+	end
+
+end
+
+function TestScene:keyreleased(key,scancode)
+	Scene.keyreleased(self,key,scancode)
+end
+
 return TestScene

@@ -93,7 +93,24 @@ function Scene:draw()
 		end
 	end
 
+	function Scene:gamepadpressed(joystick,button)
+		for k,v in ipairs(self.entities) do
+			v:gamepadpressed(joystick,button)
+		end
+	end
 
+	function Scene:keypressed( key,scancode,isrepeat )
+		for k,v in ipairs(self.entities) do
+			v:keypressed( key,scancode,isrepeat )
+		end
+	end
+
+	function Scene:keyreleased(key,scancode)
+		for k,v in ipairs(self.entities) do
+			v:keyreleased( key,scancode )
+		end
+	end
+	
 	function Scene:preSolve(a,b,coll)
 	end
 

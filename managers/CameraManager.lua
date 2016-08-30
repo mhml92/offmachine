@@ -6,9 +6,10 @@ local CameraManager = Class('CameraManager')
 function CameraManager:initialize(scene)
    self.scene = scene
    self.cam = humpCamera(0,0)
-	self.smoother = humpCamera.smooth.damped(100)
+	self.smoother = humpCamera.smooth.damped(10)
 
    self.cam:zoomTo(1)
+	self.zoom = 1
 	self.shakes = {}
    -- shake vars
    self.offX = 0
@@ -36,6 +37,9 @@ function CameraManager:update(dt)
    local dx,dy = x-self.x,y-self.y
    self.x,self.y = self.x + (self.clm*dx),self.y + (self.clm*dy)
 	]]
+		self.cam:zoomTo(self.zoom)
+
+	
 	local lx,ly = self.cam:worldCoords(love.mouse.getX(), love.mouse.getY())
 	self.cam:lockPosition(lx,ly, self.smoother)
 	--print(self.cam)

@@ -19,14 +19,12 @@ end
 
 
 function Player:draw()
-	--[[
 	local lg = love.graphics
 	lg.setColor(255,0,0)
 	lg.circle('fill', self.x, self.y, 16, 32)
 	lg.setColor(0,0,255)
-	lg.line(self.x,self.y,self.x+(math.cos(self.lookr)*16),self.y+(math.sin(self.lookr)*16))
+	--lg.line(self.x,self.y,self.x+(math.cos(self.lookr)*16),self.y+(math.sin(self.lookr)*16))
 	lg.setColor(255,255,255)
-	]]
 end
 
 
