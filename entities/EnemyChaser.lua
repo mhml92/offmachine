@@ -1,4 +1,4 @@
-local EnemyChaser = Class("EnemyChaser", Entity)
+local EnemyChaser = Class("EnemyChaser", EnemyBase)
 
 local vector = require 'hump/vector-light'
 
@@ -7,23 +7,25 @@ local CHASING = 2
 local DYING = 3
 
 function EnemyChaser:initialize(x,y,scene)
-	Entity.initialize(self,x,y,scene)
+	EnemyBase.initialize(self,x,y,scene)
 	self.aware_radius = 300
 	self.radius = 20
+	self.player = scene.player
 	self.state = LOITERING
-	self.player = self.scene.player
-	self.dx = 0
-	self.dy = 0
 	self.destroy_animation = 0
 	self.acc = 500
-	
-	self.shape = HC:circle(self.x, self.y, self.radius, self.radius)
-	self.shape.owner = self
+	self:setShape(HC:circle(self.x, self.y, self.radius, self.radius))
+	self:addCollisionResponse("Player", self.test, self)
+	self.val = 42
+end
+
+function EnemyChaser:test()
+	self:destroy()
 end
 
 function EnemyChaser:update(dt)
 	if self.state == LOITERING then
-		if self:withinRange(self.player.x, self.player.y) then
+		if self:distanceToPlayer() < self.aware_radius then
 			self.state = CHASING
 		end
 	elseif self.state == CHASING then
@@ -34,25 +36,10 @@ function EnemyChaser:update(dt)
 		self.y = self.y + self.dy
 	end
 	
-	self.shape:moveTo(self.x,self.y)
-	
-	for shape, delta in pairs(HC:collisions(self.shape)) do
-		if shape.owner.class.name == "SimpleBullet" then
-			print("JESPER LUUUND")
-			self:destroy()
-		end
+	if self.shape then
+		self.shape:moveTo(self.x,self.y)
+		self:checkCollision()
 	end
-end
-
-function EnemyChaser:destroy()
-	self.state = DYING
-	Timer.tween(1, self, {destroy_animation = 1}, "in-back", function()
-		self:kill()
-	end)
-end
-
-function EnemyChaser:withinRange(x, y)
-	return vector.len(self.x-x, self.y-y) <= self.aware_radius
 end
 
 local lg = love.graphics
@@ -67,8 +54,8 @@ function EnemyChaser:draw()
 		lg.setColor(0, 255, 0)
 	end
 	lg.circle("fill", self.x-self.radius/2, self.y-self.radius/2, self.radius*scale)
-	--lg.circle("line", self.x-self.radius/2, self.y-self.radius/2, self.aware_radius*scale)
-	--lg.line(self.x, self.y, self.player.x, self.player.y)
+	lg.circle("line", self.x-self.radius/2, self.y-self.radius/2, self.aware_radius*scale)
+	lg.line(self.x, self.y, self.player.x, self.player.y)
 end
 
 return EnemyChaser
