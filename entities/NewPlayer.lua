@@ -29,7 +29,11 @@ end
 
 function NewPlayer:update(dt)
 
+	-- JERES MOVEMENT
 	local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
+	
+	-- JESPERS MOVEMENT
+	--local leftx,lefty,rightx,righty,leftt,rightt = self.joystick:getAxes( )
 
 	if Vectorl.len(rightx,righty)> 0.9 then
 		self.weapon:update(dt)	
@@ -73,6 +77,7 @@ function NewPlayer:draw()
 	love.graphics.draw(self.front, self.x-16, self.y-16)
 	love.graphics.setColor(0,255,0, 50)
 	love.graphics.rectangle("fill", self.x-7, self.y+3, 14, 40)
+	love.graphics.setColor(255,255,255,255)
 end
 
 function NewPlayer:gamepadpressed( joystick,button)

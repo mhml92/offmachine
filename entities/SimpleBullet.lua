@@ -13,6 +13,10 @@ function SimpleBullet:initialize(px,py,x,y,rot,deltaspeed,scene)
 	self.timer:after(2,function() self:kill() end)
 end
 
+function SimpleBullet:updateRelativeSpeed(ds)
+	self.speed = self.speed + ds
+end
+
 function SimpleBullet:update(dt)
 
 	self.timer:update(dt)

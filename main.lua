@@ -40,7 +40,20 @@ time.accum = 0
 
 local self = {}
 
+WIDTH = 640
+HEIGHT = 360
+OFFSET_X = 0
+
+local canvas
+
+
 function love.load()
+	local winwidth, winheight = love.window.getDesktopDimensions()
+	updateScale(1)
+	love.graphics.setDefaultFilter("nearest", "nearest")
+	love.graphics.setLineStyle("rough")
+	canvas = love.graphics.newCanvas(WIDTH, HEIGHT)
+	
    resmgr = ResourceManager:new()
    love.graphics.setBackgroundColor(255,100,100)
 	StateManager.init("TestScene")
@@ -80,17 +93,31 @@ function love.run()
 		end
  
 		-- Call update and draw
-		Timer.update(dt)
+		--Timer.update(dt)
+		--love.update(dt)
 		time.accum = time.accum + dt 
 		if time.accum >= time.fdt then
 			love.update(time.fdt)
-			time.accum = 0--time.accum - time.fdt
+			time.accum = time.accum - time.fdt
 		end	
  
 		if love.graphics and love.graphics.isActive() then
 			love.graphics.clear(love.graphics.getBackgroundColor())
+			
 			love.graphics.origin()
 			if love.draw then love.draw() end
+			
+			love.graphics.push()
+			love.graphics.setCanvas(canvas)
+			if love.draw then love.draw() end
+			love.graphics.pop()
+			
+			love.graphics.push()
+			love.graphics.scale(SCALE, SCALE)
+			love.graphics.setCanvas()
+			love.graphics.draw(canvas, OFFSET_X, 0)
+			love.graphics.pop()
+			
 			love.graphics.present()
 		end
  
@@ -103,4 +130,18 @@ function love.keypressed( key,scancode,isrepeat )
    if key == "escape" then
       love.event.quit()
    end
+	if key == "1" then updateScale(1)
+	elseif key == "2" then updateScale(2)
+	elseif key == "3" then updateScale(3)
+	elseif key == "4" then updateScale(4)
+	elseif key == "5" then updateScale(5)
+	elseif key == "6" then updateScale(6)
+	elseif key == "7" then updateScale(7)
+	end
+end
+
+function updateScale(s)
+	print("scale = "..s)
+	SCALE = s
+	love.window.setMode(WIDTH*SCALE, HEIGHT*SCALE)
 end

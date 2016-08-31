@@ -44,11 +44,11 @@ end
 
 local lg = love.graphics
 function EnemyChaser:draw()
+	lg.setColor(255, 255, 255)
 	local scale = 1
 	if self.destroyed then
 		scale = self.destroy_tween
-	end
-	if self.state == LOITERING then
+	elseif self.state == LOITERING then
 		lg.setColor(255, 0, 0)
 	elseif self.state == CHASING then
 		lg.setColor(0, 255, 0)
@@ -56,6 +56,7 @@ function EnemyChaser:draw()
 	lg.circle("fill", self.x-self.radius/2, self.y-self.radius/2, self.radius*scale)
 	lg.circle("line", self.x-self.radius/2, self.y-self.radius/2, self.aware_radius*scale)
 	lg.line(self.x, self.y, self.player.x, self.player.y)
+	lg.setColor(255, 255, 255)
 end
 
 return EnemyChaser
