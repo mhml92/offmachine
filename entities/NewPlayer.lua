@@ -10,8 +10,8 @@ function NewPlayer:initialize(x,y,scene)
 	self.shape.owner = self
 	self.joystick = love.joystick.getJoysticks( )[1]
 	
-	self.force = 500 
-	self.weight = 10
+	self.force = 600 
+	self.weight = 20
 	self.maxspeed = 15000
 	self.momentum = {}
 	self.momentum.x = 0
@@ -74,9 +74,6 @@ function NewPlayer:draw()
 end
 
 function NewPlayer:gamepadpressed( joystick,button)
-	if button== "rightshoulder" then
-		self:shoot()
-	end
 end
 
 
