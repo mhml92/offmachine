@@ -1,18 +1,31 @@
 require 'slam/slam'
+require ("loveshortcuts")
+print(math)
 math.random = love.math.random
 
+I = require 'inspect.inspect'
 G = require 'Globals'
 Class = require 'middleclass/middleclass'
 Scene = require 'Scene'
 Entity = require 'Entity'
-Vector = require 'hump/vector-light'
+Vector = require 'hump/vector'
 Timer = require 'hump/timer'
 ResourceManager = require 'managers/ResourceManager'
 Animation = require 'entities/Animation'
 HC = require 'HC'
 
+--hardon collider
+hc = require 'HC'
+HC = hc.new()
+Polygon = require 'HC.polygon'
+
+
+MouseController = require 'controllers/MouseController'
+ControllerController = require 'controllers/ControllerController'
+KeyboardController = require 'controllers/KeyboardController'
 
 FontManager = require 'managers/FontManager'
+
 
 local TestScene = require 'scenes/TestScene'
 
@@ -29,7 +42,7 @@ local self = {}
 function love.load()
    resmgr = ResourceManager:new()
    love.graphics.setBackgroundColor(255,100,100)
-	StateManager.init("TestScene")
+	StateManager.init("Splash")
 end
 
 function love.run()

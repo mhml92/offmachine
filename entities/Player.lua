@@ -1,4 +1,14 @@
 local Player = Class("Player", Entity)
+
+local ACC = 0.5
+local SPEED = 100
+local SPEED_DAMPER = 1.03
+local MAX_SPEED = 20
+local MAX_ROOT_SPEED = 0.2
+local ROT_ACC = 2
+local ROT_DAMPER = 1.03
+local ROT_DAMPER_MULTIPLIER = 1.25
+
 function Player:initialize(x,y,scene)
 	Entity:initialize(x,y,scene)
 

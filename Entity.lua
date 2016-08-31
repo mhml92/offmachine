@@ -1,8 +1,8 @@
 local Entity = Class("Entity")
 
 function Entity:initialize(x, y, scene)
-	self.x = x
-	self.y = y
+	self.x = x or 0
+	self.y = y or 0
 	self.id = nil
 	self.layer = nil
 	self.active = true

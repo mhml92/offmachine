@@ -1,5 +1,7 @@
 local TestScene = Class("TestScene", Scene)
 local Player = require 'entities/Player'
+local PlayerTwo = require 'entities/PlayerTwo'
+local BG = require 'entities/GridBackground'
 local StaticObject = require 'entities/StaticObject'
 local CameraManager = require 'managers/CameraManager'
 local TimeManager = require 'managers/TimeManager'
@@ -9,7 +11,6 @@ local Enemy = require 'entities/Enemy'
 
 -- levels
 --local TestLevel = require 'levels/wallsTest'
-
 
 
 ---------------------------------------------------------------------
@@ -28,10 +29,14 @@ function TestScene:initialize()
    self.world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 	]]
 
-	self:addEntity(StaticObject:new(0, 0, self))
-	self:addEntity(Player:new(100,100,self))
 
-	self:addEntity(Enemy:new(10,10,self))
+	--self:addEntity(Enemy:new(10,10,self))
+
+
+	--self:addEntity(StaticObject:new(0, 0, self), self.layers.objects)
+	self.player = PlayerTwo:new(100,100,self)
+	self:addEntity(self.player, self.layers.objects)
+	self:addEntity(BG:new(self), self.layers.bg)
 	
 	self.bgmusic = self.soundmgr:addSound("hyperfun.mp3", true, 0.8)
 	self.soundmgr:playSound(self.bgmusic)
@@ -39,9 +44,9 @@ function TestScene:initialize()
 
 end
 
-function Scene:defineLayers()
-
-
+function TestScene:defineLayers()
+	self:addLayer("bg")
+	self:addLayer("objects")
 end
 ---------------------------------------------------------------------
 --										UPDATE
@@ -49,7 +54,9 @@ end
 function TestScene:update(dt)
 	dt = self.timemgr:update(dt)
 	self.soundmgr:update(dt)
+	self.cammgr.cam:lookAt(self.player.shape:center())
 	self.cammgr:update(dt)
+
 	--self.world:update(dt)
 	for i, v in ipairs(self.entities) do
 		if v:isActive() then

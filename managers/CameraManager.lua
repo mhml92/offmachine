@@ -25,6 +25,10 @@ function CameraManager:initialize(scene)
 	self.debug.shakeCount = 0
 end
 
+function CameraManager:getUpperLeft()
+    return self.cam:worldCoords(0,0)
+end
+
 function CameraManager:update(dt)
 
    --if DEBUG then self:debugFunction(x,y,dt) end
@@ -38,7 +42,6 @@ function CameraManager:update(dt)
    self.x,self.y = self.x + (self.clm*dx),self.y + (self.clm*dy)
 	]]
 		self.cam:zoomTo(self.zoom)
-
 	--print(self.cam)
 	-- Update cam shake
 	self.offX = 0

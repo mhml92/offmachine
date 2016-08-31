@@ -60,7 +60,10 @@ function Scene:draw()
 	end
 
 	function Scene:addLayer(name)
+
 		self.layers[name] = self:getNewLayerId()
+
+		print(name, self.layers[name])
 	end
 
 	function Scene:getNewLayerId()
