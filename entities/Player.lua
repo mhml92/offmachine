@@ -7,6 +7,7 @@ function Player:initialize(x,y,scene)
 
 	self.radius = 10
 	self.shape = HC:rectangle(100,100,2*self.radius,2*self.radius)
+	self.shape.owner = self
 	self.joystick = love.joystick.getJoysticks( )[1]
 	
 	self.force = 10
@@ -15,6 +16,7 @@ function Player:initialize(x,y,scene)
 	self.momentum = {}
 	self.momentum.x = 0
 	self.momentum.y = 0
+
 	self.drag = 0.95
 
 	self.rot = 0
@@ -22,12 +24,11 @@ function Player:initialize(x,y,scene)
 	self.rotation_momentum = 0
 	self.rotation_drag = 0.91
 	self.maxrotarion = 0.1
-	
 end
 
 function Player:update(dt)
 	local leftx,lefty,leftt,reightx,righty,rightt = self.joystick:getAxes( )
-	
+
 	leftt,rightt = ((leftt+1)/2),((rightt+1)/2)
 
 	local f_r,f_x,f_y = 0,0,0
@@ -103,8 +104,6 @@ function Player:update(dt)
 	--
 
 
-
-	
 	self.shape:moveTo(self.x,self.y)
 	self.shape:setRotation(self.rot)
 end

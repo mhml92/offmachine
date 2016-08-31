@@ -11,6 +11,11 @@ local SoundManager = require 'managers/SoundManager'
 local Enemy = require 'entities/Enemy'
 local SimpleBullet = require 'entities/SimpleBullet'
 
+local EnemyChaser = require 'entities/EnemyChaser'
+local EnemyLineFormation = require 'entities/EnemyLineFormation'
+
+local EnemyDirector = require 'entities/EnemyDirector'
+
 -- levels
 --local TestLevel = require 'levels/wallsTest'
 
@@ -28,21 +33,24 @@ function TestScene:initialize()
 	--[[
 	self.world = love.physics.newWorld(0,0,true)
 	love.physics.setMeter(32)
-   self.world:setCallbacks(beginContact, endContact, preSolve, postSolve)
+   	self.world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 	]]
-
-
 	--self:addEntity(Enemy:new(10,10,self))
 
 
 	--self:addEntity(StaticObject:new(0, 0, self), self.layers.objects)
 	self.player = NewPlayer:new(100,100,self)
 	self:addEntity(self.player, self.layers.objects)
+	
+	self:addEntity(EnemyChaser:new(300, 300, self), self.layers.objects)
+	
 	self:addEntity(BG:new(self), self.layers.bg)
 	self:addEntity(SimpleBullet:new(0,0,0,0,self), self.layers.objects)
 	
 	self.bgmusic = self.soundmgr:addSound("hyperfun.mp3", true, 0.8)
 	self.soundmgr:playSound(self.bgmusic)
+	
+	self:addEntity(EnemyDirector:new(0,0,self), self.layers.objects)
 
 
 end
