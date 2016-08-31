@@ -73,6 +73,7 @@ function NewPlayer:draw()
 	love.graphics.draw(self.front, self.x-16, self.y-16)
 	love.graphics.setColor(0,255,0, 50)
 	love.graphics.rectangle("fill", self.x-7, self.y+3, 14, 40)
+	love.graphics.setColor(255,255,255,255)
 end
 
 function NewPlayer:gamepadpressed( joystick,button)
