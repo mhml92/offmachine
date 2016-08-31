@@ -1,6 +1,6 @@
 local NewPlayer = Class("NewPlayer", Entity)
 local SimpleBullet = require 'entities/SimpleBullet'
-
+local WeaponInterface = require 'entities/WeaponInterface'
 
 function NewPlayer:initialize(x,y,scene)
 	Entity.initialize(self,x,y,scene)
@@ -22,11 +22,16 @@ function NewPlayer:initialize(x,y,scene)
 	self.front = resmgr:getImg("spaceship_front.png")
 
 	self.rot = 0
+
+	self.weapon = WeaponInterface:new(scene, self)
+
 end
 
 function NewPlayer:update(dt)
-	local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
-	
+	local leftx,lefty,rightx,righty,leftt,rightt = self.joystick:getAxes( )
+	self.weapon:update(dt)	
+	--print(leftx,lefty,rightx,righty,leftt,rightt)
+
 	if math.abs(rightx) > 0.5 or math.abs(righty) > 0.5 then
 		self:shoot(rightx,righty)
 	end
@@ -55,37 +60,26 @@ function NewPlayer:update(dt)
 	self.momentum.y = self.momentum.y*self.drag
 	self.shape:moveTo(self.x,self.y)
 	self.shape:setRotation(self.rot)
-	
 end
 
 function NewPlayer:shoot(x,y)
 	local rot = Vectorl.angleTo(x,y)
-	self.scene:addEntity(SimpleBullet:new(self.x,self.y,rot,Vectorl.len(self.momentum.x,self.momentum.y),self.scene), self.scene.layers.objects)
+	self.weapon:shoot(x,y,rot,Vectorl.len(self.momentum.x,self.momentum.y))
 end
 
 
 function NewPlayer:draw()
-	
-	--self.shape:draw("fill")
-	--love.graphics.setColor(0,255,255)
-
-	--local px,py = self.radius,0
-	--px,py = Vectorl.rotate(self.rot,px,py)
-	--love.graphics.circle( "fill", self.x+px, self.y+py, 10, 10 )
-	--love.graphics.line(self.left_motor_pos.x,self.left_motor_pos.y,self.right_motor_pos.x,self.right_motor_pos.y)
 	love.graphics.setColor(255,255,255)
 	love.graphics.draw(self.back, self.x, self.y, self.rot+math.pi/2, 1, 1, 16, 16)
 	love.graphics.draw(self.front, self.x-16, self.y-16)
 	love.graphics.setColor(0,255,0, 50)
 	love.graphics.rectangle("fill", self.x-7, self.y+3, 14, 40)
 	--love.graphics.circle("fill", self.x, self.y, 10)
-	
-	
 end
 
 function NewPlayer:gamepadpressed( joystick,button)
 	if button== "rightshoulder" then
-		self:shoot()
+		--self:shoot()
 	end
 end
 

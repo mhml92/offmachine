@@ -47,7 +47,7 @@ local self = {}
 function love.load()
    resmgr = ResourceManager:new()
    love.graphics.setBackgroundColor(255,100,100)
-	StateManager.init("Main")
+	StateManager.init("TestScene")
 end
 
 function love.run()
@@ -87,7 +87,7 @@ function love.run()
 		Timer.update(dt)
 		time.accum = time.accum + dt 
 		if time.accum >= time.fdt then
-			love.update(time.fdt/10)
+			love.update(time.fdt)
 			time.accum = 0--time.accum - time.fdt
 		end	
  

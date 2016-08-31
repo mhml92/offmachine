@@ -39,20 +39,18 @@ function TestScene:initialize()
 
 
 	--self:addEntity(StaticObject:new(0, 0, self), self.layers.objects)
-	self.player = NewPlayer:new(100,100,self)
+	self.player = Player:new(100,100,self)
 	self:addEntity(self.player, self.layers.objects)
 	
 	self:addEntity(EnemyChaser:new(300, 300, self), self.layers.objects)
 	
 	self:addEntity(BG:new(self), self.layers.bg)
-	self:addEntity(SimpleBullet:new(0,0,0,0,self), self.layers.objects)
+	--self:addEntity(SimpleBullet:new(0,0,0,0,self), self.layers.objects)
 	
 	self.bgmusic = self.soundmgr:addSound("hyperfun.mp3", true, 0.8)
 	self.soundmgr:playSound(self.bgmusic)
 	
 	self:addEntity(EnemyDirector:new(0,0,self), self.layers.objects)
-
-
 end
 
 function TestScene:defineLayers()
