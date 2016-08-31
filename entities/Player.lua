@@ -2,29 +2,53 @@ local Player = Class("Player", Entity)
 function Player:initialize(x,y,scene)
 	Entity:initialize(x,y,scene)
 
-	--[[
-	local lp = love.physics
-	self.body 		= lp.newBody(self.scene.world,self.x,self.y,'dynamic')
-	self.shape 		= lp.newCircleShape(G.PLAYER_SIZE)
-	self.fixture 	= lp.newFixture(self.body,self.shape)
-   self.fixture:setUserData(self)
-	self.body:setLinearDamping(12)
-	--]]
+	self.shape = HC.rectangle(100,100,20,20)
+	self.joystick = love.joystick.getJoysticks( )[1]
+	
+	self.force = 10
+	self.weight = 10
+	self.momentum = {}
+	self.momentum.x = 0
+	self.momentum.y = 0
+	self.drag = 0.9
+
+	
+
 	
 end
 
 function Player:update(dt)
+	local leftx,lefty,leftt,reightx,righty,rightt = self.joystick:getAxes( )
+	print(leftx, lefty)
+	
+	leftt,rightt = ((leftt+1)/2),((rightt+1)/2)
 
+
+
+	if math.abs(leftx) > 0.2 then
+		self.momentum.x = self.momentum.x + (leftx*self.force/self.weight)
+	end
+	if math.abs(lefty) > 0.2 then
+		self.momentum.y = self.momentum.y + (lefty*self.force/self.weight)
+	end
+
+	self.y = self.y + self.momentum.y
+	self.x = self.x + self.momentum.x
+	self.momentum.x = self.momentum.x*self.drag
+	self.momentum.y = self.momentum.y*self.drag
+
+
+	
+	self.shape:moveTo(self.x,self.y)
 end
 
 
 function Player:draw()
-	local lg = love.graphics
-	lg.setColor(255,0,0)
-	lg.circle('fill', self.x, self.y, 16, 32)
-	lg.setColor(0,0,255)
-	--lg.line(self.x,self.y,self.x+(math.cos(self.lookr)*16),self.y+(math.sin(self.lookr)*16))
-	lg.setColor(255,255,255)
+	self.shape:draw("fill")
+end
+
+function Player:gamepadaxis( joystick, axis, value )
+	print(axis,value)
 end
 
 

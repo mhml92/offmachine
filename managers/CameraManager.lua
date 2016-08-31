@@ -39,7 +39,6 @@ function CameraManager:update(dt)
 	]]
 		self.cam:zoomTo(self.zoom)
 
-
 	--print(self.cam)
 	-- Update cam shake
 	self.offX = 0
