@@ -5,6 +5,7 @@ math.random = love.math.random
 
 I = require 'inspect.inspect'
 G = require 'Globals'
+G_functions = require 'g_functions'
 Class = require 'middleclass/middleclass'
 Scene = require 'Scene'
 Entity = require 'Entity'
@@ -20,7 +21,9 @@ HC = require 'HC'
 hc = require 'HC'
 HC = hc.new()
 Polygon = require 'HC.polygon'
+Shapes = require 'HC.shapes'
 
+Particle = require("entities/Particle")
 
 MouseController = require 'controllers/MouseController'
 ControllerController = require 'controllers/ControllerController'

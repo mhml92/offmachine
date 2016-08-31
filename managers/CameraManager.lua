@@ -8,8 +8,8 @@ function CameraManager:initialize(scene)
    self.cam = humpCamera(0,0)
 	self.smoother = humpCamera.smooth.damped(10)
 
-   self.cam:zoomTo(1)
-	self.zoom = 1
+	self.zoom = 2
+   self.cam:zoomTo(self.zoom)
 	self.shakes = {}
    -- shake vars
    self.offX = 0
@@ -23,6 +23,9 @@ function CameraManager:initialize(scene)
 	self.debug = {}
 	self.debug.shakeWaite = 60
 	self.debug.shakeCount = 0
+	
+	local cx,cy = self.cam:worldCoords(love.graphics.getDimensions( ))
+	self.cam:lookAt(cx/2,cy/2)
 end
 
 function CameraManager:getUpperLeft()
@@ -41,7 +44,10 @@ function CameraManager:update(dt)
    local dx,dy = x-self.x,y-self.y
    self.x,self.y = self.x + (self.clm*dx),self.y + (self.clm*dy)
 	]]
-		self.cam:zoomTo(self.zoom)
+	self.cam:zoomTo(self.zoom)
+	local cx,cy = self.cam:worldCoords(love.graphics.getDimensions( ))
+	self.cam:lookAt(cx/2,cy/2)
+	--self.cam:lookAt(width/(2^self.zoom),height/(2^self.zoom))
 	--print(self.cam)
 	-- Update cam shake
 	self.offX = 0
@@ -54,6 +60,7 @@ function CameraManager:update(dt)
 			table.remove(self.shakes,i)	
 		end
 	end
+
 
 	-- Update camera
    --self.cam:lookAt(self.x + self.offX,self.y + self.offY)
