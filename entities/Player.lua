@@ -104,8 +104,6 @@ function Player:update(dt)
 	--
 
 
-
-	
 	self.shape:moveTo(self.x,self.y)
 	self.shape:setRotation(self.rot)
 end

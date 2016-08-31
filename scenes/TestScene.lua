@@ -32,10 +32,8 @@ function TestScene:initialize()
 	--[[
 	self.world = love.physics.newWorld(0,0,true)
 	love.physics.setMeter(32)
-   self.world:setCallbacks(beginContact, endContact, preSolve, postSolve)
+   	self.world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 	]]
-
-
 	--self:addEntity(Enemy:new(10,10,self))
 
 
