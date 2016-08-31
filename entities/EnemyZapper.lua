@@ -25,7 +25,8 @@ end
 
 function EnemyZapper:loiter()
 	self.tweenHandle = self.scene.timer:after(self.loiter_time,function()if self.alive then self:move()end end )
-	self.scene.timer:after(self.loiter_time/2,function() if self.alive then self:shoot()end end)
+	local shoot_time = (self.loiter_time/2) + (math.random()-0.5)/5
+	self.scene.timer:after(shoot_time,function() if self.alive then self:shoot()end end)
 end
 
 function EnemyZapper:shoot()

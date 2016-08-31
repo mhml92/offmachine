@@ -58,6 +58,7 @@ function love.load()
    resmgr = ResourceManager:new()
    love.graphics.setBackgroundColor(255,100,100)
 	StateManager.init("Moffeus")
+	--StateManager.init("TestScene")
 end
 
 function love.run()

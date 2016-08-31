@@ -1,6 +1,7 @@
 local Moffeus = Class("Moffeus", Scene)
 local NewPlayer = require 'entities/NewPlayer'
 local Stars = require "entities/Stars"
+local EnemyZapper = require 'entities/EnemyZapper'
 
 function Moffeus:initialize()
 	Scene.initialize(self)
@@ -8,6 +9,11 @@ function Moffeus:initialize()
 	self:addEntity(Stars:new(0,0,self), self.layers.bg)
 	self.player = NewPlayer:new(100,100,self)
 	self:addEntity(self.player, self.layers.objects)
+	self:addEntity(EnemyZapper:new(300, 300, self), self.layers.objects)
+	self:addEntity(EnemyZapper:new(300, 300, self), self.layers.objects)
+	self:addEntity(EnemyZapper:new(300, 300, self), self.layers.objects)
+	self:addEntity(EnemyZapper:new(300, 300, self), self.layers.objects)
+	self:addEntity(EnemyZapper:new(300, 300, self), self.layers.objects)
 end
 
 function Moffeus:defineLayers()

@@ -11,6 +11,7 @@ function EnemyBullet:draw()
 	love.graphics.setColor(255,64,64)
 	--lg.draw(resmgr:getImg("normalshot.png"), self.x, self.y, self.rot, 1,1, 10,5)
 	self.shape:draw("fill")
+	love.graphics.setColor(255,255,255)
 end
 
 return EnemyBullet
