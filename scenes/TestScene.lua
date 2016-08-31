@@ -1,5 +1,6 @@
 local TestScene = Class("TestScene", Scene)
 local Player = require 'entities/Player'
+local NewPlayer = require 'entities/NewPlayer'
 local PlayerTwo = require 'entities/PlayerTwo'
 local BG = require 'entities/GridBackground'
 local StaticObject = require 'entities/StaticObject'
@@ -35,7 +36,7 @@ function TestScene:initialize()
 
 
 	--self:addEntity(StaticObject:new(0, 0, self), self.layers.objects)
-	self.player = Player:new(100,100,self)
+	self.player = NewPlayer:new(100,100,self)
 	self:addEntity(self.player, self.layers.objects)
 	self:addEntity(BG:new(self), self.layers.bg)
 	self:addEntity(SimpleBullet:new(0,0,0,0,self), self.layers.objects)
@@ -56,7 +57,7 @@ end
 function TestScene:update(dt)
 	dt = self.timemgr:update(dt)
 	self.soundmgr:update(dt)
-	self.cammgr.cam:lookAt(self.player.shape:center())
+	--self.cammgr.cam:lookAt(self.player.shape:center())
 	self.cammgr:update(dt)
 
 	--self.world:update(dt)
@@ -100,8 +101,8 @@ function TestScene:draw()
 			v:draw()
 		end
 	end
-   love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), self.cammgr.cam:worldCoords(10, 10)) 
 	self.cammgr:detach()
+   love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )),10, 10) 
 end
 
 

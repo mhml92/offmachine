@@ -5,15 +5,18 @@ function SimpleBullet:initialize(x,y,rot,deltaspeed,scene)
 	Entity.initialize(self,x,y,scene)
 
 	self.rot = rot
-	self.speed = 20 + deltaspeed
+	self.speed = 0--500 + deltaspeed
 	self.radius = 10
 	self.shape = HC:rectangle(100,100,2*self.radius,2*self.radius)
 	self.shape.owner = self
+	self.timer = Timer.new()
+	self.timer:after(20,function() self:kill() end)
 end
 
 function SimpleBullet:update(dt)
 
-	local dx,dy = Vectorl.rotate(self.rot,0,-self.speed) 
+	self.timer:update(dt)
+	local dx,dy = Vectorl.rotate(self.rot,self.speed*dt,0) 
 	self.x,self.y = self.x+dx,self.y+dy
 
 	self.shape:moveTo(self.x,self.y)
