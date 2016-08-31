@@ -1,5 +1,6 @@
 local NewPlayer = Class("NewPlayer", Entity)
 local SimpleBullet = require 'entities/SimpleBullet'
+local RemoteRocket = require 'entities/RemoteRocket'
 
 
 function NewPlayer:initialize(x,y,scene)
@@ -19,6 +20,8 @@ function NewPlayer:initialize(x,y,scene)
 	self.drag = 0.95
 
 	self.rot = 0
+
+
 end
 
 function NewPlayer:update(dt)
@@ -58,7 +61,9 @@ end
 
 function NewPlayer:shoot(x,y)
 	local rot = Vectorl.angleTo(x,y)
-	self.scene:addEntity(SimpleBullet:new(self.x,self.y,rot,Vectorl.len(self.momentum.x,self.momentum.y),self.scene), self.scene.layers.objects)
+	if self.rocket == nil then
+	self.rocket = self.scene:addEntity(RemoteRocket:new(self.x,self.y,rot,self,Vectorl.len(self.momentum.x,self.momentum.y),self.scene), self.scene.layers.objects)
+	end
 end
 
 
