@@ -6,11 +6,11 @@ function SimpleBullet:initialize(x,y,rot,deltaspeed,scene)
 
 	self.rot = rot
 	self.speed = 500 + deltaspeed
-	self.radius = 10
+	self.radius = 5
 	self.shape = HC:rectangle(100,100,2*self.radius,2*self.radius)
 	self.shape.owner = self
 	self.timer = Timer.new()
-	self.timer:after(20,function() self:kill() end)
+	self.timer:after(2,function() self:kill() end)
 end
 
 function SimpleBullet:update(dt)
