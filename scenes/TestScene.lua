@@ -8,6 +8,7 @@ local TimeManager = require 'managers/TimeManager'
 local SoundManager = require 'managers/SoundManager'
 
 local Enemy = require 'entities/Enemy'
+local SimpleBullet = require 'entities/SimpleBullet'
 
 local EnemyChaser = require 'entities/EnemyChaser'
 local EnemyLineFormation = require 'entities/EnemyLineFormation'
@@ -45,6 +46,7 @@ function TestScene:initialize()
 	self:addEntity(EnemyChaser:new(300, 300, self), self.layers.objects)
 	
 	self:addEntity(BG:new(self), self.layers.bg)
+	self:addEntity(SimpleBullet:new(0,0,0,0,self), self.layers.objects)
 	
 	self.bgmusic = self.soundmgr:addSound("hyperfun.mp3", true, 0.8)
 	self.soundmgr:playSound(self.bgmusic)

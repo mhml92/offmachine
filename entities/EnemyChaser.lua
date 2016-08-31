@@ -37,14 +37,16 @@ function EnemyChaser:update(dt)
 	self.shape:moveTo(self.x,self.y)
 	
 	for shape, delta in pairs(HC:collisions(self.shape)) do
-		if shape.owner:isInstanceOf("SimpleBullet") then
-			self:destory()
+		if shape.owner.class.name == "SimpleBullet" then
+			print("JESPER LUUUND")
+			self:destroy()
 		end
 	end
 end
 
 function EnemyChaser:destroy()
-	Timer.tween(1, self, {destory_animation = 1}, "in-back", function()
+	self.state = DYING
+	Timer.tween(1, self, {destroy_animation = 1}, "in-back", function()
 		self:kill()
 	end)
 end
@@ -57,7 +59,7 @@ local lg = love.graphics
 function EnemyChaser:draw()
 	local scale = 1
 	if self.state == DYING then
-		scale = 1 - self.destory_animation
+		scale = 1 - self.destroy_animation
 	end
 	if self.state == LOITERING then
 		lg.setColor(255, 0, 0)
