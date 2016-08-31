@@ -39,9 +39,7 @@ function CameraManager:update(dt)
 	]]
 		self.cam:zoomTo(self.zoom)
 
-	
-	local lx,ly = self.cam:worldCoords(love.mouse.getX(), love.mouse.getY())
-	self.cam:lockPosition(lx,ly, self.smoother)
+
 	--print(self.cam)
 	-- Update cam shake
 	self.offX = 0

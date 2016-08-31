@@ -61,7 +61,7 @@ function ResourceManager:loadImage(dir,name)
 end
 
 function ResourceManager:loadFont(dir,name)
-	self.fonts[name] = love.graphics.newFont(dir .. "/" .. name)
+	self.fonts[name] = love.graphics.newFont(dir .. "/" .. name, 40)
 end
 
 function ResourceManager:getImg(name)

@@ -15,7 +15,7 @@ local TestLevel = require 'levels/wallsTest'
 --										INITIALIZE
 ---------------------------------------------------------------------
 function TestScene:initialize()
-	Scene:initialize(resmgr)
+	Scene:initialize()
 	self.cammgr = CameraManager:new(self)
 	self.timemgr = TimeManager:new(self)
 	self.soundmgr = SoundManager:new(self)
@@ -26,8 +26,6 @@ function TestScene:initialize()
 	love.physics.setMeter(32)
    self.world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 	]]
-
-
 
 	self:addEntity(StaticObject:new(0, 0, self))
 	self:addEntity(Player:new(100,100,self))
@@ -42,7 +40,7 @@ end
 ---------------------------------------------------------------------
 --										UPDATE
 ---------------------------------------------------------------------
-function Scene:update(dt)
+function TestScene:update(dt)
 	dt = self.timemgr:update(dt)
 	self.soundmgr:update(dt)
 	self.cammgr:update(dt)
@@ -66,8 +64,7 @@ end
 ---------------------------------------------------------------------
 --										DRAW
 ---------------------------------------------------------------------
-function Scene:draw()
-	
+function TestScene:draw()
 	table.sort(self.entities,
 		function(a,b) 
 			if a.layer < b.layer then 
@@ -95,6 +92,10 @@ end
 
 function TestScene:gamepadpressed(joystick,button)
 	Scene.gamepadpressed(self,joystick,button)
+	if button == "start" then
+		HighscoreManager.addScore("Jesper Luuund", 42)
+		StateManager.setScene("Highscore")
+	end
 end
 
 function TestScene:keypressed( key,scancode,isrepeat )
