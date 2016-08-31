@@ -23,7 +23,7 @@ function EnemyBase:destroy()
 	if false == self.destroyed then
 		self.destroy_tween = 1
 		self.destroyed = true
-		Timer.tween(1, self, {destroy_tween = 0}, 'in-back', function() self:kill() end)
+		self.scene.timer:tween(1, self, {destroy_tween = 0}, 'in-back', function() self:kill() end)
 	end
 end
 

@@ -96,7 +96,6 @@ function love.run()
 		-- Call update and draw
 		--time.accum = time.accum + dt 
 		--if time.accum >= time.fdt then
-		Timer.update(dt)
 			love.update(dt)
 			--time.accum = 0--time.accum - time.fdt
 		--end	
