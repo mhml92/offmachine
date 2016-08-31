@@ -8,6 +8,7 @@ local TimeManager = require 'managers/TimeManager'
 local SoundManager = require 'managers/SoundManager'
 
 local Enemy = require 'entities/Enemy'
+local SimpleBullet = require 'entities/SimpleBullet'
 
 -- levels
 --local TestLevel = require 'levels/wallsTest'
@@ -34,9 +35,10 @@ function TestScene:initialize()
 
 
 	--self:addEntity(StaticObject:new(0, 0, self), self.layers.objects)
-	self.player = PlayerTwo:new(100,100,self)
+	self.player = Player:new(100,100,self)
 	self:addEntity(self.player, self.layers.objects)
 	self:addEntity(BG:new(self), self.layers.bg)
+	self:addEntity(SimpleBullet:new(0,0,0,0,self), self.layers.objects)
 	
 	self.bgmusic = self.soundmgr:addSound("hyperfun.mp3", true, 0.8)
 	self.soundmgr:playSound(self.bgmusic)
