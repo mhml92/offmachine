@@ -1,15 +1,18 @@
 local Moffeus = Class("Moffeus", Scene)
-
+local NewPlayer = require 'entities/NewPlayer'
 local Stars = require "entities/Stars"
 
 function Moffeus:initialize()
 	Scene.initialize(self)
 	
 	self:addEntity(Stars:new(0,0,self), self.layers.bg)
+	self.player = NewPlayer:new(100,100,self)
+	self:addEntity(self.player, self.layers.objects)
 end
 
 function Moffeus:defineLayers()
 	self:addLayer("bg")
+	self:addLayer("objects")
 end
 
 function Moffeus:update(dt)

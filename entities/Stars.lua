@@ -15,6 +15,9 @@ end
 function Stars:update(dt)
 	for k, v in pairs(self.layers) do
 		v.x = v.x - v.speed * dt
+		if v.x <= - WIDTH then
+			v.x = 0
+		end
 	end
 end
 
