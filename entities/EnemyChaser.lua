@@ -15,7 +15,7 @@ function EnemyChaser:initialize(x,y,scene)
 	self.destroy_animation = 0
 	self.acc = 500
 	self:setShape(HC:circle(self.x, self.y, self.radius, self.radius))
-	self:addCollisionResponse("Player", self.test, self)
+	self:addCollisionResponse("NewPlayer", self.test, self)
 	self.val = 42
 end
 

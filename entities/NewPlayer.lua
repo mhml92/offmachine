@@ -7,6 +7,7 @@ function NewPlayer:initialize(x,y,scene)
 
 	self.radius = 10
 	self.shape = HC:rectangle(100,100,2*self.radius,2*self.radius)
+	self.shape.owner = self
 	self.joystick = love.joystick.getJoysticks( )[1]
 	
 	self.force = 10
