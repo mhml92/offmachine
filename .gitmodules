@@ -12,6 +12,3 @@
 	path = HC
 	url = git://github.com/vrld/HC.git
 	branch = master
-[submodule "inspect"]
-	path = inspect
-	url = git@github.com:kikito/inspect.lua.git
