@@ -38,7 +38,6 @@ function EnemyChaser:update(dt)
 	
 	for shape, delta in pairs(HC:collisions(self.shape)) do
 		if shape.owner.class.name == "SimpleBullet" then
-			print("JESPER LUUUND")
 			self:destroy()
 		end
 	end

@@ -5,7 +5,7 @@ function SimpleBullet:initialize(x,y,rot,deltaspeed,scene)
 	Entity.initialize(self,x,y,scene)
 
 	self.rot = rot
-	self.speed = 0--500 + deltaspeed
+	self.speed = 500 + deltaspeed
 	self.radius = 10
 	self.shape = HC:rectangle(100,100,2*self.radius,2*self.radius)
 	self.shape.owner = self

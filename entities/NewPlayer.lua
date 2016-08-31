@@ -7,9 +7,10 @@ function NewPlayer:initialize(x,y,scene)
 
 	self.radius = 10
 	self.shape = HC:rectangle(100,100,2*self.radius,2*self.radius)
+	self.shape.owner = self
 	self.joystick = love.joystick.getJoysticks( )[1]
 	
-	self.force = 10
+	self.force = 500 
 	self.weight = 10
 	self.maxspeed = 15000
 	self.momentum = {}
@@ -21,9 +22,10 @@ function NewPlayer:initialize(x,y,scene)
 end
 
 function NewPlayer:update(dt)
+
 	local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
 	
-	if math.abs(rightx) > 0.5 or math.abs(righty) > 0.5 then
+	if Vectorl.len(rightx,righty)> 0.9 then
 		self:shoot(rightx,righty)
 	end
 	if math.abs(leftx) < 0.2 then
@@ -38,8 +40,8 @@ function NewPlayer:update(dt)
 	leftt,rightt = ((leftt+1)/2),((rightt+1)/2)
 
 	self.rot = Vectorl.angleTo(self.momentum.x,self.momentum.y)
-	self.momentum.x = self.momentum.x + (leftx*self.force/self.weight)
-	self.momentum.y = self.momentum.y + (lefty*self.force/self.weight)
+	self.momentum.x = self.momentum.x + (dt*leftx*self.force/self.weight)
+	self.momentum.y = self.momentum.y + (dt*lefty*self.force/self.weight)
 	--if Vectorl.len(self.momentum.x,self.momentum.y) > self.maxspeed then 
 	--	self.momentum.x = self.maxspeed*self.momentum.x/Vectorl.len(self.momentum.x,self.momentum.y)
 	--	self.momentum.y = self.maxspeed*self.momentum.y/Vectorl.len(self.momentum.x,self.momentum.y)
