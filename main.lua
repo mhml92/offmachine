@@ -93,19 +93,18 @@ function love.run()
 		end
  
 		-- Call update and draw
-		--Timer.update(dt)
-		--love.update(dt)
-		time.accum = time.accum + dt 
-		if time.accum >= time.fdt then
-			love.update(time.fdt)
-			time.accum = time.accum - time.fdt
-		end	
+		--time.accum = time.accum + dt 
+		--if time.accum >= time.fdt then
+		Timer.update(dt)
+			love.update(dt)
+			--time.accum = 0--time.accum - time.fdt
+		--end	
  
 		if love.graphics and love.graphics.isActive() then
 			love.graphics.clear(love.graphics.getBackgroundColor())
 			
 			love.graphics.origin()
-			if love.draw then love.draw() end
+			--if love.draw then love.draw() end
 			
 			love.graphics.push()
 			love.graphics.setCanvas(canvas)
@@ -143,5 +142,5 @@ end
 function updateScale(s)
 	print("scale = "..s)
 	SCALE = s
-	love.window.setMode(WIDTH*SCALE, HEIGHT*SCALE)
+	love.window.setMode(WIDTH*SCALE, HEIGHT*SCALE, {resizable=false, vsync=false, fullscreen = true})
 end
