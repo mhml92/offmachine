@@ -8,8 +8,7 @@ function SimpleBullet:initialize(px,py,x,y,rot,deltaspeed,scene)
 	self.speed = 500 + deltaspeed
 	self.radius = 10
 
-	self.shape = HC:rectangle(100,100,20,10)
-	self.shape.owner = self
+	self:setShape(HC:rectangle(100,100,20,10))
 	self.timer = Timer.new()
 	self.timer:after(2,function() self:kill() end)
 end

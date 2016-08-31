@@ -1,4 +1,4 @@
-local TimeManager = Class('CameraManager')
+local TimeManager = Class('TimeManager')
 
 function TimeManager:initialize(scene)
    self.scene = scene

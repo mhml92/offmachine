@@ -25,10 +25,6 @@ Shapes = require 'HC.shapes'
 
 Particle = require("entities/Particle")
 
-MouseController = require 'controllers/MouseController'
-ControllerController = require 'controllers/ControllerController'
-KeyboardController = require 'controllers/KeyboardController'
-
 FontManager = require 'managers/FontManager'
 
 

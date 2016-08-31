@@ -1,35 +1,35 @@
-local Main = Class("Main", Scene)
+local Moffeus = Class("Moffeus", Scene)
 
-function Main:initialize()
+function Moffeus:initialize()
 	Scene:initialize()
 	self.stars_map = resmgr:getImg("stars.png")
 end
 
-function Main:defineLayers()
+function Moffeus:defineLayers()
 	self:addLayer("bg")
 	self:addLayer("objects")
 end
 
-function Main:update(dt)
+function Moffeus:update(dt)
 	Scene.update(self, dt)
 end
 
-function Main:draw()
+function Moffeus:draw()
 	Scene.draw(self)
 	love.graphics.draw(self.stars_map, 0, 0, 0, 2, 2)
 end
 
 
-function Main:gamepadpressed(joystick,button)
+function Moffeus:gamepadpressed(joystick,button)
 	Scene.gamepadpressed(self,joystick,button)
 end
 
-function Main:keypressed( key,scancode,isrepeat )
+function Moffeus:keypressed( key,scancode,isrepeat )
 	Scene.keypressed(self,key,scancode,isrepeat)
 end
 
-function Main:keyreleased(key,scancode)
+function Moffeus:keyreleased(key,scancode)
 	Scene.keyreleased(self,key,scancode)
 end
 
-return Main
+return Moffeus

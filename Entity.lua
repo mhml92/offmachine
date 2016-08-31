@@ -23,6 +23,30 @@ function Entity:draw()
 	]]
 end
 
+function Entity:setShape(shape)
+	self.shape = shape
+	self.shape.owner = self
+end
+
+function Entity:addCollisionResponse(name, func, src)
+	if self.collision_responses == nil then
+		self.collision_responses = {}
+	end
+	table.insert(self.collision_responses, {["name"] = name, ["func"] = func, ["src"] = src})
+end
+
+function Entity:checkCollision()
+	if self.collision_responses then
+		for shape, delta in pairs(HC:collisions(self.shape)) do
+			for k, v in ipairs(self.collision_responses) do
+				if shape.owner.class.name == v.name then
+					v.func(v.src, shape, delta)
+				end
+			end
+		end
+	end
+end
+
 function Entity:kill()
 	self.alive = false
 end
