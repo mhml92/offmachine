@@ -1,9 +1,11 @@
 local RemoteRocket = Class("SimpleBullet", Entity)
 
 
-function RemoteRocket:initialize(x,y,rot,owner,deltaspeed,scene)
+function RemoteRocket:initialize(px,py,x,y,rot,deltaspeed,scene)
 	Entity.initialize(self,x,y,scene)
 
+	self.x = px
+	self.y = py
 	self.rot = rot
 	self.owner = owner
 	self.speed = 500 + deltaspeed
@@ -11,7 +13,6 @@ function RemoteRocket:initialize(x,y,rot,owner,deltaspeed,scene)
 	self.shape = HC:rectangle(100,100,4*self.radius,2*self.radius)
 	self.shape.owner = self
 	self.joystick = love.joystick.getJoysticks( )[1]
-	self.ready = true
 
 	self.timer = Timer.new()
 	self.timer:after(5,function() self:kill() end)
@@ -38,7 +39,6 @@ function RemoteRocket:draw()
 end
 
 function RemoteRocket:exit()
-	 self.owner.rocket = nil
 end
 
 function RemoteRocket:gamepadaxis( joystick, axis, value )

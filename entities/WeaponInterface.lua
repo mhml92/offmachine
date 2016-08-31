@@ -1,13 +1,14 @@
 local WeaponInterface = Class("WeaponInterface", Entity)
 
 local MachineGun = require 'entities/MachineGun'
-local RemoteRocket = require 'entities/RemoteRocket'
+local RocketLauncher = require 'entities/RocketLauncher'
 
 
 function WeaponInterface:initialize(player)
     Entity.initialize(self,x,y,player.scene)
 
-    self.weapon = MachineGun:new(self.scene)
+    --self.weapon = MachineGun:new(self.scene)
+	 self.weapon = RocketLauncher:new(self.scene)
     self.player = player
 	 self.scene = player.scene
 end
