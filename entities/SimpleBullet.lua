@@ -1,13 +1,15 @@
 local SimpleBullet = Class("SimpleBullet", Entity)
 
 
-function SimpleBullet:initialize(x,y,rot,deltaspeed,scene)
-	Entity.initialize(self,x,y,scene)
+function SimpleBullet:initialize(px,py,x,y,rot,deltaspeed,scene)
+	Entity.initialize(self,px,py,scene)
 
 	self.rot = rot
-	self.speed = 0--500 + deltaspeed
+
+	self.speed = 500 + deltaspeed
 	self.radius = 10
-	self.shape = HC:rectangle(100,100,2*self.radius,2*self.radius)
+
+	self.shape = HC:rectangle(100,100,20,10)
 	self.shape.owner = self
 	self.timer = Timer.new()
 	self.timer:after(20,function() self:kill() end)
@@ -26,7 +28,8 @@ end
 
 function SimpleBullet:draw()
 	love.graphics.setColor(255,255,255)
-	self.shape:draw("fill")
+	lg.draw(resmgr:getImg("normalshot.png"), self.x, self.y, self.rot, 1,1, 10,5)
+	self.shape:draw("line")
 end
 
 function SimpleBullet:gamepadaxis( joystick, axis, value )
