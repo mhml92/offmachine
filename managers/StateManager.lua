@@ -10,7 +10,7 @@ scenes["TestScene"] = require "scenes/TestScene"
 
 
 function StateManager.init(start)
-	Gamestate.registerEvents(draw, keypressed, keyreleased, gamepadpressed)
+	Gamestate.registerEvents()
 	StateManager.setScene(start)
 end
 
@@ -21,10 +21,6 @@ end
 
 function StateManager.getScene()
 	return Gamestate.current()
-end
-
-function StateManager.update(dt)
-	Gamestate.update(dt)
 end
 
 return StateManager

@@ -11,15 +11,11 @@ ResourceManager = require 'managers/ResourceManager'
 Animation = require 'entities/Animation'
 HC = require 'HC'
 
---MouseController = require 'controllers/MouseController'
---ControllerController = require 'controllers/ControllerController'
---KeyboardController = require 'controllers/KeyboardController'
 
 FontManager = require 'managers/FontManager'
 
 local TestScene = require 'scenes/TestScene'
 
--- TOMMYS STUFF
 StateManager = require "managers/StateManager"
 HighscoreManager = require "managers/HighscoreManager"
 
@@ -31,63 +27,66 @@ time.accum = 0
 local self = {}
 
 function love.load()
-   --love.mouse.setVisible(false)
-   --love.graphics.setScissor( 0, 0, w, h)
    resmgr = ResourceManager:new()
-   --self.scene = TestScene:new()
    love.graphics.setBackgroundColor(255,100,100)
-   --	self.scene = MenuScene:new()
-	
-	StateManager.init("Highscore")
+	StateManager.init("TestScene")
 end
 
-function love.update(dt)
-   Timer.update(dt)
-   time.accum = time.accum + dt 
-   if time.accum >= time.fdt then
-		StateManager.update(time.fdt)
-      time.accum = 0--time.accum - time.fdt
-   end
+function love.run()
+	if love.math then
+		love.math.setRandomSeed(os.time())
+	end
+ 
+	if love.load then love.load(arg) end
+ 
+	-- We don't want the first frame's dt to include time taken by love.load.
+	if love.timer then love.timer.step() end
+ 
+	local dt = 0
+ 
+	-- Main loop time.
+	while true do
+		-- Process events.
+		if love.event then
+			love.event.pump()
+			for name, a,b,c,d,e,f in love.event.poll() do
+				if name == "quit" then
+					if not love.quit or not love.quit() then
+						return a
+					end
+				end
+				love.handlers[name](a,b,c,d,e,f)
+			end
+		end
+ 
+		-- Update dt, as we'll be passing it to update
+		if love.timer then
+			love.timer.step()
+			dt = love.timer.getDelta()
+		end
+ 
+		-- Call update and draw
+		Timer.update(dt)
+		time.accum = time.accum + dt 
+		if time.accum >= time.fdt then
+			love.update(time.fdt)
+			time.accum = 0--time.accum - time.fdt
+		end	
+ 
+		if love.graphics and love.graphics.isActive() then
+			love.graphics.clear(love.graphics.getBackgroundColor())
+			love.graphics.origin()
+			if love.draw then love.draw() end
+			love.graphics.present()
+		end
+ 
+		if love.timer then love.timer.sleep(0.001) end
+	end
+ 
 end
-
-function love.draw()
-	--love.graphics.setColor(0,0,0)
-	--love.graphics.rectangle( "fill", 0, 0, G.WIDTH, G.HEIGHT )
-	--love.graphics.setColor(255,255,255)
-   --self.scene:draw()
-end 
 
 function love.keypressed( key,scancode,isrepeat )
    if key == "escape" then
       love.event.quit()
    end
-	
-	--self.scene:keypressed(key,scancode ,isrepeat)
-end
-
-function love.keyreleased(key,scancode)
-	--self.scene:keyreleased(key,scancode)
-end
-
-
-function love.gamepadpressed(joystick, button)
-end
-
-function love.gamepadaxis( joystick, axis, value )
-end
-
-function beginContact(a,b,coll)
-   --self.scene:beginContact(a,b,coll)
-end
-
-function endContact(a,b,coll)
-   --self.scene:endContact(a,b,coll)
-end
-
-function preSolve(a,b,coll)
-   --self.scene:preSolve(a,b,coll)
-end
-
-function postSolve(a, b, coll, normalimpulse1, tangentimpulse1, normalimpulse2, tangentimpulse2)
-   --self.scene:postSolve(a, b, coll, normalimpulse1, tangentimpulse1, normalimpulse2, tangentimpulse2)
 end
