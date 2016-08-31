@@ -99,6 +99,12 @@ function Scene:draw()
 		end
 	end
 
+	function Scene:gamepadaxis( joystick, axis, value )
+		for k,v in ipairs(self.entities) do
+			v:gamepadaxis( joystick, axis, value )
+		end
+	end
+
 	function Scene:keypressed( key,scancode,isrepeat )
 		for k,v in ipairs(self.entities) do
 			v:keypressed( key,scancode,isrepeat )

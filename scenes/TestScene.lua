@@ -5,9 +5,10 @@ local CameraManager = require 'managers/CameraManager'
 local TimeManager = require 'managers/TimeManager'
 local SoundManager = require 'managers/SoundManager'
 
+local Enemy = require 'entities/Enemy'
+
 -- levels
 --local TestLevel = require 'levels/wallsTest'
-local TestLevel = require 'levels/wallsTest'
 
 
 
@@ -31,12 +32,17 @@ function TestScene:initialize()
 
 	self:addEntity(StaticObject:new(0, 0, self))
 	self:addEntity(Player:new(100,100,self))
+
+	self:addEntity(Enemy:new(10,10,self))
 	
 	self.bgmusic = self.soundmgr:addSound("hyperfun.mp3", true, 0.8)
 	self.soundmgr:playSound(self.bgmusic)
+
+
 end
 
 function Scene:defineLayers()
+
 
 end
 ---------------------------------------------------------------------
@@ -95,6 +101,7 @@ end
 
 function TestScene:gamepadpressed(joystick,button)
 	Scene.gamepadpressed(self,joystick,button)
+	print(button)
 end
 
 function TestScene:keypressed( key,scancode,isrepeat )

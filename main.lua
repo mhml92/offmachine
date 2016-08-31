@@ -1,5 +1,4 @@
 require 'slam/slam'
-print(math)
 math.random = love.math.random
 
 G = require 'Globals'
@@ -10,10 +9,11 @@ Vector = require 'hump/vector-light'
 Timer = require 'hump/timer'
 ResourceManager = require 'managers/ResourceManager'
 Animation = require 'entities/Animation'
+HC = require 'HC'
 
-MouseController = require 'controllers/MouseController'
-ControllerController = require 'controllers/ControllerController'
-KeyboardController = require 'controllers/KeyboardController'
+--MouseController = require 'controllers/MouseController'
+--ControllerController = require 'controllers/ControllerController'
+--KeyboardController = require 'controllers/KeyboardController'
 
 FontManager = require 'managers/FontManager'
 
@@ -67,7 +67,13 @@ end
 
 
 function love.gamepadpressed(joystick, button)
-	self.scene.gamepadpressed(joystick,button)
+	self.scene:gamepadpressed(joystick,button)
+end
+
+function love.gamepadaxis( joystick, axis, value )
+	if math.abs(value) > 0.2 then
+		self.scene:gamepadaxis( joystick, axis, value )
+	end
 end
 
 function beginContact(a,b,coll)

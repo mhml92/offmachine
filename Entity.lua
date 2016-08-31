@@ -67,6 +67,9 @@ end
 function Entity:gamepadpressed(joystick,button)
 end
 
+function Scene:gamepadaxis( joystick, axis, value )
+end
+
 function Entity:keypressed(key,scancode,isrepeat)
 end
 
