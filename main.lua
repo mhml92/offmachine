@@ -42,7 +42,7 @@ local self = {}
 function love.load()
    resmgr = ResourceManager:new()
    love.graphics.setBackgroundColor(255,100,100)
-	StateManager.init("Splash")
+	StateManager.init("TestScene")
 end
 
 function love.run()

@@ -10,9 +10,10 @@ local ROT_DAMPER = 1.03
 local ROT_DAMPER_MULTIPLIER = 1.25
 
 function Player:initialize(x,y,scene)
-	Entity:initialize(x,y,scene)
+	Entity.initialize(self,x,y,scene)
 
-	self.shape = HC.rectangle(100,100,20,20)
+	self.shape = HC:rectangle(100,100,20,20)
+	self.shape.owner = self
 	self.joystick = love.joystick.getJoysticks( )[1]
 	
 	self.force = 10
@@ -21,16 +22,10 @@ function Player:initialize(x,y,scene)
 	self.momentum.x = 0
 	self.momentum.y = 0
 	self.drag = 0.9
-
-	
-
-	
 end
 
 function Player:update(dt)
 	local leftx,lefty,leftt,reightx,righty,rightt = self.joystick:getAxes( )
-	print(leftx, lefty)
-	
 	leftt,rightt = ((leftt+1)/2),((rightt+1)/2)
 
 
@@ -54,6 +49,7 @@ end
 
 
 function Player:draw()
+	love.graphics.setColor(0,0,0)
 	self.shape:draw("fill")
 end
 
