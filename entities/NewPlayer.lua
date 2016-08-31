@@ -1,5 +1,6 @@
 local NewPlayer = Class("NewPlayer", Entity)
-local SimpleBullet = require 'entities/SimpleBullet'
+local RemoteRocket = require 'entities/RemoteRocket'
+
 local WeaponInterface = require 'entities/WeaponInterface'
 
 function NewPlayer:initialize(x,y,scene)
@@ -10,8 +11,8 @@ function NewPlayer:initialize(x,y,scene)
 	self.shape.owner = self
 	self.joystick = love.joystick.getJoysticks( )[1]
 	
-	self.force = 10
-	self.weight = 10
+	self.force = 600 
+	self.weight = 20
 	self.maxspeed = 15000
 	self.momentum = {}
 	self.momentum.x = 0
@@ -28,8 +29,12 @@ function NewPlayer:initialize(x,y,scene)
 end
 
 function NewPlayer:update(dt)
-	local leftx,lefty,rightx,righty,leftt,rightt = self.joystick:getAxes( )
-	self.weapon:update(dt)	
+
+	local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
+
+	if Vectorl.len(rightx,righty)> 0.9 then
+		self.weapon:update(dt)	
+	end
 	--print(leftx,lefty,rightx,righty,leftt,rightt)
 
 	if math.abs(rightx) > 0.5 or math.abs(righty) > 0.5 then
@@ -47,8 +52,8 @@ function NewPlayer:update(dt)
 	leftt,rightt = ((leftt+1)/2),((rightt+1)/2)
 
 	self.rot = Vectorl.angleTo(self.momentum.x,self.momentum.y)
-	self.momentum.x = self.momentum.x + (leftx*self.force/self.weight)
-	self.momentum.y = self.momentum.y + (lefty*self.force/self.weight)
+	self.momentum.x = self.momentum.x + (dt*leftx*self.force/self.weight)
+	self.momentum.y = self.momentum.y + (dt*lefty*self.force/self.weight)
 	--if Vectorl.len(self.momentum.x,self.momentum.y) > self.maxspeed then 
 	--	self.momentum.x = self.maxspeed*self.momentum.x/Vectorl.len(self.momentum.x,self.momentum.y)
 	--	self.momentum.y = self.maxspeed*self.momentum.y/Vectorl.len(self.momentum.x,self.momentum.y)
@@ -78,9 +83,6 @@ function NewPlayer:draw()
 end
 
 function NewPlayer:gamepadpressed( joystick,button)
-	if button== "rightshoulder" then
-		--self:shoot()
-	end
 end
 
 
