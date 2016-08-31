@@ -42,8 +42,8 @@ function EnemyLineFormation:update(dt)
 end
 
 function EnemyLineFormation:startFormation()
-	Timer.tween(.5, self, {w = 100}, "out-back", function()
-		Timer.tween(.5, self, {pop_out = 1}, "out-back", function()
+	self.scene.timer.tween(.5, self, {w = 100}, "out-back", function()
+		self.scene.timer.tween(.5, self, {pop_out = 1}, "out-back", function()
 			local dxn, dyn = vector.normalize(self.x-self.player.x, self.y-self.player.y)
 			dxn, dyn = vector.perpendicular(dxn, dyn)
 			for i = 1,self.n do

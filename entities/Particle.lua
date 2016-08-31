@@ -37,7 +37,7 @@ function Particle:setColor(color, endcolor)
     self.color = color
     self.endcolor = endcolor
     print(color,endcolor)
-    Timer.tween(self.life, self.color, {[1]=self.endcolor[1], [2]=self.endcolor[2], [3]=self.endcolor[3]})
+    self.scene.timer.tween(self.life, self.color, {[1]=self.endcolor[1], [2]=self.endcolor[2], [3]=self.endcolor[3]})
 end
 
 function Particle:update(dt)

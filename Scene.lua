@@ -6,9 +6,11 @@ function Scene:initialize()
 	self.layers = {}
 	self.layers.default = 0
 	self.layerId = 0
+	self.timer = Timer:new()
 end
 
 function Scene:update(dt)
+	self.timer:update(dt)
 	for i, v in ipairs(self.entities) do
 		if v:isActive() then
 			v:update(dt)

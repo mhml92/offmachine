@@ -5,14 +5,12 @@ function Enemy:initialize(x,y,scene)
 
 	self.rect = HC.rectangle(self.x,self.y,self.g.x_size,self.g.y_size)
 	self.rect.owner = self
-	self.timer = Timer.new()
 
 	self:loiter()
 end
 
 function Enemy:update(dt)
 
-	self.timer:update(dt)
 	self.rect:moveTo(self.x,self.y)
 
 end
@@ -22,7 +20,7 @@ function Enemy:getPlayerPos()
 end
 
 function Enemy:loiter()
-	self.tweenHandle = Timer.after(self.g.loiter_time,function() self:move()end )
+	self.tweenHandle = self.scene.timer.after(self.g.loiter_time,function() self:move()end )
 end
 
 function Enemy:move()
@@ -30,7 +28,7 @@ function Enemy:move()
 	local dx,dy = px-self.x,py-self.y
 	dx,dy = self.x + dx*0.5,self.y +dy*0.5
 
-	self.tweenHandle = Timer.tween(self.g.move_time,self,{x = dx,y = dy},'in-out-back',function() self:loiter()end)
+	self.tweenHandle = self.scene.timer.tween(self.g.move_time,self,{x = dx,y = dy},'in-out-back',function() self:loiter()end)
 end
 
 

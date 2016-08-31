@@ -9,8 +9,7 @@ function SimpleBullet:initialize(px,py,x,y,rot,deltaspeed,scene)
 	self.radius = 10
 
 	self:setShape(HC:rectangle(100,100,20,10))
-	self.timer = Timer.new()
-	self.timer:after(2,function() self:kill() end)
+	self.scene.timer:after(2,function() self:kill() end)
 end
 
 function SimpleBullet:updateRelativeSpeed(ds)
@@ -19,7 +18,6 @@ end
 
 function SimpleBullet:update(dt)
 
-	self.timer:update(dt)
 	local dx,dy = Vectorl.rotate(self.rot,self.speed*dt,0) 
 	self.x,self.y = self.x+dx,self.y+dy
 
