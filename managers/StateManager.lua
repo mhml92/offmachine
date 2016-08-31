@@ -7,6 +7,7 @@ scenes["Splash"] = require "scenes/Splash"
 scenes["Menu"] = require "scenes/Menu"
 scenes["Highscore"] = require "scenes/Highscore"
 scenes["TestScene"] = require "scenes/TestScene"
+scenes["Main"] = require "scenes/Main"
 
 
 function StateManager.init(start)

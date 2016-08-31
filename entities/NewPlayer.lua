@@ -5,7 +5,7 @@ local SimpleBullet = require 'entities/SimpleBullet'
 function NewPlayer:initialize(x,y,scene)
 	Entity.initialize(self,x,y,scene)
 
-	self.radius = 10
+	self.radius = 16
 	self.shape = HC:rectangle(100,100,2*self.radius,2*self.radius)
 	self.shape.owner = self
 	self.joystick = love.joystick.getJoysticks( )[1]
@@ -17,6 +17,9 @@ function NewPlayer:initialize(x,y,scene)
 	self.momentum.x = 0
 	self.momentum.y = 0
 	self.drag = 0.95
+	
+	self.back = resmgr:getImg("spaceship_back.png")
+	self.front = resmgr:getImg("spaceship_front.png")
 
 	self.rot = 0
 end
@@ -62,14 +65,22 @@ end
 
 
 function NewPlayer:draw()
-	love.graphics.setColor(255,255,255)
-	self.shape:draw("fill")
-	love.graphics.setColor(0,255,255)
+	
+	--self.shape:draw("fill")
+	--love.graphics.setColor(0,255,255)
 
-	local px,py = self.radius,0
-	px,py = Vectorl.rotate(self.rot,px,py)
-	love.graphics.circle( "fill", self.x+px, self.y+py, 10, 10 )
+	--local px,py = self.radius,0
+	--px,py = Vectorl.rotate(self.rot,px,py)
+	--love.graphics.circle( "fill", self.x+px, self.y+py, 10, 10 )
 	--love.graphics.line(self.left_motor_pos.x,self.left_motor_pos.y,self.right_motor_pos.x,self.right_motor_pos.y)
+	love.graphics.setColor(255,255,255)
+	love.graphics.draw(self.back, self.x, self.y, self.rot+math.pi/2, 1, 1, 16, 16)
+	love.graphics.draw(self.front, self.x-16, self.y-16)
+	love.graphics.setColor(0,255,0, 50)
+	love.graphics.rectangle("fill", self.x-7, self.y+3, 14, 40)
+	--love.graphics.circle("fill", self.x, self.y, 10)
+	
+	
 end
 
 function NewPlayer:gamepadpressed( joystick,button)
