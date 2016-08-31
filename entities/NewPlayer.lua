@@ -30,10 +30,10 @@ end
 function NewPlayer:update(dt)
 
 	-- JERES MOVEMENT
-	--local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
+	local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
 	
 	-- JESPERS MOVEMENT
-	local leftx,lefty,rightx,righty,leftt,rightt = self.joystick:getAxes( )
+	--local leftx,lefty,rightx,righty,leftt,rightt = self.joystick:getAxes( )
 
 	if Vectorl.len(rightx,righty)> 0.9 then
 		self.weapon:update(dt)	

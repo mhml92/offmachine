@@ -94,9 +94,9 @@ function love.run()
 		end
  
 		-- Call update and draw
-		Timer.update(dt)
 		--time.accum = time.accum + dt 
 		--if time.accum >= time.fdt then
+		Timer.update(dt)
 			love.update(dt)
 			--time.accum = 0--time.accum - time.fdt
 		--end	
@@ -105,7 +105,7 @@ function love.run()
 			love.graphics.clear(love.graphics.getBackgroundColor())
 			
 			love.graphics.origin()
-			if love.draw then love.draw() end
+			--if love.draw then love.draw() end
 			
 			love.graphics.push()
 			love.graphics.setCanvas(canvas)
