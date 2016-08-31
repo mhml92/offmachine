@@ -2,7 +2,9 @@ local TestScene = Class("TestScene", Scene)
 local NewPlayer = require 'entities/NewPlayer'
 
 local SimpleBullet = require 'entities/SimpleBullet'
+local EnemyBullet = require 'entities/EnemyBullet'
 
+local EnemyZapper = require 'entities/EnemyZapper'
 local EnemyChaser = require 'entities/EnemyChaser'
 local EnemyDirector = require 'entities/EnemyDirector'
 
@@ -16,6 +18,11 @@ function TestScene:initialize()
 	self:addEntity(self.player, self.layers.objects)
 	
 	self:addEntity(EnemyChaser:new(300, 300, self), self.layers.objects)
+	self:addEntity(EnemyZapper:new(300, 300, self), self.layers.objects)
+	self:addEntity(EnemyZapper:new(300, 300, self), self.layers.objects)
+	self:addEntity(EnemyZapper:new(300, 300, self), self.layers.objects)
+	self:addEntity(EnemyZapper:new(300, 300, self), self.layers.objects)
+	self:addEntity(EnemyZapper:new(300, 300, self), self.layers.objects)
 	
 	self:addEntity(EnemyDirector:new(0,0,self), self.layers.objects)
 end
