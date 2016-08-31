@@ -1,8 +1,13 @@
 local Moffeus = Class("Moffeus", Scene)
+local NewPlayer = require 'entities/NewPlayer'
+local Stars = require "entities/Stars"
 
 function Moffeus:initialize()
-	Scene:initialize()
-	self.stars_map = resmgr:getImg("stars.png")
+	Scene.initialize(self)
+	
+	self:addEntity(Stars:new(0,0,self), self.layers.bg)
+	self.player = NewPlayer:new(100,100,self)
+	self:addEntity(self.player, self.layers.objects)
 end
 
 function Moffeus:defineLayers()
@@ -16,7 +21,6 @@ end
 
 function Moffeus:draw()
 	Scene.draw(self)
-	love.graphics.draw(self.stars_map, 0, 0, 0, 2, 2)
 end
 
 
