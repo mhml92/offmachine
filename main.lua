@@ -94,11 +94,11 @@ function love.run()
  
 		-- Call update and draw
 		Timer.update(dt)
-		time.accum = time.accum + dt 
-		if time.accum >= time.fdt then
-			love.update(time.fdt)
-			time.accum = 0--time.accum - time.fdt
-		end	
+		--time.accum = time.accum + dt 
+		--if time.accum >= time.fdt then
+			love.update(dt)
+			--time.accum = 0--time.accum - time.fdt
+		--end	
  
 		if love.graphics and love.graphics.isActive() then
 			love.graphics.clear(love.graphics.getBackgroundColor())
@@ -142,5 +142,5 @@ end
 function updateScale(s)
 	print("scale = "..s)
 	SCALE = s
-	love.window.setMode(WIDTH*SCALE, HEIGHT*SCALE)
+	love.window.setMode(WIDTH*SCALE, HEIGHT*SCALE, {resizable=false, vsync=false, fullscreen = true})
 end
