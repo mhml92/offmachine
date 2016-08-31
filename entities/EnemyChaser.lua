@@ -15,7 +15,7 @@ function EnemyChaser:initialize(x,y,scene)
 	self.destroy_animation = 0
 	self.acc = 500
 	self:setShape(HC:circle(self.x, self.y, self.radius, self.radius))
-	self:addCollisionResponse("NewPlayer", self.test, self)
+	self:addCollisionResponse("SimpleBullet", self.test, self)
 	self.val = 42
 end
 
@@ -45,8 +45,8 @@ end
 local lg = love.graphics
 function EnemyChaser:draw()
 	local scale = 1
-	if self.state == DYING then
-		scale = 1 - self.destroy_animation
+	if self.destroyed then
+		scale = self.destroy_tween
 	end
 	if self.state == LOITERING then
 		lg.setColor(255, 0, 0)

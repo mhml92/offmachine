@@ -39,7 +39,7 @@ function TestScene:initialize()
 
 
 	--self:addEntity(StaticObject:new(0, 0, self), self.layers.objects)
-	self.player = Player:new(100,100,self)
+	self.player = NewPlayer:new(100,100,self)
 	self:addEntity(self.player, self.layers.objects)
 	
 	self:addEntity(EnemyChaser:new(300, 300, self), self.layers.objects)
