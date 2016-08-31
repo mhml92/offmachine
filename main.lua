@@ -40,16 +40,17 @@ time.accum = 0
 
 local self = {}
 
-WIDTH = 640
-HEIGHT = 360
-OFFSET_X = 0
+WIDTH = 960
+HEIGHT = 540
+FULLSCREEN = false
+SCALE = 1
 
 local canvas
 
 
 function love.load()
 	local winwidth, winheight = love.window.getDesktopDimensions()
-	updateScale(1)
+	toggleFullscreen()
 	love.graphics.setDefaultFilter("nearest", "nearest")
 	love.graphics.setLineStyle("rough")
 	canvas = love.graphics.newCanvas(WIDTH, HEIGHT)
@@ -114,7 +115,7 @@ function love.run()
 			love.graphics.push()
 			love.graphics.scale(SCALE, SCALE)
 			love.graphics.setCanvas()
-			love.graphics.draw(canvas, OFFSET_X, 0)
+			love.graphics.draw(canvas, 0, 0)
 			love.graphics.pop()
 			
 			love.graphics.present()
@@ -128,19 +129,18 @@ end
 function love.keypressed( key,scancode,isrepeat )
    if key == "escape" then
       love.event.quit()
-   end
-	if key == "1" then updateScale(1)
-	elseif key == "2" then updateScale(2)
-	elseif key == "3" then updateScale(3)
-	elseif key == "4" then updateScale(4)
-	elseif key == "5" then updateScale(5)
-	elseif key == "6" then updateScale(6)
-	elseif key == "7" then updateScale(7)
+	elseif key == "f" then
+		toggleFullscreen(not FULLSCREEN)
 	end
 end
 
-function updateScale(s)
-	print("scale = "..s)
-	SCALE = s
-	love.window.setMode(WIDTH*SCALE, HEIGHT*SCALE, {resizable=false, vsync=false, fullscreen = true})
+function toggleFullscreen()
+	FULLSCREEN = not FULLSCREEN
+	if FULLSCREEN then
+		local winwidth, winheight = love.window.getDesktopDimensions(1)
+		SCALE = math.floor(winheight/HEIGHT)
+	else
+		SCALE = 1
+	end
+	love.window.setMode(WIDTH*SCALE, HEIGHT*SCALE, {resizable=false, vsync=false, fullscreen = FULLSCREEN})
 end
