@@ -36,22 +36,22 @@ function Hud:initialize(x,y,scene)
 end
 
 function Hud:update(dt)
+	
 	local weapon = self.weapon_i.weapon
 	if weapon.ammo > 0 then
 		self.red_ratio = weapon.ammo / weapon.max_ammo
 	else
 		self.red_ratio = 1 - weapon.reload_time / weapon.start_reload_time
 	end
-	self.local_timer = self.local_timer + dt
+	
+	local dt_diff = self.scene.timemgr.last_dt - dt
+	print(dt_diff)
+	self.local_timer = self.local_timer + dt + dt_diff*10
 	self.blue_ratio = 1 - self.local_timer / self.start_time
 end
 
-function Hud:setBlueMeter(ratio)
-	self.blue_ratio = ratio
-end
-
-function Hud:setRedMeter(ratio)
-	self.red_ratio = ratio
+function Hud:loseTime(lost)
+	self.local_timer = self.local_timer + lost
 end
 
 local lg = love.graphics
@@ -121,7 +121,7 @@ end
 
 function Hud:keypressed(key)
 	if key == "b" then
-		self.blue_ratio = self.blue_ratio - 0.1
+		self:loseTime(20)
 	elseif key == "r" then
 		self.red_ratio = self.red_ratio - 0.1
 		

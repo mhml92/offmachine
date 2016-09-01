@@ -10,10 +10,12 @@ function TimeManager:initialize(scene)
 	self.upper = HEIGHT - 300
 	self.lower = HEIGHT 
 	self.max_slow = 0.4
+	self.last_dt = 0
 end
 
 function TimeManager:update(dt)
 	-- get player y pos
+	self.last_dt = dt
  	local py = self.scene.player.y
 	if py > self.upper then
 		
