@@ -49,7 +49,7 @@ function EnemyChaser:update(dt)
 	
 	p.x,p.x = p.x-self.x,p.y-self.y
 	local nep = Vectorl.len(p.x,p.y)
-	self.eye_offx,self.eye_offy = 6*p.x/nep,6*p.y/nep
+	self.eye_offx,self.eye_offy = 6*dxn,6*dyn--p.x/nep,6*p.y/nep
 
 	
 	if self.shape then

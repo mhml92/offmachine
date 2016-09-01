@@ -70,7 +70,8 @@ end
 
 
 function Moffeus:gamepadpressed(joystick,button)
-	Scene.gamepadpressed(self,joystick,button)
+
+Scene.gamepadpressed(self,joystick,button)
 end
 
 function Moffeus:keypressed( key,scancode,isrepeat )
