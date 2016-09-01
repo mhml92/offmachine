@@ -34,11 +34,11 @@ end
 function NewPlayer:update(dt)
 
 	-- JERES MOVEMENT
-	local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
+	--local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
 	--leftx,lefty,leftt,rightx,righty,rightt = 0,0,0,0,0,0
 	
 	-- JESPERS MOVEMENT
-	--local leftx,lefty,rightx,righty,leftt,rightt = self.joystick:getAxes( )
+	local leftx,lefty,rightx,righty,leftt,rightt = self.joystick:getAxes( )
 
 	self.weapon:update(dt)
 	if Vectorl.len(rightx,righty) > 0.9 then
@@ -46,7 +46,8 @@ function NewPlayer:update(dt)
 	end
 
 	if math.abs(rightx) > 0.5 or math.abs(righty) > 0.5 then
-		self:shoot(rightx,righty)
+		--self:shoot(rightx,righty)
+		self:shoot(self.momentum.x,self.momentum.y)
 	end
 	if math.abs(leftx) < 0.2 then
 		leftx = 0

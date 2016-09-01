@@ -1,7 +1,7 @@
 local Moffeus = Class("Moffeus", Scene)
 local NewPlayer = require 'entities/NewPlayer'
-local Stars = require "entities/Stars"
 --local EnemyZapper = require 'entities/EnemyZapper'
+local Stars = require "entities/Stars"
 local TimeManager = require 'managers/TimeManager'
 local SoundManager = require 'managers/SoundManager'
 local EnemyDirector = require 'entities/EnemyDirector'
@@ -41,8 +41,8 @@ function Moffeus:initialize()
 		local meteorite = Meteorite:new(-32, -150+math.random(120), self)
 		meteorite.dx = math.random(50, 300)
 		self:addEntity(meteorite, self.layers.objects)
-	end
-	--]]
+	]]
+	
 end
 
 function Moffeus:defineLayers()

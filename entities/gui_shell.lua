@@ -1,7 +1,11 @@
 local GuiShell = Class("GuiShell", Entity)
 
+
+
 function GuiShell:initialize(x,y,scene,image,life)
     Entity:initialize(x,y,scene)
+
+    self.sprites = resmgr:getImg("weapon_icons.png")
 
     self.x = x
     self.y = y
@@ -39,8 +43,8 @@ end
 function GuiShell:draw()
     local lg = love.graphics
     
-    lg.draw(self.image, self.x, self.y, self.rot, 0.5, 0.5, self.image:getWidth()/2, self.image:getHeight()/2)
     lg.setColor(255,255,255,255)
+    lg.draw(self.sprites,self.image, self.x, self.y, self.rot, 1, 1, 5,5)
     
 end
 

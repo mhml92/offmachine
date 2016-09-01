@@ -11,13 +11,36 @@ function WeaponInterface:initialize(player)
 
     --self.weapon = MachineGun:new(self.scene)
 	 --self.weapon = RocketLauncher:new(self.scene)
-    self.weapon = Shotgun:new(self.scene)
     self.player = player
-	self.scene = player.scene
+    self.scene = player.scene
+    
+    self.quads = {}
+    for i=1,5 do
+        self.quads[i] = love.graphics.newQuad((i-1)*10, 0, 10, 10, 50, 10)
+    end
+
+    self.weapon = Shotgun:new(self.scene,self.quads[2])
+
 end
 
 function WeaponInterface:update(dt)
     self.weapon:update(dt)
+end
+
+function WeaponInterface:changeType(type)
+    if type == 1 then
+        self.weapon = MachineGun:new(self.scene, self.quads[1])
+    end
+    if type == 2 then
+        self.weapon = Shotgun:new(self.scene, self.quads[2])
+    end
+    if type == 3 then
+        self.weapon = RemoteRocket:new(self.scene, self.quads[3])
+    end
+end
+
+function WeaponInterface:gainLevel()
+    self.weapon:levelUp()
 end
 
 function WeaponInterface:shoot(x,y,rot,momentum)
@@ -37,7 +60,6 @@ function WeaponInterface:draw()
         lg.line(WIDTH/2+60,HEIGHT-30,WIDTH/2+60,HEIGHT-30-11)
     else
         local ratio = math.pi * 2 * self.weapon.reload_time/self.weapon.start_reload_time
-
 
         lg.setColor(G.color_theme[5])
         lg.line(WIDTH/2+60,HEIGHT-30,WIDTH/2+60-math.sin(ratio)*11,HEIGHT-30-math.cos(ratio)*11)

@@ -56,7 +56,10 @@ end
 
 
 function MachineGun:draw()
-
+    local img = resmgr:getImg("shotgun_shell.png")
+    for i=1,self.ammo do
+        lg.draw(img,WIDTH/2+65+i*5,HEIGHT-18, 0, 0.5, 0.5, img:getWidth()/2, img:getHeight()/2)
+    end
 end
 
 return MachineGun
