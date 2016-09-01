@@ -30,9 +30,20 @@ function Hud:initialize(x,y,scene)
 	self.blue_ratio = 1.0
 	self.red_ratio = 1.0
 	self.weapon_i = self.scene.player.weapon
+	
+	self.start_time = 65
+	self.local_timer = 0
 end
 
 function Hud:update(dt)
+	local weapon = self.weapon_i.weapon
+	if weapon.ammo > 0 then
+		self.red_ratio = weapon.ammo / weapon.max_ammo
+	else
+		self.red_ratio = 1 - weapon.reload_time / weapon.start_reload_time
+	end
+	self.local_timer = self.local_timer + dt
+	self.blue_ratio = 1 - self.local_timer / self.start_time
 end
 
 function Hud:setBlueMeter(ratio)
@@ -50,6 +61,7 @@ function Hud:draw()
 	lg.setColor(255,255,255,255)
 	lg.draw(self.lines, self.x, self.y)
 	self:drawWeapon()
+	self:drawTimer()
 	lg.draw(self.icons, self.icons_q[7], self.cx-76, self.cy-10)
 	love.graphics.setColor(255,255,255, 255)
 end
@@ -68,12 +80,17 @@ end
 function Hud:drawRedMeter()
 	local x,y = self.cx+97, self.cy-10
 	local w = 81*self.red_ratio
-	lg.setColor(red[2])
-	lg.rectangle("fill", x, y, w, 20)
-	lg.setColor(red[1])
-	lg.rectangle("fill", x, y+15, w, 5)
-	lg.setColor(red[3])
-	lg.rectangle("fill", x, y, w, 5)
+	if self.weapon_i.weapon.ammo <= 0 then
+		lg.setColor(255,255,255)
+		lg.rectangle("fill", x, y, w, 20)
+	else
+		lg.setColor(red[2])
+		lg.rectangle("fill", x, y, w, 20)
+		lg.setColor(red[1])
+		lg.rectangle("fill", x, y+15, w, 5)
+		lg.setColor(red[3])
+		lg.rectangle("fill", x, y, w, 5)
+	end
 end
 
 function Hud:drawWeapon()
@@ -87,6 +104,19 @@ function Hud:drawWeapon()
 		lg.draw(self.icons, self.icons_q[quad], self.cx+55, self.cy-10)
 		lg.draw(self.icons, self.icons_q[level+3], self.cx+75, self.cy-10)
 	end
+end
+
+function Hud:drawTimer()
+	local time_remaining = math.floor(self.start_time - self.local_timer)
+	local minutes = math.floor(time_remaining / 60)
+	local seconds = math.floor(time_remaining % 60)
+	
+	local s = seconds
+	if seconds < 10 then
+		s = "0"..seconds
+	end
+	
+	lg.print("0"..minutes..":"..s, self.cx-25, self.cy-5)
 end
 
 function Hud:keypressed(key)
