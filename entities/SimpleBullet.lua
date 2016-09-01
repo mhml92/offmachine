@@ -37,7 +37,7 @@ end
 function SimpleBullet:draw()
 	love.graphics.setColor(self.color)
 	lg.draw(resmgr:getImg("normalshot.png"), self.x, self.y, self.rot, 0.5,0.5, 10,5)
-	--self.shape:draw("line")
+	self.shape:draw("line")
 end
 
 function SimpleBullet:gamepadaxis( joystick, axis, value )

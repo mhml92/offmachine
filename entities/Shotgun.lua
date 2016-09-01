@@ -36,14 +36,14 @@ function MachineGun:update(dt)
 end
 
 function MachineGun:levelUp()
-    self.level = selv.level + 1
+    self.level = self.level + 1
 
-    if selv.level == 2 then
-        selv.name = "Powerfun Powergun"
+    if self.level == 2 then
+        self.name = "Powerfun Powergun"
     end
 
-    if selv.level == 3 then
-        selv.name = "Spreaddy shooter"
+    if self.level == 3 then
+        self.name = "Spreaddy shooter"
     end
 end
 

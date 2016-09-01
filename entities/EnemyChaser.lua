@@ -9,7 +9,7 @@ function EnemyChaser:initialize(x,y,scene)
 	self.player = scene.player
 	self.state = LOITERING
 	self.destroy_animation = 0
-	self.acc = 5
+	self.acc = 3
 	self:setShape(HC:circle(self.x, self.y, self.radius, self.radius))
 	self:addCollisionResponse("SimpleBullet", self.test, self)
 	self:addCollisionResponse("EnemyChaser", self.decluster, self)
@@ -23,8 +23,11 @@ function EnemyChaser:initialize(x,y,scene)
 	self.declutter_strenght = 10 
 end
 
-function EnemyChaser:test()
-	self:destroy()
+function EnemyChaser:test(shape,delta)
+	if shape.owner.alive then
+		shape.owner:kill()
+		self:destroy()
+	end
 end
 
 function EnemyChaser:decluster(shape, delta)

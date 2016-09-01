@@ -37,7 +37,7 @@ function MachineGun:shoot(px,py,x,y,rot,momentum)
 
         self.splits = 1 + math.floor((self.level - 1)/2)
 
-        print(self.splits)
+        print(self.splits , "here")
         if self.splits == 1 then 
             self.scene:addEntity(SimpleBullet:new(px,py,x,y,rot,momentum,self.scene),self.scene.layers.objects)
         end

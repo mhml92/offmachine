@@ -40,17 +40,17 @@ function NewPlayer:update(dt)
 	--leftx,lefty,leftt,rightx,righty,rightt = 0,0,0,0,0,0
 	
 	-- JESPERS MOVEMENT
-	local leftx,lefty,rightx,righty,leftt,rightt = self.joystick:getAxes( )
+	--local leftx,lefty,rightx,righty,leftt,rightt = self.joystick:getAxes( )
 
 	self.weapon:update(dt)
 	if Vectorl.len(rightx,righty) > 0.9 then
 	--	self.weapon:update(dt)	
 	end
 
-	if math.abs(rightx) > 0.5 or math.abs(righty) > 0.5 then
-		--self:shoot(rightx,righty)
-		self:shoot(self.momentum.x,self.momentum.y)
-	end
+	--if math.abs(rightx) > 0.5 or math.abs(righty) > 0.5 then
+	--	--self:shoot(rightx,righty)
+	--	self:shoot(self.momentum.x,self.momentum.y)
+	--end
 	if math.abs(leftx) < 0.2 then
 		leftx = 0
 	end
@@ -59,7 +59,7 @@ function NewPlayer:update(dt)
 		lefty = 0
 	end
 
-	print("speed", Vectorl.len(self.momentum.x,self.momentum.y),"x",self.momentum.x,"y",self.momentum.y)
+	--print("speed", Vectorl.len(self.momentum.x,self.momentum.y),"x",self.momentum.x,"y",self.momentum.y)
 
 	-- normalize gamepad triggers
 	leftt,rightt = ((leftt+1)/2),((rightt+1)/2)
@@ -163,6 +163,10 @@ function NewPlayer:draw()
 end
 
 function NewPlayer:gamepadpressed( joystick,button)
+	if button == "a" then
+
+		self:shoot(self.momentum.x,self.momentum.y)
+	end
 end
 
 
