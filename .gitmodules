@@ -15,3 +15,6 @@
 [submodule "inspect"]
 	path = inspect
 	url = https://github.com/kikito/inspect.lua.git
+[submodule "shine"]
+	path = shine
+	url = https://github.com/vrld/shine.git
