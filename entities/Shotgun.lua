@@ -10,12 +10,15 @@ function MachineGun:initialize(scene,img)
     self.sprites = resmgr:getImg("weapon_icons.png")
     self.name = "Shotgun"
     self.ammo = 5
+	 
     self.shoot_delay = 0.75
     self.reload_time = 2
     self.level = 1
-    self.recoil = 200
+    self.recoil = 5
     self.spread = 5
 
+	 self.max_ammo = 3*self.level + 5 
+	 
     self.img = img
     
     self.current_shoot_delay = 0
@@ -60,7 +63,9 @@ function MachineGun:shoot(px,py,x,y,rot,momentum)
             self.scene:addEntity(bullet,self.scene.layers.objects)
         end
 
-        self.scene:addEntity(GuiShell:new(WIDTH/2+65+self.ammo*5,HEIGHT-18,self.scene,self.img,30),self.scene.layers.gui)
+        --print("vibration",self.scene.player.joystick:setVibration( 1, 1, 2 ))
+
+        --self.scene:addEntity(GuiShell:new(WIDTH/2+65+self.ammo*5,HEIGHT-18,self.scene,self.img,30),self.scene.layers.gui)
 
         return self.recoil
     end

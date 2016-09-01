@@ -136,7 +136,7 @@ function EnemyDirector:update(dt)
 								end
 							end
 							local px,py = self:getNewPosition(placement)
-							self.scene:addEntity(obj.obj:new(px,py,self.scene))
+							self.scene:addEntity(obj.obj:new(px,py,self.scene), self.scene.layers.objects)
 						end
 						)	
 				end

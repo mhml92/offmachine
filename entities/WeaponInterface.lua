@@ -50,6 +50,7 @@ end
 
 
 function WeaponInterface:draw()
+    --[[
     lg.draw(resmgr:getImg("weaponhud.png"),WIDTH/2+60,HEIGHT-30,0,1,1)
 
 
@@ -67,8 +68,11 @@ function WeaponInterface:draw()
     end
     lg.setColor(255,255,255)
     self.weapon:draw()
+<<<<<<< HEAD
     --print(self.weapon)
     lg.print(self.weapon.name,WIDTH/2+80,HEIGHT-45)
+=======
+    lg.print(self.weapon.name,WIDTH/2+80,HEIGHT-45)]]
 end
 
 return WeaponInterface

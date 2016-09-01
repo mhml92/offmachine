@@ -119,7 +119,7 @@ function love.update(dt)
 
 		local part = particle:new(WIDTH,HEIGHT-3-G_functions.rand(1,20),scene,1+G_functions.rand(1,5),1+G_functions.rand(1,5),-200,0,0,0,5,G.color_theme[G_functions.rand(1,#G.color_theme)],nil)
 		part:setTrans(false)
-		scene:addEntity(part)		
+		scene:addEntity(part,scene.layers.objects)		
 	end
 end
 
