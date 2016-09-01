@@ -57,13 +57,13 @@ function NewPlayer:update(dt)
 	leftt,rightt = ((leftt+1)/2),((rightt+1)/2)
 
 	self.rot = Vectorl.angleTo(self.momentum.x,self.momentum.y)
-	self.momentum.x = self.momentum.x + (dt*leftx*self.force * (self.recoil and self.recoil or 1)/self.weight)
-	self.momentum.y = self.momentum.y + (dt*lefty*self.force * (self.recoil and self.recoil or 1)/self.weight)
 
 	if self.recoil then
 		self.momentum.x = self.momentum.x + math.cos(self.recoil_dir)*((self.recoil and -self.recoil or 1)/self.weight)
 		self.momentum.y = self.momentum.y + math.sin(self.recoil_dir)*((self.recoil and -self.recoil or 1)/self.weight)
 	end
+	self.momentum.x = self.momentum.x + (dt*leftx*self.force * (self.recoil and self.recoil or 1)/self.weight)
+	self.momentum.y = self.momentum.y + (dt*lefty*self.force * (self.recoil and self.recoil or 1)/self.weight)
 	self.recoil = nil
 
 	self.y = self.y + self.momentum.y
