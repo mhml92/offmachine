@@ -26,7 +26,25 @@ end
 
 
 function WeaponInterface:draw()
+    lg.draw(resmgr:getImg("weaponhud.png"),WIDTH/2+60,HEIGHT-30,0,1,1)
+
+
+    lg.draw(resmgr:getImg("circle.png"),WIDTH/2+60,HEIGHT-30,0,1,1,12.5,12.5)
+    lg.setLineWidth( 2 )
+
+    if self.weapon.ammo > 0 then
+        lg.setColor(G.color_theme[4])
+        lg.line(WIDTH/2+60,HEIGHT-30,WIDTH/2+60,HEIGHT-30-11)
+    else
+        local ratio = math.pi * 2 * self.weapon.reload_time/self.weapon.start_reload_time
+
+
+        lg.setColor(G.color_theme[5])
+        lg.line(WIDTH/2+60,HEIGHT-30,WIDTH/2+60-math.sin(ratio)*11,HEIGHT-30-math.cos(ratio)*11)
+    end
+    lg.setColor(255,255,255)
     self.weapon:draw()
+    lg.print(self.weapon.name,WIDTH/2+80,HEIGHT-45)
 end
 
 return WeaponInterface

@@ -26,6 +26,8 @@ function NewPlayer:initialize(x,y,scene)
 	self.rot = 0
 
 	self.weapon = WeaponInterface:new(self)
+	print(I(self.scene.layers))
+	self.scene:addEntity(self.weapon, scene.layers.gui)
 
 end
 
@@ -61,12 +63,12 @@ function NewPlayer:update(dt)
 
 	self.rot = Vectorl.angleTo(self.momentum.x,self.momentum.y)
 
+	self.momentum.x = self.momentum.x + (leftx*self.force /self.weight)
+	self.momentum.y = self.momentum.y + (lefty*self.force /self.weight)
 	if self.recoil then
 		self.momentum.x = self.momentum.x + math.cos(self.recoil_dir)*((self.recoil and -self.recoil or 1)/self.weight)
 		self.momentum.y = self.momentum.y + math.sin(self.recoil_dir)*((self.recoil and -self.recoil or 1)/self.weight)
 	end
-	self.momentum.x = self.momentum.x + (leftx*self.force * (self.recoil and self.recoil or 1)/self.weight)
-	self.momentum.y = self.momentum.y + (lefty*self.force * (self.recoil and self.recoil or 1)/self.weight)
 	self.recoil = nil
 
 	self.y = self.y + self.momentum.y * dt
@@ -107,7 +109,6 @@ function NewPlayer:shoot(x,y)
 	local rot = Vectorl.angleTo(x,y)
 	local recoil = self.weapon:shoot(x,y,rot,Vectorl.len(self.momentum.x,self.momentum.y))
 
-	print("Setting recoil", recoil)
 	self.recoil = recoil
 	self.recoil_dir = rot
 end
