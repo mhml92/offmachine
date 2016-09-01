@@ -59,7 +59,7 @@ esr = 400
 esh = 400
 ess = 400
 
-local canvas
+local canvas, guicanvas
 
 function love.load()
 lol1 = math.max(love.graphics.getWidth(),love.graphics.getHeight())
@@ -69,6 +69,7 @@ lol2 = lol1
 	love.graphics.setDefaultFilter("nearest", "nearest")
 	love.graphics.setLineStyle("rough")
 	canvas = love.graphics.newCanvas(WIDTH, HEIGHT)
+	guicanvas = love.graphics.newCanvas(WIDTH, HEIGHT)
 	
    resmgr = ResourceManager:new()
    --love.graphics.setBackgroundColor(255,100,100)
@@ -181,14 +182,26 @@ function love.run()
 			love.graphics.setCanvas(canvas)
 
 			local scene = StateManager.getScene()
+		    local no_gui,gui_id = true,0  
+		    if scene.layers.gui then
+		    	no_gui = false
+		    	gui_id = scene.layers.gui
+		    end
 			for i=0,#scene.layercanvases do
-		    if i == 2 then
-			    bloom:draw(function()
-					lg.draw(scene.layercanvases[i])
-			    end)
-			else
-				lg.draw(scene.layercanvases[i])
-			end
+			    if i ~= gui_id or no_gui then
+				    if i == 2 then
+					    bloom:draw(function()
+							lg.draw(scene.layercanvases[i])
+					    end)
+					else
+						lg.draw(scene.layercanvases[i])
+					end
+				else
+					lg.setCanvas(guicanvas)
+					lg.clear()
+					lg.draw(scene.layercanvases[gui_id])
+					lg.setCanvas(canvas)
+				end
 			end
 			
 			--for i=#scene.layers,1 do
@@ -222,17 +235,20 @@ function love.run()
 		    shaders:send('pos',{1920/2, 1080*2})
 
 		    --godsray
-		    love.graphics.setShader(shaders)
-
-    		
 		    
+		    love.graphics.setShader(shaders)
 			love.graphics.draw(canvas, 0, 0)
 			love.graphics.setShader()
+			
+			--gui
+			--scene.player.weapon:draw()
+			
+			lg.draw(guicanvas,0,0)
+
 			--lg.draw(resmgr:getImg("black_hole.png"), 0, 0)
 
 			love.graphics.pop()
-			love.graphics.setShader()	
-
+			
    			love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )),10, 10) 
 			love.graphics.present()
 		end

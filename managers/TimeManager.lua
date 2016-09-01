@@ -9,7 +9,7 @@ function TimeManager:initialize(scene)
 
 	self.upper = HEIGHT - 300
 	self.lower = HEIGHT 
-	self.max_slow = 0.9
+	self.max_slow = 0.4
 end
 
 function TimeManager:update(dt)
