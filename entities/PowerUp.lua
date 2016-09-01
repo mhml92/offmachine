@@ -8,7 +8,15 @@ function PowerUp:initialize(x,y,scene)
 	self.shape.owner = self
 	self.move_speed = 3
 	self.loiter_speed = 0.5
+	self.type = 1
 	local dx,dy = WIDTH/2,HEIGHT/2
+	
+	
+	self.sprites = resmgr:getImg("boxes.png")
+	self.quads = {}
+	for i=1,4 do
+		self.quads[i] = love.graphics.newQuad(0, (i-1)*20, 20, 20, 20, 80)
+	end
 
 	self.scene.timer:tween(self.move_speed,self,{x = dx,y = dy},'in-out-sine',function() self:loiter()end)
 end
@@ -31,7 +39,14 @@ end
 
 function PowerUp:draw()
 	love.graphics.setColor(255,255,255)
-	self.shape:draw("fill")
+	--self.shape:draw("fill")
+	love.graphics.draw(self.sprites, self.quads[self.type], self.x, self.y)
+end
+
+function PowerUp:keypressed(key)
+	if key == "a" then
+		self.type = (self.type%4)+1
+	end
 end
 
 return PowerUp
