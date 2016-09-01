@@ -12,7 +12,7 @@ function EnemyChaser:initialize(x,y,scene)
 	self.acc = 5
 	self:setShape(HC:circle(self.x, self.y, self.radius, self.radius))
 	self:addCollisionResponse("SimpleBullet", self.test, self)
-	self.val = 42
+	self:addCollisionResponse("EnemyChaser", self.decluster, self)
 	self.sprite = resmgr:getImg("chaser.png")
 	self.back = love.graphics.newQuad(0, 0, 40, 40, 120, 40)
 	self.eye = love.graphics.newQuad(40, 0, 40, 40, 120, 40)
@@ -20,14 +20,22 @@ function EnemyChaser:initialize(x,y,scene)
 	self.eye_offx = 0
 	self.eye_offy = 0
 	self.drag = 0.99
+	self.declutter_strenght = 10 
 end
 
 function EnemyChaser:test()
 	self:destroy()
 end
 
+function EnemyChaser:decluster(shape, delta)
+	local dxn, dyn = vector.normalize(shape.owner.x-self.x, shape.owner.y-self.y)
+	
+end
+
 function EnemyChaser:update(dt)
-	local dxn, dyn = vector.normalize(self.player.x-self.x, self.player.y-self.y)
+	EnemyBase.update(self,dt)
+	local p = self:getClosestPlayer()
+	local dxn, dyn = vector.normalize(p.x-self.x, p.y-self.y)
 	self.dx = self.dx + dxn * dt * self.acc
 	self.dy = self.dy + dyn * dt * self.acc
 	self.dx,self.dy = self.dx*self.drag,self.dy*self.drag
@@ -36,10 +44,10 @@ function EnemyChaser:update(dt)
 	self.y = self.y + self.dy
 
 	-- look at player
-	local epx,epy =  self:getClosestPlayer()
-	epx,epy = epx-self.x,epy-self.y
-	local nep = Vectorl.len(epx,epy)
-	self.eye_offx,self.eye_offy = 6*epx/nep,6*epy/nep
+	
+	p.x,p.x = p.x-self.x,p.y-self.y
+	local nep = Vectorl.len(p.x,p.y)
+	self.eye_offx,self.eye_offy = 6*p.x/nep,6*p.y/nep
 
 	
 	if self.shape then
