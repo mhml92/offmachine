@@ -15,7 +15,6 @@ function EnemyDirector:initialize(x, y, scene)
 	self.wawes = {
 		-- first wawe
 		{
-				{0,1,PowerUp,"top"}
 				-- subwawe 1	
 				-- {time,#,Enemy,dir}
 --				{0,1,EnemyChaser,"top"},
@@ -26,6 +25,7 @@ function EnemyDirector:initialize(x, y, scene)
 --				{6,1,EnemyChaser,"top"},
 --				{6,1,EnemyChaser,"left"},
 --				{6,1,EnemyChaser,"right"},
+				{0,1,PowerUp,"top"}
 --
 --
 --				-- powerup

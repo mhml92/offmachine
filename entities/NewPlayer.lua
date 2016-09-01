@@ -26,9 +26,9 @@ function NewPlayer:initialize(x,y,scene)
 	self.rot = 0
 
 	self.weapon = WeaponInterface:new(self)
-	print(I(self.scene.layers))
 	self.scene:addEntity(self.weapon, scene.layers.gui)
 
+	self:addCollisionResponse("PowerUp",self.handlePowerUp,self)
 end
 
 function NewPlayer:update(dt)
@@ -103,6 +103,16 @@ function NewPlayer:update(dt)
         self.scene:addEntity(part, self.scene.layers.objects)
     end
 	 
+end
+
+function NewPlayer:handlePowerUp(shape,delta)
+	local powerup = shape.owner
+	if powerup.type == 4 then
+		self:weapon:gainLevel()
+	else
+		self.weapon:changeType(powerup.type)
+	end
+	powerup:kill()
 end
 
 function NewPlayer:shoot(x,y)

@@ -73,7 +73,7 @@ lol2 = lol1
 	
    resmgr = ResourceManager:new()
    --love.graphics.setBackgroundColor(255,100,100)
-   love.graphics.setBackgroundColor(42,164,168)
+   --love.graphics.setBackgroundColor(42,164,168)
    StateManager.init("Moffeus")
 	--StateManager.init("TestScene")
 	shaders = love.graphics.newShader[[
