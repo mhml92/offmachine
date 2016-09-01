@@ -32,6 +32,22 @@ function EnemyDirector:initialize(x, y, scene)
 					obj = EnemyZapper,
 					placement = "rnd"
 				},
+				{
+					type = "enemy",
+					time_a = 35,
+					time_b = 60,
+					count = 10,
+					obj = EnemyChaser,
+					placement = "rnd"
+				},
+				{
+					type = "enemy",
+					time_a = 35,
+					time_b = 60,
+					count = 5,
+					obj = EnemyZapper,
+					placement = "rnd"
+				},
 				--{"enemy",0,6,EnemyZapper,"rnd"},
 				--{"enemy",2,1,EnemyChaser,"rnd"},
 				--{"enemy",3,1,EnemyChaser,"rnd"},

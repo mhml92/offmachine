@@ -9,7 +9,7 @@ function EnemyChaser:initialize(x,y,scene)
 	self.player = scene.player
 	self.state = LOITERING
 	self.destroy_animation = 0
-	self.acc = 10
+	self.acc = 5
 	self:setShape(HC:circle(self.x, self.y, self.radius, self.radius))
 	self:addCollisionResponse("SimpleBullet", self.test, self)
 	self.val = 42
@@ -48,9 +48,9 @@ function EnemyChaser:update(dt)
 	end
 end
 
-function EnemyChaser:getClosestPlayer()
-	return self.scene.player.x,self.scene.player.y
-end
+--function EnemyChaser:getClosestPlayer()
+--	return self.scene.player.x,self.scene.player.y
+--end
 
 local lg = love.graphics
 function EnemyChaser:draw()
