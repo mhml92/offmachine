@@ -6,7 +6,6 @@ function Stars:initialize(x,y,scene)
 	self.layers = {}
 	self:addLayers(resmgr:getImg("stars_small.png"), 300)
 	self:addLayers(resmgr:getImg("stars_big.png"), 350)
-	self.black_hole = resmgr:getImg("black_hole.png")
 end
 
 function Stars:addLayers(img, speed)
