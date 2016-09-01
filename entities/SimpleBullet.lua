@@ -9,6 +9,7 @@ function SimpleBullet:initialize(px,py,x,y,rot,deltaspeed,scene)
 	self.radius = 10
 
 	self:setShape(HC:rectangle(100,100,20,10))
+	self.color = G.color_theme[G_functions.rand(1,#G.color_theme)]
 	self.scene.timer:after(2,function() self:kill() end)
 end
 
@@ -27,7 +28,7 @@ end
 
 
 function SimpleBullet:draw()
-	love.graphics.setColor(255,255,255)
+	love.graphics.setColor(self.color)
 	lg.draw(resmgr:getImg("normalshot.png"), self.x, self.y, self.rot, 1,1, 10,5)
 	--self.shape:draw("line")
 end

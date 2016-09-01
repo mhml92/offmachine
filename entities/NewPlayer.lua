@@ -35,8 +35,6 @@ function NewPlayer:update(dt)
 	-- JESPERS MOVEMENT
 	local leftx,lefty,rightx,righty,leftt,rightt = self.joystick:getAxes( )
 
-	print(rightx,righty)
-
 	self.weapon:update(dt)
 	if Vectorl.len(rightx,righty) > 0.9 then
 	--	self.weapon:update(dt)	
@@ -59,8 +57,14 @@ function NewPlayer:update(dt)
 	leftt,rightt = ((leftt+1)/2),((rightt+1)/2)
 
 	self.rot = Vectorl.angleTo(self.momentum.x,self.momentum.y)
-	self.momentum.x = self.momentum.x + (dt*leftx*self.force/self.weight)
-	self.momentum.y = self.momentum.y + (dt*lefty*self.force/self.weight)
+	self.momentum.x = self.momentum.x + (dt*leftx*self.force * (self.recoil and self.recoil or 1)/self.weight)
+	self.momentum.y = self.momentum.y + (dt*lefty*self.force * (self.recoil and self.recoil or 1)/self.weight)
+
+	if self.recoil then
+		self.momentum.x = self.momentum.x + math.cos(self.recoil_dir)*((self.recoil and -self.recoil or 1)/self.weight)
+		self.momentum.y = self.momentum.y + math.sin(self.recoil_dir)*((self.recoil and -self.recoil or 1)/self.weight)
+	end
+	self.recoil = nil
 
 	self.y = self.y + self.momentum.y
 	self.x = self.x + self.momentum.x
@@ -83,7 +87,11 @@ end
 
 function NewPlayer:shoot(x,y)
 	local rot = Vectorl.angleTo(x,y)
-	self.weapon:shoot(x,y,rot,Vectorl.len(self.momentum.x,self.momentum.y))
+	local recoil = self.weapon:shoot(x,y,rot,Vectorl.len(self.momentum.x,self.momentum.y))
+
+	print("Setting recoil", recoil)
+	self.recoil = recoil
+	self.recoil_dir = rot
 end
 
 
