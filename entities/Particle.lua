@@ -18,7 +18,6 @@ function Particle:initialize(x,y,scene,w,h,xspeed,yspeed,rot,rotSpeed,life)
     self.startlife = life
 
     self.rot = rot or 0
-    print("rot in particle",rot)
     self.rotSpeed = rotSpeed or 0
     self.speed_vec = Vector.new(xspeed,yspeed)
 end
@@ -36,8 +35,7 @@ end
 function Particle:setColor(color, endcolor)
     self.color = color
     self.endcolor = endcolor
-    print(color,endcolor)
-    self.scene.timer.tween(self.life, self.color, {[1]=self.endcolor[1], [2]=self.endcolor[2], [3]=self.endcolor[3]})
+    self.scene.timer:tween(self.life, self.color, {[1]=self.endcolor[1], [2]=self.endcolor[2], [3]=self.endcolor[3]})
 end
 
 function Particle:update(dt)
@@ -48,6 +46,10 @@ function Particle:update(dt)
     if self.poly then
         self.poly:moveTo(self.x,self.y)
     end
+
+    if self.life < 0 then
+         self:kill()
+     end
 end
 
 
@@ -57,6 +59,7 @@ function Particle:draw()
     self.color[4] = (self.life/self.startlife) * 255
     lg.setColor(self.color)
     lg.draw(resmgr:getImg("square3x3.png"), self.x, self.y, self.rot, self.w/3, self.h/3, 1.5, 1.5)
+    lg.setColor(255,255,255,255)
     
 end
 

@@ -37,11 +37,12 @@ function TestScene:update(dt)
 end
 
 function TestScene:draw()
-	love.graphics.setColor(0, 0, 0)
+			
+	love.graphics.setColor(0, 0, 0, 255)
 	love.graphics.rectangle("fill", 0, 0, WIDTH, HEIGHT)
-	love.graphics.setColor(255, 255, 255)
+	love.graphics.setColor(255, 255, 255, 255)
 	Scene.draw(self)
-   love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )),10, 10) 
+   	love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )),10, 10) 
 end
 
 

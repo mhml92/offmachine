@@ -1,5 +1,6 @@
 local Stars = Class("Stars", Entity)
 
+
 function Stars:initialize(x,y,scene)
 	Entity.initialize(self,x,y,scene)
 	self.layers = {}
@@ -32,7 +33,7 @@ function Stars:draw()
 		lg.draw(v.img, v.x+WIDTH, 0)
 	end
 	lg.setColor(255, 255, 255)
-	lg.draw(self.black_hole, 0, 0)
+	--lg.draw(self.black_hole, 0, 0)
 end
 
 return Stars

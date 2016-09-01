@@ -8,7 +8,8 @@ local EVENT_HORIZON_Y = 400
 
 function Moffeus:initialize()
 	Scene.initialize(self)
-	
+
+    self:defineLayers()	
 	self:addEntity(Stars:new(0,0,self), self.layers.bg)
 	self.player = NewPlayer:new(100,100,self)
 	self:addEntity(self.player, self.layers.objects)
