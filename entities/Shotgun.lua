@@ -9,6 +9,7 @@ function MachineGun:initialize(scene)
     self.shoot_delay = 1
     self.reload_time = 3
     self.level = 5
+    self.recoil = 100
     
     self.current_shoot_delay = 0
     self.start_reload_time = self.reload_time
@@ -39,7 +40,9 @@ function MachineGun:shoot(px,py,x,y,rot,momentum)
             bullet:updateRelativeSpeed(G_functions.rand(-20,100))
             self.scene:addEntity(bullet,self.scene.layers.objects)
         end
+        return self.recoil
     end
+
 end
 
 
