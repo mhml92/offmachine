@@ -1,6 +1,6 @@
 local Particle = Class("Particle", Entity)
 
-function Particle:initialize(x,y,scene,w,h,xspeed,yspeed,rot,rotSpeed,life)
+function Particle:initialize(x,y,scene,w,h,xspeed,yspeed,rot,rotSpeed,life,color,endcolor)
     Entity:initialize(x,y,scene)
 
     --[[
@@ -11,15 +11,27 @@ function Particle:initialize(x,y,scene,w,h,xspeed,yspeed,rot,rotSpeed,life)
    self.fixture:setUserData(self)
     self.body:setLinearDamping(12)
     --]]
+
+    self.x = x
+    self.y = y
     self.w = w
     self.h = h
-
+    self.trans = true
     self.life = life
     self.startlife = life
 
     self.rot = rot or 0
     self.rotSpeed = rotSpeed or 0
     self.speed_vec = Vector.new(xspeed,yspeed)
+    
+    if color then
+        self:setColor(color,endcolor and endcolor or color)
+    end
+end
+
+
+function Particle:setTrans(bool)
+    self.trans = bool
 end
 
 
@@ -56,7 +68,9 @@ end
 function Particle:draw()
     local lg = love.graphics
     
-    self.color[4] = (self.life/self.startlife) * 255
+    if self.trans then
+        self.color[4] = (self.life/self.startlife) * 255
+    end
     lg.setColor(self.color)
     lg.draw(resmgr:getImg("square3x3.png"), self.x, self.y, self.rot, self.w/3, self.h/3, 1.5, 1.5)
     lg.setColor(255,255,255,255)

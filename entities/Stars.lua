@@ -39,8 +39,6 @@ function Stars:draw()
 	lg.setColor(0,0,0)
 	lg.line(0,HEIGHT, WIDTH, HEIGHT)
 	lg.setColor(255, 255, 255)
-
-	--lg.draw(self.black_hole, 0, 0)
 end
 
 return Stars
