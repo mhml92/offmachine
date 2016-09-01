@@ -7,7 +7,7 @@ math.random = love.math.random
 
 
 shine = require 'shine'
-godsray = shine.godsray()
+bloom = shine.glowsimple()
 I = require 'inspect.inspect'
 G = require 'Globals'
 G_functions = require 'g_functions'
@@ -22,6 +22,8 @@ ResourceManager = require 'managers/ResourceManager'
 Animation = require 'entities/Animation'
 HC = require 'HC'
 particle = require 'entities/Particle'
+
+Shaders = (require 'shaders'):new()
 
 Shaders = (require 'shaders'):new()
 
@@ -113,7 +115,8 @@ function love.update(dt)
 
 	if addPixel <= 0 then
 		addPixel = G_functions.rand(1,2)/20
-		local part = particle:new(WIDTH,HEIGHT-3-G_functions.rand(1,20),scene,1+G_functions.rand(1,5),1+G_functions.rand(1,5),-1,0,0,0,5,{255,0,0},{0,255,0})
+
+		local part = particle:new(WIDTH,HEIGHT-3-G_functions.rand(1,20),scene,1+G_functions.rand(1,5),1+G_functions.rand(1,5),-200,0,0,0,5,G.color_theme[G_functions.rand(1,#G.color_theme)],nil)
 		part:setTrans(false)
 		scene:addEntity(part)		
 	end
@@ -179,19 +182,25 @@ function love.run()
 
 			local scene = StateManager.getScene()
 			for i=0,#scene.layercanvases do
+		    if i == 2 then
+			    bloom:draw(function()
+					lg.draw(scene.layercanvases[i])
+			    end)
+			else
 				lg.draw(scene.layercanvases[i])
+			end
 			end
 			
 			--for i=#scene.layers,1 do
 			--	lg.draw(scene.layercanvases[i])
 			--end
-
 			love.graphics.pop()
 			
 			love.graphics.push()
 			love.graphics.scale(SCALE, SCALE)
 			love.graphics.setCanvas()
 			
+
 			if love.keyboard.isDown("up") then
 		        lol1 = lol1 + 1
 			end
@@ -215,9 +224,9 @@ function love.run()
 		    --godsray
 		    love.graphics.setShader(shaders)
 
-		    --godsray:draw(function()
+    		
+		    
 			love.graphics.draw(canvas, 0, 0)
-		    --end)
 			love.graphics.setShader()
 			--lg.draw(resmgr:getImg("black_hole.png"), 0, 0)
 

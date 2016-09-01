@@ -66,9 +66,9 @@ function NewPlayer:update(dt)
 	self.x = self.x + self.momentum.x
 	self.momentum.x = self.momentum.x*self.drag
 	self.momentum.y = self.momentum.y*self.drag
-	if self.x < 0 then self.x = 0 end
+	if self.x < 0 then self.x = self.x+WIDTH end
 	if self.y < 0 then self.y = 0 end
-	if self.x > WIDTH then self.x = WIDTH end
+	if self.x > WIDTH then self.x = self.x -WIDTH end
 	if self.y > HEIGHT then self.y = HEIGHT end
 	self.shape:moveTo(self.x,self.y)
 	self.shape:setRotation(self.rot)
@@ -91,6 +91,12 @@ function NewPlayer:draw()
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.draw(self.back, self.x, self.y, self.rot+math.pi/2, 1, 1, 16, 16)
 	love.graphics.draw(self.front, self.x-16, self.y-16)
+	love.graphics.draw(self.back, self.x+WIDTH, self.y, self.rot+math.pi/2, 1, 1, 16, 16)
+	love.graphics.draw(self.front, self.x-16+WIDTH, self.y-16)
+	love.graphics.draw(self.back, self.x-WIDTH, self.y, self.rot+math.pi/2, 1, 1, 16, 16)
+	love.graphics.draw(self.front, self.x-16-WIDTH, self.y-16)
+		
+
 	love.graphics.setColor(0,255,0, 50)
 	love.graphics.rectangle("fill", self.x-7, self.y+3, 14, 40)
 	love.graphics.setColor(255,255,255,255)

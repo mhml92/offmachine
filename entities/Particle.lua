@@ -52,9 +52,9 @@ end
 
 function Particle:update(dt)
     self.life = self.life - dt
-    self.x,self.y = self.x + self.speed_vec.x,self.y + self.speed_vec.y
+    self.x,self.y = self.x + self.speed_vec.x*dt,self.y + self.speed_vec.y*dt
     
-    self.rot = self.rot + self.rotSpeed
+    self.rot = self.rot + self.rotSpeed * dt
     if self.poly then
         self.poly:moveTo(self.x,self.y)
     end
