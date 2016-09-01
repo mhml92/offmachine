@@ -2,10 +2,6 @@ local EnemyChaser = Class("EnemyChaser", EnemyBase)
 
 local vector = require 'hump/vector-light'
 
-local LOITERING = 1
-local CHASING = 2
-local DYING = 3
-
 function EnemyChaser:initialize(x,y,scene)
 	EnemyBase.initialize(self,x,y,scene)
 	self.aware_radius = 300
@@ -13,10 +9,16 @@ function EnemyChaser:initialize(x,y,scene)
 	self.player = scene.player
 	self.state = LOITERING
 	self.destroy_animation = 0
-	self.acc = 500
+	self.acc = 200
 	self:setShape(HC:circle(self.x, self.y, self.radius, self.radius))
 	self:addCollisionResponse("SimpleBullet", self.test, self)
 	self.val = 42
+	self.sprite = resmgr:getImg("chaser.png")
+	self.back = love.graphics.newQuad(0, 0, 40, 40, 120, 40)
+	self.eye = love.graphics.newQuad(40, 0, 40, 40, 120, 40)
+	self.front = love.graphics.newQuad(80, 0, 40, 40, 120, 40)
+	self.eye_offx = 0
+	self.eye_offy = 0
 end
 
 function EnemyChaser:test()
@@ -24,17 +26,11 @@ function EnemyChaser:test()
 end
 
 function EnemyChaser:update(dt)
-	if self.state == LOITERING then
-		if self:distanceToPlayer() < self.aware_radius then
-			self.state = CHASING
-		end
-	elseif self.state == CHASING then
-		local dxn, dyn = vector.normalize(self.player.x-self.x, self.player.y-self.y)
-		self.dx = dxn * dt * self.acc
-		self.dy = dyn * dt * self.acc
-		self.x = self.x + self.dx
-		self.y = self.y + self.dy
-	end
+	local dxn, dyn = vector.normalize(self.player.x-self.x, self.player.y-self.y)
+	self.dx = dxn * dt * self.acc
+	self.dy = dyn * dt * self.acc
+	self.x = self.x + self.dx
+	self.y = self.y + self.dy
 	
 	if self.shape then
 		self.shape:moveTo(self.x,self.y)
@@ -53,10 +49,10 @@ function EnemyChaser:draw()
 	elseif self.state == CHASING then
 		lg.setColor(0, 255, 0)
 	end
-	lg.circle("fill", self.x-self.radius/2, self.y-self.radius/2, self.radius*scale)
-	lg.circle("line", self.x-self.radius/2, self.y-self.radius/2, self.aware_radius*scale)
-	lg.line(self.x, self.y, self.player.x, self.player.y)
-	lg.setColor(255, 255, 255)
+	lg.setColor(255,255,255)
+	lg.draw(self.sprite, self.back, self.x-20, self.y-20)
+	lg.draw(self.sprite, self.eye, self.x-20+self.eye_offx, self.y-20+self.eye_offy)
+	lg.draw(self.sprite, self.front, self.x-20, self.y-20)
 end
 
 return EnemyChaser

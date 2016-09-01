@@ -21,7 +21,7 @@ function Moffeus:initialize()
 
 	self:defineLayers()	
 	self:addEntity(Stars:new(0,0,self), self.layers.bg)
-	self.player = NewPlayer:new(100,100,self)
+	self.player = NewPlayer:new(WIDTH/2,HEIGHT/2,self)
 	self:addEntity(self.player, self.layers.objects)
 
 	self.fuelinterface = FuelInterface:new(self)

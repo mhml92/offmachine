@@ -10,6 +10,7 @@ function NewPlayer:initialize(x,y,scene)
 
 	self.radius = 16
 	self:setShape(HC:rectangle(100,100,2*self.radius,2*self.radius))
+	print(#love.joystick.getJoysticks( ),"here")
 	self.joystick = love.joystick.getJoysticks( )[1]
 	
 	self.force = 200 
@@ -34,11 +35,11 @@ end
 function NewPlayer:update(dt)
 
 	-- JERES MOVEMENT
-	--local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
+	local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
 	--leftx,lefty,leftt,rightx,righty,rightt = 0,0,0,0,0,0
 	
 	-- JESPERS MOVEMENT
-	local leftx,lefty,rightx,righty,leftt,rightt = self.joystick:getAxes( )
+	--local leftx,lefty,rightx,righty,leftt,rightt = self.joystick:getAxes( )
 
 	self.weapon:update(dt)
 	if Vectorl.len(rightx,righty) > 0.9 then
@@ -104,9 +105,12 @@ function NewPlayer:update(dt)
         self.scene:addEntity(part, self.scene.layers.objects)
     end
 	 
+	 self:checkCollision()
+	 
 end
 
 function NewPlayer:handlePowerUp(shape,delta)
+	print(shape, delta)
 	local powerup = shape.owner
 	if powerup.type == 4 then
 		self.weapon:gainLevel()
