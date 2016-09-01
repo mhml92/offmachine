@@ -9,7 +9,7 @@ function EnemyChaser:initialize(x,y,scene)
 	self.player = scene.player
 	self.state = LOITERING
 	self.destroy_animation = 0
-	self.acc = 200
+	self.acc = 10
 	self:setShape(HC:circle(self.x, self.y, self.radius, self.radius))
 	self:addCollisionResponse("SimpleBullet", self.test, self)
 	self.val = 42
@@ -19,6 +19,7 @@ function EnemyChaser:initialize(x,y,scene)
 	self.front = love.graphics.newQuad(80, 0, 40, 40, 120, 40)
 	self.eye_offx = 0
 	self.eye_offy = 0
+	self.drag = 0.99
 end
 
 function EnemyChaser:test()
@@ -27,15 +28,28 @@ end
 
 function EnemyChaser:update(dt)
 	local dxn, dyn = vector.normalize(self.player.x-self.x, self.player.y-self.y)
-	self.dx = dxn * dt * self.acc
-	self.dy = dyn * dt * self.acc
+	self.dx = self.dx + dxn * dt * self.acc
+	self.dy = self.dy + dyn * dt * self.acc
+	self.dx,self.dy = self.dx*self.drag,self.dy*self.drag
+
 	self.x = self.x + self.dx
 	self.y = self.y + self.dy
+
+	-- look at player
+	local epx,epy =  self:getClosestPlayer()
+	epx,epy = epx-self.x,epy-self.y
+	local nep = Vectorl.len(epx,epy)
+	self.eye_offx,self.eye_offy = 6*epx/nep,6*epy/nep
+
 	
 	if self.shape then
 		self.shape:moveTo(self.x,self.y)
 		self:checkCollision()
 	end
+end
+
+function EnemyChaser:getClosestPlayer()
+	return self.scene.player.x,self.scene.player.y
 end
 
 local lg = love.graphics
