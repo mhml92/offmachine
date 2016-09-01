@@ -66,7 +66,8 @@ lol2 = lol1
 	canvas = love.graphics.newCanvas(WIDTH, HEIGHT)
 	
    resmgr = ResourceManager:new()
-   love.graphics.setBackgroundColor(255,100,100)
+   --love.graphics.setBackgroundColor(255,100,100)
+   love.graphics.setBackgroundColor(42,164,168)
    StateManager.init("Moffeus")
 	--StateManager.init("TestScene")
 end
@@ -196,10 +197,10 @@ function love.run()
 
 
 
-			 love.graphics.setShader(shaders)
+			love.graphics.setShader(shaders)
 			love.graphics.draw(canvas, 0, 0)
 			love.graphics.setShader()
-			lg.draw(resmgr:getImg("black_hole.png"), 0, 0)
+			--lg.draw(resmgr:getImg("black_hole.png"), 0, 0)
 
 			love.graphics.pop()
 
