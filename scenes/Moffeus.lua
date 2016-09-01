@@ -13,9 +13,10 @@ local EVENT_HORIZON_Y = 400
 function Moffeus:initialize()
 	Scene.initialize(self)
 
-	self.soundmgr = SoundManager:new(self)
-	self.soundmgr:addSound("theme.mp3",true,1.0)
 	self.timemgr = TimeManager:new(self)
+	self.soundmgr = SoundManager:new(self)
+	self.bgsound = self.soundmgr:addSound("theme.mp3",true,1.0)
+	self.soundmgr:playSound("theme.mp3")
 
 	self:defineLayers()	
 	self:addEntity(Stars:new(0,0,self), self.layers.bg)
