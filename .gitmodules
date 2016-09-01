@@ -17,4 +17,4 @@
 	url = https://github.com/kikito/inspect.lua.git
 [submodule "shine"]
 	path = shine
-	url = git@github.com:vrld/shine.git
+	url = https://github.com/vrld/shine.git
