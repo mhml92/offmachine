@@ -15,17 +15,53 @@ function EnemyDirector:initialize(x, y, scene)
 	self.wawes = {
 		-- first wawe
 		{
-				-- subwawe 1	
-				-- {time,#,Enemy,dir}
-				{0,1,EnemyChaser,"top"},
---
---				{2,1,EnemyChaser,"left"},
---				{2,1,EnemyChaser,"right"},
---
---				{6,1,EnemyChaser,"top"},
---				{6,1,EnemyChaser,"left"},
---				{6,1,EnemyChaser,"right"},
-				--{0,1,PowerUp,"top"}
+				
+				{
+					type = "enemy",
+					time_a = 5,
+					time_b = 30,
+					count = 10,
+					obj = EnemyChaser,
+					placement = "rnd"
+				},
+				{
+					type = "enemy",
+					time_a = 5,
+					time_b = 30,
+					count = 5,
+					obj = EnemyZapper,
+					placement = "rnd"
+				},
+				{
+					type = "enemy",
+					time_a = 35,
+					time_b = 60,
+					count = 10,
+					obj = EnemyChaser,
+					placement = "rnd"
+				},
+				{
+					type = "enemy",
+					time_a = 35,
+					time_b = 60,
+					count = 5,
+					obj = EnemyZapper,
+					placement = "rnd"
+				},
+				--{"enemy",0,6,EnemyZapper,"rnd"},
+				--{"enemy",2,1,EnemyChaser,"rnd"},
+				--{"enemy",3,1,EnemyChaser,"rnd"},
+				--{"enemy",4,1,EnemyChaser,"rnd"},
+				--{"enemy",5,2,EnemyChaser,"rnd"},
+				--{"enemy",6,3,EnemyChaser,"rnd"},
+				--{"powerup",37.5*1,4,PowerUp,"top"},   
+				--{"powerup",37.5*2,4,PowerUp,"top"},
+				--{"powerup",37.5*3,2,PowerUp,"top"},
+				--{"powerup",37.5*4,4,PowerUp,"top"},
+				--{"powerup",37.5*5,4,PowerUp,"top"},
+				--{"powerup",37.5*6,3,PowerUp,"top"},
+				--{"powerup",37.5*7,4,PowerUp,"top"},
+				--{"powerup",37.5*8,4,PowerUp,"top"}
 --
 --
 --				-- powerup
@@ -64,14 +100,32 @@ function EnemyDirector:update(dt)
 
 		for k,obj in ipairs(nw) do
 
-			print(obj[2])
-			for i = 1,obj[2] do
-				t:after(obj[1],
-					function() 
-						local px,py = self:getNewPosition(obj[4])
-						self.scene:addEntity(obj[3]:new(px,py,self.scene))
-					end
-					)	
+			if obj.type == "powerup"then
+				print("POWERUP")
+				print("type",obj.type)
+			else
+				for i = 1,obj.count do
+					local wait = love.math.random(obj.time_a,time_b)
+					t:after(wait,
+						function() 
+							local placement = ""
+							if obj.placement == "rnd" then
+								local p = math.floor(love.math.random(1,3))
+								print(p)
+								assert(p < 4)
+								if p == 1 then
+									placement = "top"
+								elseif p == 2 then
+									placement = "left"
+								elseif p == 3 then
+									placement = "right"
+								end
+							end
+							local px,py = self:getNewPosition(placement)
+							self.scene:addEntity(obj.obj:new(px,py,self.scene), self.scene.layers.objects)
+						end
+						)	
+				end
 			end
 		end
 
@@ -80,6 +134,7 @@ function EnemyDirector:update(dt)
 end
 
 function EnemyDirector:getNewPosition(at)
+	print(at)
 	if at == "top" then
 		return math.random()*WIDTH,-100
 	elseif at == "left" then

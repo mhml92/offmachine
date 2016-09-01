@@ -5,7 +5,7 @@ function SimpleBullet:initialize(px,py,x,y,rot,deltaspeed,scene)
 	Entity.initialize(self,px,py,scene)
 
 	self.rot = rot
-	self.speed = 500 + deltaspeed
+	self.speed = 150 + deltaspeed
 	self.radius = 10
 
 	self:setShape(HC:rectangle(100,100,20,10))
@@ -36,7 +36,7 @@ end
 
 function SimpleBullet:draw()
 	love.graphics.setColor(self.color)
-	lg.draw(resmgr:getImg("normalshot.png"), self.x, self.y, self.rot, 1,1, 10,5)
+	lg.draw(resmgr:getImg("normalshot.png"), self.x, self.y, self.rot, 0.5,0.5, 10,5)
 	--self.shape:draw("line")
 end
 

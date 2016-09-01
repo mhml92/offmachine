@@ -10,11 +10,11 @@ function NewPlayer:initialize(x,y,scene)
 
 	self.radius = 16
 	self:setShape(HC:rectangle(100,100,2*self.radius,2*self.radius))
+	print(#love.joystick.getJoysticks( ),"here")
 	self.joystick = love.joystick.getJoysticks( )[1]
 	
-	self.force = 200 
-	self.weight = 20
-	self.maxspeed = 15000
+	self.force = 25
+	self.maxspeed = 250
 	self.momentum = {}
 	self.momentum.x = 0
 	self.momentum.y = 0
@@ -26,7 +26,7 @@ function NewPlayer:initialize(x,y,scene)
 	self.rot = 0
 
 	self.weapon = WeaponInterface:new(self)
-	self.scene:addEntity(self.weapon, scene.layers.gui)
+	self.scene:addEntity(self.weapon, scene.layers.gui)	
 
 	self:addCollisionResponse("PowerUp",self.handlePowerUp,self)
 end
@@ -34,11 +34,13 @@ end
 function NewPlayer:update(dt)
 
 	-- JERES MOVEMENT
+--	local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
+--	leftx,lefty,leftt,rightx,righty,rightt = 0,0,0,0,0,0
 	local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
 	--leftx,lefty,leftt,rightx,righty,rightt = 0,0,0,0,0,0
 	
 	-- JESPERS MOVEMENT
-	--local leftx,lefty,rightx,righty,leftt,rightt = self.joystick:getAxes( )
+	local leftx,lefty,rightx,righty,leftt,rightt = self.joystick:getAxes( )
 
 	self.weapon:update(dt)
 	if Vectorl.len(rightx,righty) > 0.9 then
@@ -57,29 +59,46 @@ function NewPlayer:update(dt)
 		lefty = 0
 	end
 
-	
+	print("speed", Vectorl.len(self.momentum.x,self.momentum.y),"x",self.momentum.x,"y",self.momentum.y)
 
 	-- normalize gamepad triggers
 	leftt,rightt = ((leftt+1)/2),((rightt+1)/2)
 
-	self.rot = Vectorl.angleTo(self.momentum.x,self.momentum.y)
 
-	self.momentum.x = self.momentum.x + (leftx*self.force /self.weight)
-	self.momentum.y = self.momentum.y + (lefty*self.force /self.weight)
+	self.momentum.x = self.momentum.x + (leftx*(self.force))
+	self.momentum.y = self.momentum.y + (lefty*(self.force))
+
 	if self.recoil then
-		self.momentum.x = self.momentum.x + math.cos(self.recoil_dir)*((self.recoil and -self.recoil or 1)/self.weight)
-		self.momentum.y = self.momentum.y + math.sin(self.recoil_dir)*((self.recoil and -self.recoil or 1)/self.weight)
+		self.momentum.x = self.momentum.x + (math.cos(self.recoil_dir)+math.rad(G_functions.rand(1,20)-10))*((self.recoil and -self.recoil or 0))
+		self.momentum.y = self.momentum.y + (math.sin(self.recoil_dir)+math.rad(G_functions.rand(1,20)-10))*((self.recoil and -self.recoil or 0))
 	end
 	self.recoil = nil
 
-	self.y = self.y + self.momentum.y * dt
-	self.x = self.x + self.momentum.x *dt
-	self.momentum.x = self.momentum.x*self.drag
-	self.momentum.y = self.momentum.y*self.drag
+	self.rot = Vectorl.angleTo(self.momentum.x,self.momentum.y)
+
+	local lenght = Vectorl.len(self.momentum.x,self.momentum.y)
+
+	self.x = self.x + math.cos(self.rot)*math.min(lenght,self.maxspeed) * dt
+	self.y = self.y + math.sin(self.rot)*math.min(lenght,self.maxspeed) * dt
+
+	self.momentum.x = self.momentum.x*(self.drag)
+	self.momentum.y = self.momentum.y*(self.drag)
+
+	local lenght = Vectorl.len(self.momentum.x,self.momentum.y)
+
+	if lenght > self.maxspeed then
+		local fac = lenght/self.maxspeed
+		self.momentum.x = self.momentum.x / fac
+		self.momentum.y = self.momentum.y / fac
+
+	end 
+
+	
 	if self.x < 0 then self.x = self.x+WIDTH end
 	if self.y < 0 then self.y = 0 end
 	if self.x > WIDTH then self.x = self.x -WIDTH end
 	if self.y > HEIGHT then self.y = HEIGHT end
+	
 	self.shape:moveTo(self.x,self.y)
 	self.shape:setRotation(self.rot)
 
