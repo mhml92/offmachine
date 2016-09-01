@@ -3,6 +3,7 @@ local EnemyDirector = Class("EnemyDirector", Entity)
 local EnemyChaser = require 'entities/EnemyChaser'
 local EnemyZapper = require 'entities/EnemyZapper'
 local Meteorite = require 'entities/Meteorite'
+local PowerUp = require 'entities/PowerUp'
 
 local EVENT_HORIZON_Y = 400
 
@@ -14,20 +15,31 @@ function EnemyDirector:initialize(x, y, scene)
 	self.wawes = {
 		-- first wawe
 		{
+				{0,1,PowerUp,"top"}
 				-- subwawe 1	
 				-- {time,#,Enemy,dir}
-				{0,1,EnemyChaser,"top"},
-
-
-				{2,1,EnemyChaser,"left"},
-				{2,1,EnemyChaser,"right"},
-
-				{6,1,EnemyChaser,"top"},
-				{6,1,EnemyChaser,"left"},
-				{6,1,EnemyChaser,"right"},
-
-				-- powerup
-				--{10,1,???,"top"}
+--				{0,1,EnemyChaser,"top"},
+--
+--				{2,1,EnemyChaser,"left"},
+--				{2,1,EnemyChaser,"right"},
+--
+--				{6,1,EnemyChaser,"top"},
+--				{6,1,EnemyChaser,"left"},
+--				{6,1,EnemyChaser,"right"},
+--
+--
+--				-- powerup
+--				--{10,1,???,"top"}
+--				--
+--				
+--				{8,1,EnemyChaser,"top"},
+--
+--				{10,1,EnemyChaser,"left"},
+--				{10,1,EnemyChaser,"right"},
+--
+--				{15,1,EnemyChaser,"top"},
+--				{15,1,EnemyChaser,"left"},
+--				{15,1,EnemyChaser,"right"},
 		}
 	}
 	--[[
