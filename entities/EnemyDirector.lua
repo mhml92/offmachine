@@ -16,16 +16,15 @@ function EnemyDirector:initialize(x, y, scene)
 		-- first wawe
 		{
 				-- subwawe 1	
-				-- {time,#,Enemy,dir}
---				{0,1,EnemyChaser,"top"},
---
---				{2,1,EnemyChaser,"left"},
---				{2,1,EnemyChaser,"right"},
---
---				{6,1,EnemyChaser,"top"},
---				{6,1,EnemyChaser,"left"},
---				{6,1,EnemyChaser,"right"},
-				{0,1,PowerUp,"top"}
+				-- {type,time,#,Enemy,dir} <- enemy
+				-- {type,time,powerup_type,PowerUp,dir} <- PowerUp
+				{"enemy",0,1,EnemyChaser,"top"},
+				{"enemy",2,1,EnemyChaser,"left"},
+				{"enemy",2,1,EnemyChaser,"right"},
+				{"enemy",6,1,EnemyChaser,"top"},
+				{"enemy",6,1,EnemyChaser,"left"},
+				{"enemy",6,1,EnemyChaser,"right"},
+				{"powerup",0,1,PowerUp,"top"}
 --
 --
 --				-- powerup
@@ -64,14 +63,18 @@ function EnemyDirector:update(dt)
 
 		for k,obj in ipairs(nw) do
 
-			print(obj[2])
-			for i = 1,obj[2] do
-				t:after(obj[1],
-					function() 
-						local px,py = self:getNewPosition(obj[4])
-						self.scene:addEntity(obj[3]:new(px,py,self.scene))
-					end
-					)	
+			if obj[1] == "powerup"then
+				print("POWERUP")
+				print("type",obj[3])
+			else
+				for i = 1,obj[3] do
+					t:after(obj[2],
+						function() 
+							local px,py = self:getNewPosition(obj[5])
+							self.scene:addEntity(obj[4]:new(px,py,self.scene))
+						end
+						)	
+				end
 			end
 		end
 
