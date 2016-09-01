@@ -16,7 +16,7 @@ function EnemyDirector:initialize(x, y, scene)
 		{
 				-- subwawe 1	
 				-- {time,#,Enemy,dir}
-				{0,1,EnemyChaser,"top"},
+				{0,5,EnemyChaser,"top"},
 
 
 				{2,1,EnemyChaser,"left"},
