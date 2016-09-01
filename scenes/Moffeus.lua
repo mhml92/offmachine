@@ -3,6 +3,7 @@ local NewPlayer = require 'entities/NewPlayer'
 local Stars = require "entities/Stars"
 local EnemyZapper = require 'entities/EnemyZapper'
 local TimeManager = require 'managers/TimeManager'
+local SoundManager = require 'managers/SoundManager'
 
 
 local Meteorite = require 'entities/Meteorite'
@@ -12,6 +13,8 @@ local EVENT_HORIZON_Y = 400
 function Moffeus:initialize()
 	Scene.initialize(self)
 
+	self.soundmgr = SoundManager:new(self)
+	self.soundmgr:addSound("theme.mp3",true,1.0)
 	self.timemgr = TimeManager:new(self)
 
 	self:defineLayers()	
@@ -42,6 +45,7 @@ end
 
 function Moffeus:update(dt)
 	local ndt = self.timemgr:update(dt)
+	self.soundmgr:update(ndt)
 	Scene.update(self, ndt)
 
 end

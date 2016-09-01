@@ -7,7 +7,7 @@ function TimeManager:initialize(scene)
 	self.tweenTime = 0.5
 	self.tweenHandle = nil
 
-	self.upper = HEIGHT - 100
+	self.upper = HEIGHT - 300
 	self.lower = HEIGHT 
 	self.max_slow = 0.9
 end
