@@ -107,9 +107,10 @@ function NewPlayer:update(dt)
 end
 
 function NewPlayer:handlePowerUp(shape,delta)
+	print(shape, delta)
 	local powerup = shape.owner
 	if powerup.type == 4 then
-		self:weapon:gainLevel()
+		self.weapon:gainLevel()
 	else
 		self.weapon:changeType(powerup.type)
 	end

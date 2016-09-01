@@ -4,8 +4,9 @@ function PowerUp:initialize(x,y,scene)
 	Entity.initialize(self,x,y,scene)
 
 	self.radius = 10
-	self.shape = HC:rectangle(100,100,2*self.radius,2*self.radius)
-	self.shape.owner = self
+	self:setShape(HC:rectangle(100,100,2*self.radius,2*self.radius))
+	--self.shape = HC:rectangle(100,100,2*self.radius,2*self.radius)
+	--self.shape.owner = self
 	self.move_speed = 3
 	self.loiter_speed = 0.5
 	self.type = 1
@@ -34,7 +35,7 @@ end
 
 function PowerUp:update(dt)
 	self.shape:moveTo(self.x,self.y)
-
+	self:checkCollision()
 end
 
 function PowerUp:draw()
