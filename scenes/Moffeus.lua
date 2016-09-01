@@ -16,7 +16,7 @@ function Moffeus:initialize()
 	self.timemgr = TimeManager:new(self)
 	self.soundmgr = SoundManager:new(self)
 	self.bgsound = self.soundmgr:addSound("theme.mp3",true,1.0)
-	self.soundmgr:playSound("theme.mp3")
+	self.soundmgr:playSound(self.bgsound)
 
 	self:defineLayers()	
 	self:addEntity(Stars:new(0,0,self), self.layers.bg)
