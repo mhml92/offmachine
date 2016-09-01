@@ -7,6 +7,7 @@ local SoundManager = require 'managers/SoundManager'
 local EnemyDirector = require 'entities/EnemyDirector'
 
 local FuelInterface = require 'entities/fuelinterface'
+local Hud = require 'entities/hud'
 
 local EVENT_HORIZON_Y = 400
 
@@ -23,9 +24,11 @@ function Moffeus:initialize()
 	self:addEntity(Stars:new(0,0,self), self.layers.bg)
 	self.player = NewPlayer:new(100,100,self)
 	self:addEntity(self.player, self.layers.objects)
+	
+	self:addEntity(Hud:new(0,0,self), self.layers.gui)
 
-	self.fuelinterface = FuelInterface:new(self)
-	self:addEntity(self.fuelinterface, self.layers.gui)
+	--self.fuelinterface = FuelInterface:new(self)
+	--self:addEntity(self.fuelinterface, self.layers.gui)
 	--self:addEntity(EnemyZapper:new(300, 300, self), self.layers.objects)
 	--self:addEntity(EnemyZapper:new(300, 300, self), self.layers.objects)
 	--self:addEntity(EnemyZapper:new(300, 300, self), self.layers.objects)
