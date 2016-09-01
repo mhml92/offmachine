@@ -2,9 +2,11 @@ local Moffeus = Class("Moffeus", Scene)
 local NewPlayer = require 'entities/NewPlayer'
 local Stars = require "entities/Stars"
 local EnemyZapper = require 'entities/EnemyZapper'
+local TimeManager = require 'managers/TimeManager'
 
 function Moffeus:initialize()
 	Scene.initialize(self)
+	self.timemgr = TimeManager:new(self)
 	
 	self:addEntity(Stars:new(0,0,self), self.layers.bg)
 	self.player = NewPlayer:new(100,100,self)
@@ -22,7 +24,17 @@ function Moffeus:defineLayers()
 end
 
 function Moffeus:update(dt)
-	Scene.update(self, dt)
+		
+	if self.player.y > HEIGHT-200 then
+		self.timemgr:setTimeScalar(((HEIGHT)-self.player.y)/600)
+	else
+		self.timemgr:setTimeScalar(1)
+	end
+
+
+	local ndt = self.timemgr:update(dt)
+	Scene.update(self, ndt)
+
 end
 
 function Moffeus:draw()

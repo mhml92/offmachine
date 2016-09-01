@@ -9,7 +9,7 @@ function EnemyZapper:initialize(x,y,scene)
 	self.radius = 10
 	self.loiter_time = 2
 	self.move_speed = 2
-	self:setShape(HC:circle(self.x, self.y, self.radius, self.radius))
+	self:setShape(HC:circle(self.x, self.y, self.radius))
 	self:addCollisionResponse("SimpleBullet", self.test, self)
 	self:loiter()
 

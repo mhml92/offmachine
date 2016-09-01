@@ -61,6 +61,10 @@ function NewPlayer:update(dt)
 	self.x = self.x + self.momentum.x
 	self.momentum.x = self.momentum.x*self.drag
 	self.momentum.y = self.momentum.y*self.drag
+	if self.x < 0 then self.x = 0 end
+	if self.y < 0 then self.y = 0 end
+	if self.x > WIDTH then self.x = WIDTH end
+	if self.y > HEIGHT then self.y = HEIGHT end
 	self.shape:moveTo(self.x,self.y)
 	self.shape:setRotation(self.rot)
 end
