@@ -24,12 +24,13 @@ function EnemyBase:update(dt)
 			self.x = self.x - WIDTH
 		end
 
+		--[[
 		if self.y < 0 then
 			self.y = self.y + HEIGHT
 		end
 		if self.y > HEIGHT then
 			self.y = self.y - HEIGHT
-		end
+		end]]
 	end
 end
 

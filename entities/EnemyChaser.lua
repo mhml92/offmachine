@@ -9,7 +9,7 @@ function EnemyChaser:initialize(x,y,scene)
 	self.player = scene.player
 	self.state = LOITERING
 	self.destroy_animation = 0
-	self.acc = 5
+	self.acc = 3
 	self:setShape(HC:circle(self.x, self.y, self.radius, self.radius))
 	self:addCollisionResponse("SimpleBullet", self.test, self)
 	self:addCollisionResponse("EnemyChaser", self.decluster, self)
@@ -19,8 +19,8 @@ function EnemyChaser:initialize(x,y,scene)
 	self.front = love.graphics.newQuad(80, 0, 40, 40, 120, 40)
 	self.eye_offx = 0
 	self.eye_offy = 0
-	self.drag = 0.99
-	self.declutter_strenght = 10 
+	self.drag = 0.995
+	self.declutter_strenght = 2 
 end
 
 function EnemyChaser:test()
@@ -30,14 +30,16 @@ end
 function EnemyChaser:decluster(shape, delta)
 	local dxn, dyn = vector.normalize(shape.owner.x-self.x, shape.owner.y-self.y)
 	
+	self.dx = self.dx - dxn * self.declutter_strenght
+	self.dy = self.dy - dyn * self.declutter_strenght
 end
 
 function EnemyChaser:update(dt)
 	EnemyBase.update(self,dt)
 	local p = self:getClosestPlayer()
 	local dxn, dyn = vector.normalize(p.x-self.x, p.y-self.y)
-	self.dx = self.dx + dxn * dt * self.acc
-	self.dy = self.dy + dyn * dt * self.acc
+	self.dx = self.dx + (dxn+G_functions.rand(-4,4)) * dt * self.acc
+	self.dy = self.dy + (dyn+G_functions.rand(-4,4)) * dt * self.acc
 	self.dx,self.dy = self.dx*self.drag,self.dy*self.drag
 
 	self.x = self.x + self.dx
@@ -75,6 +77,15 @@ function EnemyChaser:draw()
 	lg.draw(self.sprite, self.back, self.x-20, self.y-20)
 	lg.draw(self.sprite, self.eye, self.x-20+self.eye_offx, self.y-20+self.eye_offy)
 	lg.draw(self.sprite, self.front, self.x-20, self.y-20)
+	
+	if self.has_been_inside then
+		lg.draw(self.sprite, self.back, self.x-20+WIDTH, self.y-20)
+		lg.draw(self.sprite, self.back, self.x-20-WIDTH, self.y-20)
+		lg.draw(self.sprite, self.front, self.x-20+WIDTH, self.y-20)
+		lg.draw(self.sprite, self.front, self.x-20-WIDTH, self.y-20)
+		lg.draw(self.sprite, self.eye, self.x-20+self.eye_offx+WIDTH, self.y-20+self.eye_offy)
+		lg.draw(self.sprite, self.eye, self.x-20+self.eye_offx-WIDTH, self.y-20+self.eye_offy)
+	end
 end
 
 return EnemyChaser
