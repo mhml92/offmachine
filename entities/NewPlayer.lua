@@ -99,13 +99,6 @@ function NewPlayer:update(dt)
 		end 
 
 		
-		if self.x < 0 then self.x = self.x+WIDTH end
-		if self.y < 0 then self.y = 0 end
-		if self.x > WIDTH then self.x = self.x -WIDTH end
-		if self.y > HEIGHT then self.y = HEIGHT end
-		
-		self.shape:moveTo(self.x,self.y)
-		self.shape:setRotation(self.rot)
 
 		
 	 else
@@ -128,6 +121,13 @@ function NewPlayer:update(dt)
 		end
 		self.dashing = self.dashing - dt
 	 end
+	if self.x < 0 then self.x = self.x+WIDTH end
+	if self.y < 0 then self.y = 0 end
+	if self.x > WIDTH then self.x = self.x -WIDTH end
+	if self.y > HEIGHT then self.y = HEIGHT end
+	
+	self.shape:moveTo(self.x,self.y)
+	self.shape:setRotation(self.rot)
 	 
 	local ndx, ndy = math.cos(self.rot), math.sin(self.rot)
 	local pndx, pndy = vector.perpendicular(ndx, ndy)
