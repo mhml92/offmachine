@@ -41,8 +41,8 @@ function Moffeus:initialize()
 		local meteorite = Meteorite:new(-32, -150+math.random(120), self)
 		meteorite.dx = math.random(50, 300)
 		self:addEntity(meteorite, self.layers.objects)
-	end
-	--]]
+	]]
+	
 end
 
 function Moffeus:defineLayers()

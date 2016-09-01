@@ -39,7 +39,7 @@ function WeaponInterface:changeType(type)
     end
 end
 
-function WeaponInterface:levelUp()
+function WeaponInterface:gainLevel()
     self.weapon:levelUp()
 end
 
