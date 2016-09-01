@@ -1,7 +1,7 @@
 local Moffeus = Class("Moffeus", Scene)
 local NewPlayer = require 'entities/NewPlayer'
-local Stars = require "entities/Stars"
 --local EnemyZapper = require 'entities/EnemyZapper'
+local Stars = require "entities/Stars"
 local TimeManager = require 'managers/TimeManager'
 local SoundManager = require 'managers/SoundManager'
 local EnemyDirector = require 'entities/EnemyDirector'

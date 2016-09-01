@@ -22,6 +22,13 @@ function SimpleBullet:update(dt)
 	local dx,dy = Vectorl.rotate(self.rot,self.speed*dt,0) 
 	self.x,self.y = self.x+dx,self.y+dy
 
+	if self.x > WIDTH then
+		self.x = self.x - WIDTH
+	end
+	if self.x < 0 then
+		self.x = self.x + WIDTH
+	end
+
 	self.shape:moveTo(self.x,self.y)
 	self.shape:setRotation(self.rot)
 end
