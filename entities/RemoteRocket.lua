@@ -8,19 +8,17 @@ function RemoteRocket:initialize(px,py,x,y,rot,deltaspeed,scene)
 	self.y = py
 	self.rot = rot
 	self.owner = owner
-	self.speed = 500 + deltaspeed
+	self.speed = 150 
 	self.radius = 10
 	self.shape = HC:rectangle(100,100,4*self.radius,2*self.radius)
 	self.shape.owner = self
 	self.joystick = love.joystick.getJoysticks( )[1]
 
-	self.timer = Timer.new()
-	self.timer:after(5,function() self:kill() end)
+	self.scene.timer:after(5,function() self:kill() end)
 end
 
 function RemoteRocket:update(dt)
 
-	self.timer:update(dt)
 	local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
 	self.rot = Vectorl.angleTo(rightx,righty)
 

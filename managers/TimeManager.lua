@@ -6,11 +6,25 @@ function TimeManager:initialize(scene)
 	self.timeScalar = 1	
 	self.tweenTime = 0.5
 	self.tweenHandle = nil
+
+	self.upper = HEIGHT - 100
+	self.lower = HEIGHT 
+	self.max_slow = 0.9
 end
 
 function TimeManager:update(dt)
+	-- get player y pos
+ 	local py = self.scene.player.y
+	if py > self.upper then
+		
+		local strength = 1-((py-self.upper)/(self.lower-self.upper))
+		self.timeScalar = strength * self.max_slow + (1-self.max_slow)
+
+	else
+		self.timeScalar = 1
+	end
+
 	local newDT = dt*self.timeScalar
---	self.localTimer:update(newDT)
 	return newDT
 end
 

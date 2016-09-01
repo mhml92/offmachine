@@ -4,10 +4,17 @@ local Stars = require "entities/Stars"
 local EnemyZapper = require 'entities/EnemyZapper'
 local TimeManager = require 'managers/TimeManager'
 
+
+local Meteorite = require 'entities/Meteorite'
+
+local EVENT_HORIZON_Y = 400
+
 function Moffeus:initialize()
 	Scene.initialize(self)
+
 	self.timemgr = TimeManager:new(self)
-	
+
+	self:defineLayers()	
 	self:addEntity(Stars:new(0,0,self), self.layers.bg)
 	self.player = NewPlayer:new(100,100,self)
 	self:addEntity(self.player, self.layers.objects)
@@ -16,6 +23,16 @@ function Moffeus:initialize()
 	self:addEntity(EnemyZapper:new(300, 300, self), self.layers.objects)
 	self:addEntity(EnemyZapper:new(300, 300, self), self.layers.objects)
 	self:addEntity(EnemyZapper:new(300, 300, self), self.layers.objects)
+	for i=1,5 do
+		local meteorite = Meteorite:new(WIDTH+32, -50+math.random(120), self)
+		meteorite.dx = -math.random(100, 300)
+		self:addEntity(meteorite, self.layers.objects)
+	end
+	for i=1,5 do
+		local meteorite = Meteorite:new(-32, -150+math.random(120), self)
+		meteorite.dx = math.random(50, 300)
+		self:addEntity(meteorite, self.layers.objects)
+	end
 end
 
 function Moffeus:defineLayers()
@@ -24,14 +41,6 @@ function Moffeus:defineLayers()
 end
 
 function Moffeus:update(dt)
-		
-	if self.player.y > HEIGHT-200 then
-		self.timemgr:setTimeScalar(((HEIGHT)-self.player.y)/600)
-	else
-		self.timemgr:setTimeScalar(1)
-	end
-
-
 	local ndt = self.timemgr:update(dt)
 	Scene.update(self, ndt)
 
@@ -39,6 +48,10 @@ end
 
 function Moffeus:draw()
 	Scene.draw(self)
+end
+
+function Moffeus:belowEventHorizon(obj)
+	return obj.y > EVENT_HORIZON_Y
 end
 
 

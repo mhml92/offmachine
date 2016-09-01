@@ -1,3 +1,5 @@
+-- PROFILEING
+--ProFi = require 'ProFi'
 require 'slam/slam'
 require ("loveshortcuts")
 print(math)
@@ -16,6 +18,8 @@ Timer = require 'hump/timer'
 ResourceManager = require 'managers/ResourceManager'
 Animation = require 'entities/Animation'
 HC = require 'HC'
+
+Shaders = (require 'shaders'):new()
 
 --hardon collider
 hc = require 'HC'
@@ -45,10 +49,16 @@ HEIGHT = 540
 FULLSCREEN = false
 SCALE = 1
 
+esr = 400
+esh = 400
+ess = 400
+
+
 local canvas
 
-
 function love.load()
+lol1 = math.max(love.graphics.getWidth(),love.graphics.getHeight())
+lol2 = lol1
 	local winwidth, winheight = love.window.getDesktopDimensions()
 	toggleFullscreen()
 	love.graphics.setDefaultFilter("nearest", "nearest")
@@ -57,11 +67,13 @@ function love.load()
 	
    resmgr = ResourceManager:new()
    love.graphics.setBackgroundColor(255,100,100)
-	StateManager.init("Moffeus")
+   StateManager.init("Moffeus")
 	--StateManager.init("TestScene")
 end
 
 function love.run()
+	-- PROFILEING
+	--ProFi:start()
 	if love.math then
 		love.math.setRandomSeed(os.time())
 	end
@@ -73,7 +85,39 @@ function love.run()
  
 	local dt = 0
  
+
+	shaders = love.graphics.newShader[[
+		  extern vec2 size;
+		  extern vec2 pos;
+		  extern float eventH;
+		  extern float escapeR;
+		  extern vec3 holeColor;
+
+		  vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 pixel_coords) {
+				vec2 pos = pos/size;
+				float eventH = eventH/size.x;
+				float escapeR = escapeR/size.y;
+
+				if(distance(texture_coords.xy,pos.xy) < eventH) {
+				// height
+				//if( distance(texture_coords.x, pos.x)*distance(texture_coords.x, pos.x) < distance(texture_coords.y, pos.y)) {
+					 return vec4(holeColor.rgb,1);
+				} else if(distance(texture_coords.xy,pos.xy) <= escapeR+eventH) { //magic
+				//} else if(distance(texture_coords.x, pos.x)*distance(texture_coords.x, pos.x) < distance(texture_coords.y, pos.y)) { //magic
+					 vec2 guide = vec2(pos.xy-texture_coords.xy);
+					 //guide.y += 2;
+					 float e = 1-((length(guide) - eventH)/escapeR);
+					 return Texel(texture,texture_coords.xy + guide.xy*e);
+
+					 //return vec4(1,0,0,1);
+				}
+
+				return Texel(texture,texture_coords.xy).rgba;
+		  }
+	 ]]
+
 	-- Main loop time.
+	
 	while true do
 		-- Process events.
 		if love.event then
@@ -100,7 +144,6 @@ function love.run()
 			love.update(dt)
 			--time.accum = 0--time.accum - time.fdt
 		--end	
- 
 		if love.graphics and love.graphics.isActive() then
 			love.graphics.clear(love.graphics.getBackgroundColor())
 			
@@ -108,26 +151,74 @@ function love.run()
 			--if love.draw then love.draw() end
 			
 			love.graphics.push()
+
+			if love.draw then 
+				love.draw() 
+			end
+
 			love.graphics.setCanvas(canvas)
-			if love.draw then love.draw() end
+
+			local scene = StateManager.getScene()
+			for i=0,#scene.layercanvases do
+				lg.draw(scene.layercanvases[i])
+			end
+			
+			--for i=#scene.layers,1 do
+			--	lg.draw(scene.layercanvases[i])
+			--end
+
+
 			love.graphics.pop()
 			
 			love.graphics.push()
 			love.graphics.scale(SCALE, SCALE)
 			love.graphics.setCanvas()
-			love.graphics.draw(canvas, 0, 0)
-			love.graphics.pop()
 			
+			if love.keyboard.isDown("up") then
+		        lol1 = lol1 + 1
+			end
+		    if love.keyboard.isDown("down") then
+		        lol1 = lol1 - 1
+		    end
+			if love.keyboard.isDown("left") then
+		        lol2 = lol2 - 1
+			end
+			if love.keyboard.isDown("right") then
+		        lol2 = lol2 + 1
+			end
+			
+			local width = math.max(love.graphics.getWidth(),love.graphics.getHeight())
+		    shaders:send('size',{lol1,lol2})
+		    shaders:send('eventH',esh)
+		    shaders:send('escapeR',esr*1.5)
+		    shaders:send('holeColor',{0,0,0})
+		    shaders:send('pos',{1920/2, 1080*2})
+
+
+
+			 love.graphics.setShader(shaders)
+			love.graphics.draw(canvas, 0, 0)
+			love.graphics.setShader()
+			lg.draw(resmgr:getImg("black_hole.png"), 0, 0)
+
+			love.graphics.pop()
+
+   	love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )),10, 10) 
 			love.graphics.present()
 		end
  
 		if love.timer then love.timer.sleep(0.001) end
 	end
+	-- PROFILER
  
 end
 
 function love.keypressed( key,scancode,isrepeat )
    if key == "escape" then
+
+		-- PROFILEING
+		--ProFi:stop()
+		--ProFi:writeReport( 'MyProfilingReport.txt' )
       love.event.quit()
 	elseif key == "f" then
 		toggleFullscreen(not FULLSCREEN)

@@ -5,7 +5,9 @@ function Scene:initialize()
 	self.entities = {}
 	self.layers = {}
 	self.layers.default = 0
-	self.layerId = 0
+	self.layercanvases = {}
+	self.layercanvases[0] = lg.newCanvas(WIDTH, HEIGHT)
+	self.layerId = 1
 	self.timer = Timer:new()
 end
 
@@ -30,7 +32,7 @@ function Scene:draw()
 
 	table.sort(self.entities,
 		function(a,b) 
-			if a.layer < b.layer then 
+			if a.layer > b.layer then 
 				return true 
 			elseif a.layer == b.layer then 
 				if a.id < b.id then 
@@ -43,11 +45,23 @@ function Scene:draw()
 			end 
 		end)
 
+		local current_layer = self.entities[1].layer
+		lg.setCanvas(self.layercanvases[current_layer])
+		--print("drawing to", current_layer)
+		love.graphics.clear( )
+
 		for i, v in ipairs(self.entities) do
 			if v:isActive() then
+				if current_layer ~= v.layer then
+					current_layer = v.layer
+					lg.setCanvas(self.layercanvases[current_layer])
+					love.graphics.clear( )
+			--		print("drawing to", current_layer)
+				end
 				v:draw()
 			end
 		end
+		lg.setCanvas()
 	end
 
 	function Scene:addEntity(e,layer)
@@ -64,8 +78,8 @@ function Scene:draw()
 	function Scene:addLayer(name)
 
 		self.layers[name] = self:getNewLayerId()
-
-		print(name, self.layers[name])
+		self.layercanvases[self.layers[name]] = lg.newCanvas(WIDTH, HEIGHT)
+		--print(name, self.layers[name])
 	end
 
 	function Scene:getNewLayerId()
