@@ -5,6 +5,9 @@ require ("loveshortcuts")
 print(math)
 math.random = love.math.random
 
+
+shine = require 'shine'
+bloom = shine.glowsimple()
 I = require 'inspect.inspect'
 G = require 'Globals'
 G_functions = require 'g_functions'
@@ -18,6 +21,9 @@ Timer = require 'hump/timer'
 ResourceManager = require 'managers/ResourceManager'
 Animation = require 'entities/Animation'
 HC = require 'HC'
+particle = require 'entities/Particle'
+
+Shaders = (require 'shaders'):new()
 
 Shaders = (require 'shaders'):new()
 
@@ -53,7 +59,6 @@ esr = 400
 esh = 400
 ess = 400
 
-
 local canvas
 
 function love.load()
@@ -70,23 +75,6 @@ lol2 = lol1
    love.graphics.setBackgroundColor(42,164,168)
    StateManager.init("Moffeus")
 	--StateManager.init("TestScene")
-end
-
-function love.run()
-	-- PROFILEING
-	--ProFi:start()
-	if love.math then
-		love.math.setRandomSeed(os.time())
-	end
- 
-	if love.load then love.load(arg) end
- 
-	-- We don't want the first frame's dt to include time taken by love.load.
-	if love.timer then love.timer.step() end
- 
-	local dt = 0
- 
-
 	shaders = love.graphics.newShader[[
 		  extern vec2 size;
 		  extern vec2 pos;
@@ -116,6 +104,39 @@ function love.run()
 				return Texel(texture,texture_coords.xy).rgba;
 		  }
 	 ]]
+end
+
+
+local addPixel = G_functions.rand(1,5)
+function love.update(dt)
+	local scene = StateManager.getScene()
+
+	addPixel = addPixel - dt
+
+	if addPixel <= 0 then
+		addPixel = G_functions.rand(1,2)/20
+
+		local part = particle:new(WIDTH,HEIGHT-3-G_functions.rand(1,20),scene,1+G_functions.rand(1,5),1+G_functions.rand(1,5),-200,0,0,0,5,G.color_theme[G_functions.rand(1,#G.color_theme)],nil)
+		part:setTrans(false)
+		scene:addEntity(part)		
+	end
+end
+
+function love.run()
+	-- PROFILEING
+	--ProFi:start()
+	if love.math then
+		love.math.setRandomSeed(os.time())
+	end
+ 
+	if love.load then love.load(arg) end
+ 
+	-- We don't want the first frame's dt to include time taken by love.load.
+	if love.timer then love.timer.step() end
+ 
+	local dt = 0
+ 
+
 
 	-- Main loop time.
 	
@@ -161,20 +182,25 @@ function love.run()
 
 			local scene = StateManager.getScene()
 			for i=0,#scene.layercanvases do
+		    if i == 2 then
+			    bloom:draw(function()
+					lg.draw(scene.layercanvases[i])
+			    end)
+			else
 				lg.draw(scene.layercanvases[i])
+			end
 			end
 			
 			--for i=#scene.layers,1 do
 			--	lg.draw(scene.layercanvases[i])
 			--end
-
-
 			love.graphics.pop()
 			
 			love.graphics.push()
 			love.graphics.scale(SCALE, SCALE)
 			love.graphics.setCanvas()
 			
+
 			if love.keyboard.isDown("up") then
 		        lol1 = lol1 + 1
 			end
@@ -195,16 +221,19 @@ function love.run()
 		    shaders:send('holeColor',{0,0,0})
 		    shaders:send('pos',{1920/2, 1080*2})
 
+		    --godsray
+		    love.graphics.setShader(shaders)
 
-
-			love.graphics.setShader(shaders)
+    		
+		    
 			love.graphics.draw(canvas, 0, 0)
 			love.graphics.setShader()
 			--lg.draw(resmgr:getImg("black_hole.png"), 0, 0)
 
 			love.graphics.pop()
+			love.graphics.setShader()	
 
-   	love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )),10, 10) 
+   			love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )),10, 10) 
 			love.graphics.present()
 		end
  

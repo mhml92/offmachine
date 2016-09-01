@@ -40,7 +40,6 @@ function Moffeus:initialize()
 end
 
 function Moffeus:defineLayers()
-	self:addLayer("bg")
 	self:addLayer("objects")
 end
 

@@ -4,10 +4,12 @@ function Scene:initialize()
 	self.entitiesId = 0
 	self.entities = {}
 	self.layers = {}
-	self.layers.default = 0
+	self.layers.bg = 0
 	self.layercanvases = {}
 	self.layercanvases[0] = lg.newCanvas(WIDTH, HEIGHT)
-	self.layerId = 1
+	self.layers.default = 1
+	self.layercanvases[1] = lg.newCanvas(WIDTH, HEIGHT)
+	self.layerId = 2
 	self.timer = Timer:new()
 end
 
@@ -48,7 +50,8 @@ function Scene:draw()
 		local current_layer = self.entities[1].layer
 		lg.setCanvas(self.layercanvases[current_layer])
 		--print("drawing to", current_layer)
-		love.graphics.clear( )
+
+		love.graphics.clear()
 
 		for i, v in ipairs(self.entities) do
 			if v:isActive() then
