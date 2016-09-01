@@ -1,7 +1,8 @@
 local Particle = Class("Particle", Entity)
 
-function Particle:initialize(x,y,scene,w,h,xspeed,yspeed,rot,rotSpeed,life,color,endcolor)
+function Particle:initialize(x,y,scene,w,h,xspeed,yspeed,rot,rotSpeed,life,color,endcolor, parent)
     Entity:initialize(x,y,scene)
+	 self.parent = parent or nil
 
     --[[
     local lp = love.physics
@@ -51,6 +52,9 @@ function Particle:setColor(color, endcolor)
 end
 
 function Particle:update(dt)
+	if self.parent then
+		self.speed_vec.x = self.parent.momentum.x
+	end
     self.life = self.life - dt
     self.x,self.y = self.x + self.speed_vec.x*dt,self.y + self.speed_vec.y*dt
     
