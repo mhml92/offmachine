@@ -7,6 +7,8 @@ function EnemyBullet:initialize(px,py,x,y,rot,deltaspeed,scene)
 
 	self.sprite = resmgr:getImg("bullets.png")
 	self.quad = love.graphics.newQuad(3,0,3,10,9,10)
+    self:addCollisionResponse("NewPLayer",self.hitPlayer,self)
+
 end
 
 function EnemyBullet:draw()
@@ -17,5 +19,10 @@ function EnemyBullet:draw()
 	love.graphics.draw(self.sprite, self.quad, self.x, self.y, self.rot+math.pi/2, 2,2)
 	love.graphics.setColor(255,255,255)
 end
+
+function EnemyBullet:hitPlayer(shape,delta)
+    self:kill()
+end
+
 
 return EnemyBullet

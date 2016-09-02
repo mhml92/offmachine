@@ -33,6 +33,7 @@ function Hud:initialize(x,y,scene)
 	
 	self.start_time = 300
 	self.local_timer = 0
+	self.real_timer = 0
 	
 	self.level_juice = 1
 	self.weapon_juice = 1
@@ -50,10 +51,13 @@ function Hud:update(dt)
 		self.red_ratio = 1 - weapon.reload_time / weapon.start_reload_time
 	end
 	
+	self.real_timer = self.real_timer + dt
 	local dt_diff = self.scene.timemgr.last_dt - dt
 	--print(dt_diff)
 	self.local_timer = self.local_timer + dt + dt_diff*10
+
 	self.blue_ratio = 1 - self.local_timer / self.start_time
+	if self.blue_ratio < 0 then self.blue_ratio = 0 end
 end
 
 function Hud:loseTime(lost)
@@ -148,6 +152,7 @@ end
 
 function Hud:drawTimer()
 	local time_remaining = math.floor(self.start_time - self.local_timer)
+	if time_remaining < 0 then time_remaining = 0 end
 	local minutes = math.floor(time_remaining / 60)
 	local seconds = math.floor(time_remaining % 60)
 	

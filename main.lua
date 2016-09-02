@@ -49,6 +49,7 @@ time.accum = 0
 
 
 local self = {}
+final_score = 0
 
 WIDTH = 960
 HEIGHT = 540
