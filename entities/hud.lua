@@ -156,7 +156,11 @@ function Hud:drawTimer()
 		s = "0"..seconds
 	end
 	
-	lg.print("0"..minutes..":"..s, self.cx-25, self.cy-5)
+	local text = "0"..minutes..":"..s
+	local font = love.graphics.getFont()
+	local lx = (WIDTH-font:getWidth(text)*2) / 2
+	
+	lg.print(text, lx, self.cy-8, 0, 2, 2)
 end
 
 function Hud:keypressed(key)

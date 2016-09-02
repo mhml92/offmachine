@@ -5,7 +5,7 @@ local StateManager = {}
 local scenes = {}
 scenes["Splash"] = require "scenes/Splash"
 scenes["Menu"] = require "scenes/Menu"
-scenes["Highscore"] = require "scenes/Highscore"
+scenes["EndScene"] = require "scenes/EndScene"
 scenes["TestScene"] = require "scenes/TestScene"
 scenes["Moffeus"] = require "scenes/Moffeus"
 
