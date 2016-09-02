@@ -65,6 +65,8 @@ function EnemyBase:getClosestPlayer()
 end
 
 function EnemyBase:destroy()
+
+	self.scene.soundmgr:playSound(self.explodeSound)
 	if false == self.destroyed then
 		self.destroy_tween = 1
 		self.destroyed = true

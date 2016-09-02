@@ -133,4 +133,10 @@ function EnemyChaser:draw()
 
 end
 
+function EnemyChaser:exit()
+
+	
+	self.scene.soundmgr:playSound(self.explodeSound3)
+end
+
 return EnemyChaser

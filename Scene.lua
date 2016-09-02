@@ -1,3 +1,5 @@
+
+local SoundManager = require 'managers/SoundManager'
 local Scene = Class("Scene")
 
 function Scene:initialize()
@@ -11,6 +13,7 @@ function Scene:initialize()
 	self.layercanvases[1] = lg.newCanvas(WIDTH, HEIGHT)
 	self.layerId = 2
 	self.timer = Timer:new()
+	self.soundmgr = SoundManager:new(self)
 end
 
 function Scene:update(dt)

@@ -42,6 +42,7 @@ function NewPlayer:initialize(x,y,scene)
 	self.weapon = WeaponInterface:new(self)
 	self.scene:addEntity(self.weapon, scene.layers.gui)	
 
+
 	self:addCollisionResponse("PowerUp",self.handlePowerUp,self)
 	self:addCollisionResponse("EnemyChaser",self.hitEnemyShip,self)
 	self:addCollisionResponse("EnemyZapper",self.hitEnemyShip,self)

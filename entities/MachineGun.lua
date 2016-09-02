@@ -17,6 +17,7 @@ function MachineGun:initialize(scene)
 
 	self.current_shoot_delay = 0
 	self.start_reload_time = self.reload_time
+	self.emptySound = self.scene.soundmgr:addSound("empty.mp3",false,1.0)
 end
 
 function MachineGun:levelUp()
@@ -67,11 +68,16 @@ function MachineGun:shoot(px,py,x,y,rot,momentum)
 			self.scene:addEntity(SimpleBullet:new(px,py,x,y,rot,momentum,self.scene, 3),self.scene.layers.objects)
 			self.scene:addEntity(SimpleBullet:new(px,py,x,y,rot+math.rad(15),momentum,self.scene, 3),self.scene.layers.objects)
 			self.scene:addEntity(SimpleBullet:new(px,py,x,y,rot+math.rad(30),momentum,self.scene, 3),self.scene.layers.objects)
+		else
+			
 		end
 		
 		self.scene.hud:juiceRed()
 		
 		return self.recoil
+	else
+
+			self.scene.soundmgr:playSound(self.emptySound)
 	end
 end
 
