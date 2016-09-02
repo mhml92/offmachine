@@ -10,10 +10,6 @@ function Entity:initialize(x, y, scene)
 	self.scene = scene
 	self.localTimer = scene.timemgr and scene.timemgr.localTimer or nil
 	self.flags = {}
-
-	self.explodeSound = self.scene.soundmgr:addSound("explo1.mp3",false,1.0)
-	self.explodeSound2 = self.scene.soundmgr:addSound("explo2.mp3",false,1.0)
-	self.explodeSound3 = self.scene.soundmgr:addSound("explo3.mp3",false,1.0)
 end
 
 function Entity:update(dt)

@@ -68,7 +68,6 @@ function MachineGun:shoot(px,py,x,y,rot,momentum)
 			self.scene:addEntity(SimpleBullet:new(px,py,x,y,rot,momentum,self.scene, 3),self.scene.layers.objects)
 			self.scene:addEntity(SimpleBullet:new(px,py,x,y,rot+math.rad(15),momentum,self.scene, 3),self.scene.layers.objects)
 			self.scene:addEntity(SimpleBullet:new(px,py,x,y,rot+math.rad(30),momentum,self.scene, 3),self.scene.layers.objects)
-		else
 			
 		end
 		
@@ -77,7 +76,7 @@ function MachineGun:shoot(px,py,x,y,rot,momentum)
 		return self.recoil
 	else
 
-			self.scene.soundmgr:playSound(self.emptySound)
+		--	self.scene.soundmgr:playSound(self.emptySound)
 	end
 end
 
