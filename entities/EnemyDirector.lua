@@ -17,70 +17,6 @@ function EnemyDirector:initialize(x, y, scene)
 		{
 				
 				{
-					type = "enemy",
-					time_a = 10,
-					time_b = 10,
-					count = 2,
-					obj = EnemyZapper,
-					placement = "rnd"
-				},
-				{
-					type = "enemy",
-					time_a = 20,
-					time_b = 20,
-					count = 3,
-					obj = EnemyZapper,
-					placement = "rnd"
-				},
-				{
-					type = "enemy",
-					time_a = 25,
-					time_b = 35,
-					count = 10,
-					obj = EnemyZapper,
-					placement = "rnd"
-				},
-
-				--{
-				--	type = "enemy",
-				--	time_a = 30,
-				--	time_b = 30,
-				--	count = 3,
-				--	obj = EnemyZapper,
-				--	placement = "rnd"
-				--},
-				{
-					type      = "powerup",
-					time      = 40,
-					item      = 4,
-					obj       = PowerUp,
-					placement = "top"
-				},   
-				{
-					type = "enemy",
-					time_a = 45,
-					time_b = 45,
-					count = 2,
-					obj = EnemyZapper,
-					placement = "rnd"
-				},
-				{
-					type = "enemy",
-					time_a = 50,
-					time_b = 50,
-					count = 0,
-					obj = EnemyZapper,
-					placement = "rnd"
-				},
-				{
-					type = "enemy",
-					time_a = 50,
-					time_b = 50,
-					count = 2,
-					obj = EnemyChaser,
-					placement = "rnd"
-				},
-				{
 					type      = "powerup",
 					time      = 50,
 					item      = 4,
@@ -88,21 +24,160 @@ function EnemyDirector:initialize(x, y, scene)
 					placement = "top"
 				},   
 				{
+					type      = "powerup",
+					time      = 100,
+					item      = 4,
+					obj       = PowerUp,
+					placement = "top"
+				},   
+				{
+					type      = "powerup",
+					time      = 150,
+					item      = 2,
+					obj       = PowerUp,
+					placement = "top"
+				},   
+				{
+					type      = "powerup",
+					time      = 200,
+					item      = 4,
+					obj       = PowerUp,
+					placement = "top"
+				},   
+				{
+					type      = "powerup",
+					time      = 250,
+					item      = 4,
+					obj       = PowerUp,
+					placement = "top"
+				},   
+				{
 					type = "enemy",
-					time_a = 54,
-					time_b = 250,
-					count = 100,
+					time_a = 5,
+					time_b = 100,
+					count = 25,
 					obj = EnemyZapper,
 					placement = "rnd"
 				},
 				{
 					type = "enemy",
-					time_a = 54,
-					time_b = 250,
-					count = 100,
+					time_a = 100,
+					time_b = 150,
+					count = 20,
+					obj = EnemyZapper,
+					placement = "rnd"
+				},
+				{
+					type = "enemy",
+					time_a = 150,
+					time_b = 300,
+					count = 60,
+					obj = EnemyZapper,
+					placement = "rnd"
+				},
+				{
+					type = "enemy",
+					time_a = 50,
+					time_b = 100,
+					count = 10,
 					obj = EnemyChaser,
 					placement = "rnd"
 				},
+				{
+					type = "enemy",
+					time_a = 100,
+					time_b = 150,
+					count = 15,
+					obj = EnemyChaser,
+					placement = "rnd"
+				},
+				{
+					type = "enemy",
+					time_a = 150,
+					time_b = 200,
+					count = 15,
+					obj = EnemyChaser,
+					placement = "rnd"
+				},
+				{
+					type = "enemy",
+					time_a = 200,
+					time_b = 300,
+					count = 30,
+					obj = EnemyZapper,
+					placement = "rnd"
+				},
+			--	{
+			--		type = "enemy",
+			--		time_a = 25,
+			--		time_b = 35,
+			--		count = 10,
+			--		obj = EnemyZapper,
+			--		placement = "rnd"
+			--	},
+
+			--	--{
+			--	--	type = "enemy",
+			--	--	time_a = 30,
+			--	--	time_b = 30,
+			--	--	count = 3,
+			--	--	obj = EnemyZapper,
+			--	--	placement = "rnd"
+			--	--},
+			--	{
+			--		type      = "powerup",
+			--		time      = 40,
+			--		item      = 4,
+			--		obj       = PowerUp,
+			--		placement = "top"
+			--	},   
+			--	{
+			--		type = "enemy",
+			--		time_a = 45,
+			--		time_b = 45,
+			--		count = 2,
+			--		obj = EnemyZapper,
+			--		placement = "rnd"
+			--	},
+			--	{
+			--		type = "enemy",
+			--		time_a = 50,
+			--		time_b = 50,
+			--		count = 0,
+			--		obj = EnemyZapper,
+			--		placement = "rnd"
+			--	},
+			--	{
+			--		type = "enemy",
+			--		time_a = 50,
+			--		time_b = 50,
+			--		count = 2,
+			--		obj = EnemyChaser,
+			--		placement = "rnd"
+			--	},
+			--	{
+			--		type      = "powerup",
+			--		time      = 50,
+			--		item      = 4,
+			--		obj       = PowerUp,
+			--		placement = "top"
+			--	},   
+			--	{
+			--		type = "enemy",
+			--		time_a = 54,
+			--		time_b = 250,
+			--		count = 80,
+			--		obj = EnemyZapper,
+			--		placement = "rnd"
+			--	},
+			--	{
+			--		type = "enemy",
+			--		time_a = 54,
+			--		time_b = 250,
+			--		count = 80,
+			--		obj = EnemyChaser,
+			--		placement = "rnd"
+			--	},
 				--{
 				--	type = "enemy",
 				--	time_a = 65,
