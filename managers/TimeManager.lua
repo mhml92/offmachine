@@ -27,6 +27,9 @@ function TimeManager:update(dt)
 	end
 
 	local newDT = dt*self.timeScalar
+
+	shake_screen((1-dt/newDT)/5)
+
 	return newDT
 end
 

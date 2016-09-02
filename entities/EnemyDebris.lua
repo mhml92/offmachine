@@ -22,6 +22,10 @@ function EnemyDebris:initialize(x,y,scene,image,life,sprites,w,h,quad)
     self.speed_vec = Vector.new(G_functions.rand(-40,40),G_functions.rand(-40,40))
 end
 
+function EnemyDebris:setMoveVec(x,y)
+    self.speed_vec = Vector.new(x,y)
+end
+
 
 function EnemyDebris:update(dt)
     self.life = self.life - dt
