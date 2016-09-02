@@ -12,14 +12,8 @@ function NewPlayer:initialize(x,y,scene)
 	self:setShape(HC:rectangle(100,100,2*self.radius,2*self.radius))
 	--print(#love.joystick.getJoysticks( ),"here")
 	self.joystick = love.joystick.getJoysticks( )[1]
-<<<<<<< ef229a4279682a75b02e173112028d63a22ceb12
-
-	self.force = 25
-	self.maxspeed = 250
-=======
 	self.force = 20
 	self.maxspeed = 200
->>>>>>> added way too much shit
 	self.dash_force = 750
 	self.dash_time = 0.15
 	self.momentum = {}
@@ -137,11 +131,6 @@ function NewPlayer:update(dt)
 	if self.y < 0 then self.y = 0 end
 	if self.x > WIDTH then self.x = self.x -WIDTH end
 	if self.y > HEIGHT then self.y = HEIGHT end
-<<<<<<< ef229a4279682a75b02e173112028d63a22ceb12
-
-=======
-	
->>>>>>> added way too much shit
 	self.shape:moveTo(self.x,self.y)
 	self.shape:setRotation(self.rot)
 
