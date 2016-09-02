@@ -5,6 +5,14 @@ local WeaponInterface = require 'entities/WeaponInterface'
 
 local vector = require 'hump.vector-light'
 
+local deathshader = love.graphics.newShader[[
+	extern float percent;
+    vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords ){
+        vec4 pixel = Texel(texture, texture_coords);
+		return vec4(max(1.0*percent, pixel.r),max(1.0*percent, pixel.g), max(1.0*percent, pixel.b), pixel.a);//red
+    }
+]]
+
 function NewPlayer:initialize(x,y,scene)
 	Entity.initialize(self,x,y,scene)
 
@@ -28,24 +36,42 @@ function NewPlayer:initialize(x,y,scene)
 	self.front = resmgr:getImg("spaceship_front.png")
 
 	self.rot = 0
+	self.has_been_hit = 0
+	self.declutter_strenght = 250
 
 	self.weapon = WeaponInterface:new(self)
 	self.scene:addEntity(self.weapon, scene.layers.gui)	
 
 	self:addCollisionResponse("PowerUp",self.handlePowerUp,self)
+	self:addCollisionResponse("EnemyChaser",self.hitEnemyShip,self)
+	self:addCollisionResponse("EnemyZapper",self.hitEnemyShip,self)
+end
+
+function NewPlayer:hitEnemyShip(shape,delta)
+	if shape.owner.alive then
+		local dxn, dyn = vector.normalize(shape.owner.x-self.x, shape.owner.y-self.y)
+		
+		self.momentum.x = self.momentum.x - dxn * self.declutter_strenght
+		self.momentum.y = self.momentum.y - dyn * self.declutter_strenght
+		
+		shake_screen(3)
+		if self.has_been_hit <= 0 then
+			self.has_been_hit = 0.5
+		end
+	end
 end
 
 function NewPlayer:update(dt)
 
 	-- JERES MOVEMENT
-	local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
+	--local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
 	--	leftx,lefty,leftt,rightx,righty,rightt = 0,0,0,0,0,0
 	--	local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
 	--local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
 	--leftx,lefty,leftt,rightx,righty,rightt = 0,0,0,0,0,0
 
 	-- JESPERS MOVEMENT
-	--local leftx,lefty,rightx,righty,leftt,rightt = self.joystick:getAxes( )
+	local leftx,lefty,rightx,righty,leftt,rightt = self.joystick:getAxes( )
 
 	self.weapon:update(dt)
 
@@ -89,6 +115,14 @@ function NewPlayer:update(dt)
 
 		local lenght = Vectorl.len(self.momentum.x,self.momentum.y)
 
+
+		if self.has_been_hit > 0 then
+			self.maxspeed = 1500
+			self.force = math.min(1/(self.has_been_hit*self.has_been_hit),20)
+		else
+			self.maxspeed = 200
+			self.force = 20
+		end
 		self.x = self.x + math.cos(self.rot)*math.min(lenght,self.maxspeed) * dt
 		self.y = self.y + math.sin(self.rot)*math.min(lenght,self.maxspeed) * dt
 
@@ -127,6 +161,8 @@ function NewPlayer:update(dt)
 		end
 		self.dashing = self.dashing - dt
 	end
+
+	self.has_been_hit = self.has_been_hit - dt
 	if self.x < 0 then self.x = self.x+WIDTH end
 	if self.y < 0 then self.y = 0 end
 	if self.x > WIDTH then self.x = self.x -WIDTH end
@@ -183,6 +219,12 @@ end
 
 function NewPlayer:draw()
 	love.graphics.setColor(255,255,255,255)
+	local percent = self.has_been_hit*2
+	if percent > 0 then
+		deathshader:send("percent", percent)
+		lg.setShader(deathshader)
+	end
+
 	love.graphics.draw(self.back, self.x, self.y, self.rot+math.pi/2, 1, 1, 16, 16)
 	--love.graphics.draw(self.front, self.x-16, self.y-16)
 	love.graphics.draw(self.back, self.x+WIDTH, self.y, self.rot+math.pi/2, 1, 1, 16, 16)
@@ -190,6 +232,7 @@ function NewPlayer:draw()
 	love.graphics.draw(self.back, self.x-WIDTH, self.y, self.rot+math.pi/2, 1, 1, 16, 16)
 	--love.graphics.draw(self.front, self.x-16-WIDTH, self.y-16)
 
+	lg.setShader()
 
 	--love.graphics.setColor(0,255,0, 50)
 	--love.graphics.rectangle("fill", self.x-7, self.y+3, 14, 40)
