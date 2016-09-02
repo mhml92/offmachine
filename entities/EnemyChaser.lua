@@ -43,6 +43,7 @@ function EnemyChaser:initialize(x,y,scene)
 	self.drag = 0.995
 	self.life = 3
 	self.declutter_strenght = 2 
+	self.enterSound = self.scene.soundmgr:addSound("chaser.mp3",false,1.0)
 end
 
 function EnemyChaser:test(shape,delta)

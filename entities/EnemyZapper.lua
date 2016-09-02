@@ -31,6 +31,8 @@ function EnemyZapper:initialize(x,y,scene)
 			self.debris[i][j] = love.graphics.newQuad(j*(self.xsize/self.numx), i*(self.ysize/self.numy), self.xsize/self.numx, self.ysize/self.numx, 120, 40)
 		end
 	end
+
+	self.enterSound = self.scene.soundmgr:addSound("zapper.mp3",false,1.0)
 end
 
 function EnemyZapper:test(shape,delta)
@@ -102,6 +104,7 @@ function EnemyZapper:move()
 end
 
 function EnemyZapper:update(dt)
+	EnemyBase.update(self,dt)
 	if self.shape then
 		self.shape:moveTo(self.x,self.y)
 		self:checkCollision()

@@ -85,7 +85,7 @@ function NewPlayer:update(dt)
 	local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
 	--	leftx,lefty,leftt,rightx,righty,rightt = 0,0,0,0,0,0
 	--	local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
-	--local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
+	local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
 	--leftx,lefty,leftt,rightx,righty,rightt = 0,0,0,0,0,0
 
 	-- JESPERS MOVEMENT
