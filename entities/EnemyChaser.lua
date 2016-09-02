@@ -19,7 +19,7 @@ function EnemyChaser:initialize(x,y,scene)
 	self.player = scene.player
 	self.state = LOITERING
 	self.destroy_animation = 0
-	self.acc = 3
+	self.acc = 2
 	self:setShape(HC:circle(self.x, self.y, self.radius, self.radius))
 	self:addCollisionResponse("SimpleBullet", self.test, self)
 	self:addCollisionResponse("EnemyChaser", self.decluster, self)
@@ -30,7 +30,7 @@ function EnemyChaser:initialize(x,y,scene)
 	self.front = love.graphics.newQuad(80, 0, 40, 40, 120, 40)
 
 	self.debris = {}
-	self.xsize,self.ysize,self.numx,self.numy = 40,40,G_functions.rand(1,20),G_functions.rand(1,20)
+	self.xsize,self.ysize,self.numx,self.numy = 40,40,G_functions.rand(4,8),G_functions.rand(4,8)
 	for i=0,self.numy-1 do
 		self.debris[i] = {}
 		for j=0,self.numx-1 do

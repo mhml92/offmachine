@@ -76,8 +76,10 @@ end
 local lg = love.graphics
 function EnemyZapper:draw()
 	lg.setColor(255, 255, 255)
-	lg.draw(self.sprite, self.back, self.x-15, self.y-15, self.back_rot, 1,1,15, 15)
-	lg.draw(self.sprite, self.front, self.x-15, self.y-15, self.front_rot, 1,1,15, 15)
+	--lg.draw(self.sprite, self.back, self.x-15, self.y-15, self.back_rot, 1,1,15, 15)
+	--lg.draw(self.sprite, self.front, self.x-15, self.y-15, self.front_rot, 1,1,15, 15)
+	lg.draw(self.sprite, self.back, self.x, self.y, self.back_rot, 1,1,15, 15)
+	lg.draw(self.sprite, self.front, self.x, self.y, self.front_rot, 1,1,15, 15)
 	--self.shape:draw("fill")
 end
 
