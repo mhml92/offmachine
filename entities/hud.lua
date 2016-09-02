@@ -33,6 +33,10 @@ function Hud:initialize(x,y,scene)
 	
 	self.start_time = 65
 	self.local_timer = 0
+	
+	self.level_juice = 1
+	self.weapon_juice = 1
+	self.time_juice = 1
 end
 
 function Hud:update(dt)
@@ -62,7 +66,7 @@ function Hud:draw()
 	lg.draw(self.lines, self.x, self.y)
 	self:drawWeapon()
 	self:drawTimer()
-	lg.draw(self.icons, self.icons_q[7], self.cx-76, self.cy-10)
+	lg.draw(self.icons, self.icons_q[7], self.cx-76, self.cy-10, 0, self.time_juice, self.time_juice)
 	love.graphics.setColor(255,255,255, 255)
 end
 
@@ -104,9 +108,27 @@ function Hud:drawWeapon()
 		quad = 2
 	end
 	if quad then
-		lg.draw(self.icons, self.icons_q[quad], self.cx+55, self.cy-10)
-		lg.draw(self.icons, self.icons_q[level+3], self.cx+75, self.cy-10)
+		lg.draw(self.icons, self.icons_q[level+3], self.cx+75, self.cy-10, 0, self.level_juice, self.level_juice)
+		lg.draw(self.icons, self.icons_q[quad], self.cx+55, self.cy-10, 0, self.weapon_juice, self.weapon_juice)
 	end
+end
+
+function Hud:juiceWeapon()
+	self.scene.timer:tween(0.2, self, {weapon_juice = 1.5}, "out-back", function()
+		self.scene.timer:tween(0.2, self, {weapon_juice = 1}, "out-back")
+	end)
+end
+
+function Hud:juiceLevel()
+	self.scene.timer:tween(0.2, self, {level_juice = 1.5}, "out-back", function()
+		self.scene.timer:tween(0.2, self, {level_juice = 1}, "out-back")
+	end)
+end
+
+function Hud:juiceTime()
+	self.scene.timer:tween(0.2, self, {time_juice = 1.5}, "out-back", function()
+		self.scene.timer:tween(0.2, self, {time_juice = 1}, "out-back")
+	end)
 end
 
 function Hud:drawTimer()
@@ -124,9 +146,9 @@ end
 
 function Hud:keypressed(key)
 	if key == "b" then
-		self:loseTime(20)
+		self:juiceLevel()
 	elseif key == "r" then
-		self.red_ratio = self.red_ratio - 0.1
+		self:juiceWeapon()
 		
 	end
 end
