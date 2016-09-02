@@ -58,7 +58,7 @@ function MachineGun:shoot(px,py,x,y,rot,momentum)
         local bullets = 4 + 1 * self.level
 
         for i = 1,bullets do
-            local bullet = SimpleBullet:new(px,py,x,y,rot+math.rad(G_functions.rand(0,self.spread*2)-self.spread),momentum,self.scene)
+            local bullet = SimpleBullet:new(px,py,x,y,rot+math.rad(G_functions.rand(0,self.spread*2)-self.spread),momentum,self.scene, 3)
             bullet:updateRelativeSpeed(G_functions.rand(-100,100))
             self.scene:addEntity(bullet,self.scene.layers.objects)
         end
@@ -66,7 +66,7 @@ function MachineGun:shoot(px,py,x,y,rot,momentum)
         --print("vibration",self.scene.player.joystick:setVibration( 1, 1, 2 ))
 
         --self.scene:addEntity(GuiShell:new(WIDTH/2+65+self.ammo*5,HEIGHT-18,self.scene,self.img,30),self.scene.layers.gui)
-
+			self.scene.hud:juiceRed()
         return self.recoil
     end
 
