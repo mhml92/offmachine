@@ -97,6 +97,9 @@ function Hud:drawWeapon()
 	local name = self.weapon_i.weapon.name
 	local level = self.weapon_i.weapon.level
 	local quad = nil
+	if name == "Pea shooter" then
+		quad = 1
+	end
 	if name == "Shotgun" then
 		quad = 2
 	end

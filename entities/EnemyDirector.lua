@@ -20,10 +20,27 @@ function EnemyDirector:initialize(x, y, scene)
 					type = "enemy",
 					time_a = 10,
 					time_b = 10,
-					count = 5,
+					count = 2,
 					obj = EnemyZapper,
 					placement = "rnd"
 				},
+				{
+					type = "enemy",
+					time_a = 20,
+					time_b = 20,
+					count = 3,
+					obj = EnemyZapper,
+					placement = "rnd"
+				},
+				{
+					type = "enemy",
+					time_a = 25,
+					time_b = 35,
+					count = 10,
+					obj = EnemyZapper,
+					placement = "rnd"
+				},
+
 				--{
 				--	type = "enemy",
 				--	time_a = 30,
@@ -34,27 +51,43 @@ function EnemyDirector:initialize(x, y, scene)
 				--},
 				{
 					type      = "powerup",
-					time      = 50,
+					time      = 40,
 					item      = 4,
 					obj       = PowerUp,
 					placement = "top"
 				},   
 				{
 					type = "enemy",
-					time_a = 55,
-					time_b = 60,
-					count = 5,
-					obj = EnemyChaser,
+					time_a = 45,
+					time_b = 45,
+					count = 2,
+					obj = EnemyZapper,
 					placement = "rnd"
 				},
 				{
 					type = "enemy",
-					time_a = 65,
-					time_b = 76,
-					count = 8,
+					time_a = 50,
+					time_b = 50,
+					count = 4,
+					obj = EnemyZapper,
+					placement = "rnd"
+				},
+				{
+					type = "enemy",
+					time_a = 50,
+					time_b = 50,
+					count = 3,
 					obj = EnemyChaser,
 					placement = "rnd"
 				},
+				--{
+				--	type = "enemy",
+				--	time_a = 65,
+				--	time_b = 76,
+				--	count = 8,
+				--	obj = EnemyChaser,
+				--	placement = "rnd"
+				--},
 				--{
 				--	type = "enemy",
 				--	time_a = 40,
@@ -63,13 +96,13 @@ function EnemyDirector:initialize(x, y, scene)
 				--	obj = EnemyZapper,
 				--	placement = "rnd"
 				--},
-				{
-					type      = "powerup",
-					time      = 90,
-					item      = 4,
-					obj       = PowerUp,
-					placement = "top"
-				},   
+			--	{
+			--		type      = "powerup",
+			--		time      = 90,
+			--		item      = 4,
+			--		obj       = PowerUp,
+			--		placement = "top"
+			--	},   
 				--{
 				--	type = "enemy",
 				--	time_a = 35,

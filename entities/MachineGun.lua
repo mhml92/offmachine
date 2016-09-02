@@ -30,6 +30,7 @@ function MachineGun:levelUp()
 	elseif self.level == 3 then
 		self.max_ammo = 1
 	end
+	self.ammo = self.max_ammo
 end
 
 function MachineGun:update(dt)
