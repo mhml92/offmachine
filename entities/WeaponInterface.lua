@@ -50,6 +50,7 @@ end
 
 
 function WeaponInterface:draw()
+<<<<<<< ef229a4279682a75b02e173112028d63a22ceb12
     --[[
     lg.draw(resmgr:getImg("weaponhud.png"),WIDTH/2+60,HEIGHT-30,0,1,1)
 
@@ -73,6 +74,8 @@ function WeaponInterface:draw()
     lg.print(self.weapon.name,WIDTH/2+80,HEIGHT-45)
 =======
     lg.print(self.weapon.name,WIDTH/2+80,HEIGHT-45)]]
+=======
+>>>>>>> added way too much shit
 end
 
 return WeaponInterface
