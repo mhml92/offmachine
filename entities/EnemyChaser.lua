@@ -136,7 +136,7 @@ end
 function EnemyChaser:exit()
 
 	
-	self.scene.soundmgr:playSound(self.explodeSound3)
+	self.scene.soundmgr:playSound(self.scene.explodeSound3)
 end
 
 return EnemyChaser

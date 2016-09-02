@@ -278,7 +278,7 @@ function love.run()
 
 			love.graphics.pop()
 			
-   		--	love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )),10, 10) 
+   			love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )),10, 10) 
 			love.graphics.present()
 		end
  		

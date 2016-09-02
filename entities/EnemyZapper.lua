@@ -123,4 +123,9 @@ function EnemyZapper:draw()
 	--self.shape:draw("fill")
 end
 
+function EnemyZapper:exit()
+
+	self.scene.soundmgr:playSound(self.scene.explodeSound)
+end
+
 return EnemyZapper
