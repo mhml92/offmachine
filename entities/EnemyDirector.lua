@@ -18,27 +18,91 @@ function EnemyDirector:initialize(x, y, scene)
 				
 				{
 					type = "enemy",
-					time_a = 5,
-					time_b = 60,
-					count = 10,
-					obj = EnemyChaser,
-					placement = "rnd"
-				},
-				{
-					type = "enemy",
-					time_a = 15,
-					time_b = 30,
-					count = 5,
+					time_a = 10,
+					time_b = 10,
+					count = 2,
 					obj = EnemyZapper,
 					placement = "rnd"
 				},
 				{
+					type = "enemy",
+					time_a = 20,
+					time_b = 20,
+					count = 3,
+					obj = EnemyZapper,
+					placement = "rnd"
+				},
+				{
+					type = "enemy",
+					time_a = 25,
+					time_b = 35,
+					count = 10,
+					obj = EnemyZapper,
+					placement = "rnd"
+				},
+
+				--{
+				--	type = "enemy",
+				--	time_a = 30,
+				--	time_b = 30,
+				--	count = 3,
+				--	obj = EnemyZapper,
+				--	placement = "rnd"
+				--},
+				{
 					type      = "powerup",
-					time      = 1,
-					item      = 1,
+					time      = 40,
+					item      = 4,
 					obj       = PowerUp,
 					placement = "top"
 				},   
+				{
+					type = "enemy",
+					time_a = 45,
+					time_b = 45,
+					count = 2,
+					obj = EnemyZapper,
+					placement = "rnd"
+				},
+				{
+					type = "enemy",
+					time_a = 50,
+					time_b = 50,
+					count = 4,
+					obj = EnemyZapper,
+					placement = "rnd"
+				},
+				{
+					type = "enemy",
+					time_a = 50,
+					time_b = 50,
+					count = 3,
+					obj = EnemyChaser,
+					placement = "rnd"
+				},
+				--{
+				--	type = "enemy",
+				--	time_a = 65,
+				--	time_b = 76,
+				--	count = 8,
+				--	obj = EnemyChaser,
+				--	placement = "rnd"
+				--},
+				--{
+				--	type = "enemy",
+				--	time_a = 40,
+				--	time_b = 50,
+				--	count = 4,
+				--	obj = EnemyZapper,
+				--	placement = "rnd"
+				--},
+			--	{
+			--		type      = "powerup",
+			--		time      = 90,
+			--		item      = 4,
+			--		obj       = PowerUp,
+			--		placement = "top"
+			--	},   
 				--{
 				--	type = "enemy",
 				--	time_a = 35,
@@ -119,7 +183,7 @@ function EnemyDirector:update(dt)
 					)
 			else
 				for i = 1,obj.count do
-					local wait = love.math.random(obj.time_a,time_b)
+					local wait = love.math.random(obj.time_a,obj.time_b)
 					t:after(wait,
 						function() 
 							local placement = ""
@@ -148,7 +212,7 @@ function EnemyDirector:update(dt)
 end
 
 function EnemyDirector:getNewPosition(at)
-	print(at)
+	--print(at)
 	if at == "top" then
 		return math.random()*WIDTH,-100
 	elseif at == "left" then

@@ -2,7 +2,7 @@
 --ProFi = require 'ProFi'
 require 'slam/slam'
 require ("loveshortcuts")
-print(math)
+--print(math)
 math.random = love.math.random
 
 

@@ -10,7 +10,7 @@ function NewPlayer:initialize(x,y,scene)
 
 	self.radius = 16
 	self:setShape(HC:rectangle(100,100,2*self.radius,2*self.radius))
-	print(#love.joystick.getJoysticks( ),"here")
+	--print(#love.joystick.getJoysticks( ),"here")
 	self.joystick = love.joystick.getJoysticks( )[1]
 
 	self.force = 25
@@ -160,14 +160,16 @@ function NewPlayer:update(dt)
 end
 
 function NewPlayer:handlePowerUp(shape,delta)
-	print(shape, delta)
+	--print(shape, delta)
 	local powerup = shape.owner
-	if powerup.type == 4 then
-		self.weapon:gainLevel()
-	else
-		self.weapon:changeType(powerup.type)
+	if powerup.alive then
+		if powerup.type == 4 then
+			self.weapon:gainLevel()
+		else
+			self.weapon:changeType(powerup.type)
+		end
+		powerup:kill()
 	end
-	powerup:kill()
 end
 
 function NewPlayer:shoot(x,y)

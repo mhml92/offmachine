@@ -23,7 +23,7 @@ function Scene:update(dt)
 	for i=#self.entities, 1, -1 do
 		if self.entities[i]:isAlive() == false then
 			if self.entities[i].shape then
-				print(self.entities[i].class.name, "mig")
+		--		print(self.entities[i].class.name, "mig")
 				--HC.remove(self.entities[i].shape)
 			end
 			table.remove(self.entities, i);
