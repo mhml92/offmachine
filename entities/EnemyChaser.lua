@@ -52,10 +52,29 @@ function EnemyChaser:test(shape,delta)
 		self.life = self.life - 1
 		if self.life <= 0 then
 			self:destroy()
+			shake_screen(G_functions.rand(0,30)/10)
 			for i=0,self.numy-1 do
 				for j=0,self.numx-1 do
 					self.scene:addEntity(enemydebris:new(self.x+j*(self.xsize/self.numx),self.y+i*(self.ysize/self.numy),self.scene,self.debris[i][j],5,self.sprite,(self.xsize/self.numx),(self.ysize/self.numy)), self.scene.layers.objects)
 				end
+			end
+
+			for i=1,25 do
+				--+(G_functions.rand(0,40)-20)/10
+				local part = Particle:new(
+					self.x+G_functions.rand(-8,8),
+					self.y+G_functions.rand(-8,8),
+					self.scene,
+					G_functions.rand(-25,25),
+					G_functions.rand(-25,25),
+					G_functions.rand(-25,25),
+					G_functions.rand(-25,25),
+					math.rad(G_functions.rand(0,360)),
+					0,
+					G_functions.rand(0,1.5),
+					nil)
+				part:setColor(G_functions.deepcopy(G.fire_colors[G_functions.rand(1,3)]),G_functions.deepcopy(G.fire_colors[G_functions.rand(4,5)]))
+				self.scene:addEntity(part, self.scene.layers.objects)
 			end
 		end
 		self.has_been_hit = 1

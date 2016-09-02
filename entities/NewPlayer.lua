@@ -28,6 +28,7 @@ function NewPlayer:initialize(x,y,scene)
 	self.momentum.x = 0
 	self.momentum.y = 0
 	self.drag = 0.995
+	self.finished = false
 
 	self.dashing = 0
 	self.dash_dir = "left"
@@ -83,109 +84,120 @@ end
 function NewPlayer:update(dt)
 
 	-- JERES MOVEMENT
-	local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
+	--local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
 	--	leftx,lefty,leftt,rightx,righty,rightt = 0,0,0,0,0,0
 	--	local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
-	local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
+	--local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
 	--leftx,lefty,leftt,rightx,righty,rightt = 0,0,0,0,0,0
 
 	-- JESPERS MOVEMENT
-	--local leftx,lefty,rightx,righty,leftt,rightt = self.joystick:getAxes( )
+	local leftx,lefty,rightx,righty,leftt,rightt = self.joystick:getAxes( )
 
 	self.weapon:update(dt)
 
-	--if math.abs(rightx) > 0.5 or math.abs(righty) > 0.5 then
-	--	--self:shoot(rightx,righty)
-	--	self:shoot(self.momentum.x,self.momentum.y)
-	--end
-	if math.abs(leftx) < 0.2 then
-		leftx = 0
-	end
-	if self.dashing <= 0 then
+	if self.scene.hud.local_timer >= self.scene.hud.start_time then
+		if not self.finished then
+			FINAL_SCORE = math.floor(self.scene.hud.real_timer)
+			self.finished = true
+			self.scene.timer:tween(3.0, self,{rot = Vectorl.angleTo(0,-50)},'in-quad')
+			self.scene.timer:tween(3.0, self,{x = WIDTH/2,y=-50},'in-quart', function() StateManager.setScene("EndScene") end)
+		end 
+	else
 
-		if math.abs(rightx) > 0.5 or math.abs(righty) > 0.5 then
-			--self:shoot(rightx,righty)
-			self:shoot(self.momentum.x,self.momentum.y)
-		end
+		--if math.abs(rightx) > 0.5 or math.abs(righty) > 0.5 then
+		--	--self:shoot(rightx,righty)
+		--	self:shoot(self.momentum.x,self.momentum.y)
+		--end
 		if math.abs(leftx) < 0.2 then
 			leftx = 0
 		end
+		if self.dashing <= 0 then
 
-		if math.abs(lefty) < 0.2 then
-			lefty = 0
-		end
+			if math.abs(rightx) > 0.5 or math.abs(righty) > 0.5 then
+				--self:shoot(rightx,righty)
+				self:shoot(self.momentum.x,self.momentum.y)
+			end
+			if math.abs(leftx) < 0.2 then
+				leftx = 0
+			end
 
-		-- normalize gamepad triggers
-		leftt,rightt = ((leftt+1)/2),((rightt+1)/2)
+			if math.abs(lefty) < 0.2 then
+				lefty = 0
+			end
 
-
-		self.momentum.x = self.momentum.x + (leftx*(self.force))
-		self.momentum.y = self.momentum.y + (lefty*(self.force))
-
-		if self.recoil then
-			self.x = self.x+ (math.cos(self.recoil_dir)+math.rad(G_functions.rand(1,20)-10))*((self.recoil and -self.recoil or 0))
-			--self.momentum.x = self.momentum.x + (math.cos(self.recoil_dir)+math.rad(G_functions.rand(1,20)-10))*((self.recoil and -self.recoil or 0))
-			self.y = self.y+ (math.sin(self.recoil_dir)+math.rad(G_functions.rand(1,20)-10))*((self.recoil and -self.recoil or 0))
-			--self.momentum.y = self.momentum.y + (math.sin(self.recoil_dir)+math.rad(G_functions.rand(1,20)-10))*((self.recoil and -self.recoil or 0))
-		end
-		self.recoil = nil
-
-		self.rot = Vectorl.angleTo(self.momentum.x,self.momentum.y)
-
-		local lenght = Vectorl.len(self.momentum.x,self.momentum.y)
+			-- normalize gamepad triggers
+			leftt,rightt = ((leftt+1)/2),((rightt+1)/2)
 
 
-		if self.has_been_hit > 0 then
-			self.maxspeed = 1500
-			self.force = math.min(1/(self.has_been_hit*self.has_been_hit),20)
+			self.momentum.x = self.momentum.x + (leftx*(self.force))
+			self.momentum.y = self.momentum.y + (lefty*(self.force))
+
+			if self.recoil then
+				self.x = self.x+ (math.cos(self.recoil_dir)+math.rad(G_functions.rand(1,20)-10))*((self.recoil and -self.recoil or 0))
+				--self.momentum.x = self.momentum.x + (math.cos(self.recoil_dir)+math.rad(G_functions.rand(1,20)-10))*((self.recoil and -self.recoil or 0))
+				self.y = self.y+ (math.sin(self.recoil_dir)+math.rad(G_functions.rand(1,20)-10))*((self.recoil and -self.recoil or 0))
+				--self.momentum.y = self.momentum.y + (math.sin(self.recoil_dir)+math.rad(G_functions.rand(1,20)-10))*((self.recoil and -self.recoil or 0))
+			end
+			self.recoil = nil
+
+			self.rot = Vectorl.angleTo(self.momentum.x,self.momentum.y)
+
+			local lenght = Vectorl.len(self.momentum.x,self.momentum.y)
+
+
+			if self.has_been_hit > 0 then
+				self.maxspeed = 1500
+				self.force = math.min(1/(self.has_been_hit*self.has_been_hit),20)
+			else
+				self.maxspeed = 200
+				self.force = 20
+			end
+			self.x = self.x + math.cos(self.rot)*math.min(lenght,self.maxspeed) * dt
+			self.y = self.y + math.sin(self.rot)*math.min(lenght,self.maxspeed) * dt
+
+			self.momentum.x = self.momentum.x*(self.drag)
+			self.momentum.y = self.momentum.y*(self.drag)
+
+			local lenght = Vectorl.len(self.momentum.x,self.momentum.y)
+
+			if lenght > self.maxspeed then
+				local fac = lenght/self.maxspeed
+				self.momentum.x = self.momentum.x / fac
+				self.momentum.y = self.momentum.y / fac
+
+			end 
+		
+
+
 		else
-			self.maxspeed = 200
-			self.force = 20
+			if self.dash_dir == "right" then
+				local px,py = vector.perpendicular(self.momentum.x,self.momentum.y)
+
+				local rot = Vectorl.angleTo(px,py)
+
+				self.x = self.x + math.cos(rot)*self.dash_force*dt
+				self.y = self.y + math.sin(rot)*self.dash_force*dt 
+			end
+			if self.dash_dir == "left" then
+				local px,py = vector.perpendicular(self.momentum.x,self.momentum.y)
+
+				local rot = Vectorl.angleTo(px,py)
+
+				rot = rot + math.rad(180)
+				self.x = self.x + math.cos(rot)*self.dash_force*dt
+				self.y = self.y + math.sin(rot)*self.dash_force*dt 
+			end
+			self.dashing = self.dashing - dt
 		end
-		self.x = self.x + math.cos(self.rot)*math.min(lenght,self.maxspeed) * dt
-		self.y = self.y + math.sin(self.rot)*math.min(lenght,self.maxspeed) * dt
-
-		self.momentum.x = self.momentum.x*(self.drag)
-		self.momentum.y = self.momentum.y*(self.drag)
-
-		local lenght = Vectorl.len(self.momentum.x,self.momentum.y)
-
-		if lenght > self.maxspeed then
-			local fac = lenght/self.maxspeed
-			self.momentum.x = self.momentum.x / fac
-			self.momentum.y = self.momentum.y / fac
-
-		end 
-
-
-
-
-	else
-		if self.dash_dir == "right" then
-			local px,py = vector.perpendicular(self.momentum.x,self.momentum.y)
-
-			local rot = Vectorl.angleTo(px,py)
-
-			self.x = self.x + math.cos(rot)*self.dash_force*dt
-			self.y = self.y + math.sin(rot)*self.dash_force*dt 
-		end
-		if self.dash_dir == "left" then
-			local px,py = vector.perpendicular(self.momentum.x,self.momentum.y)
-
-			local rot = Vectorl.angleTo(px,py)
-
-			rot = rot + math.rad(180)
-			self.x = self.x + math.cos(rot)*self.dash_force*dt
-			self.y = self.y + math.sin(rot)*self.dash_force*dt 
-		end
-		self.dashing = self.dashing - dt
 	end
 
 	self.has_been_hit = self.has_been_hit - dt
-	if self.x < 0 then self.x = self.x+WIDTH end
-	if self.y < 0 then self.y = 0 end
-	if self.x > WIDTH then self.x = self.x -WIDTH end
-	if self.y > HEIGHT then self.y = HEIGHT end
+	if not self.finished then 
+		if self.x < 0 then self.x = self.x+WIDTH end
+		if self.y < 0 then self.y = 0 end
+		if self.x > WIDTH then self.x = self.x -WIDTH end
+		if self.y > HEIGHT then self.y = HEIGHT end
+	end
 	self.shape:moveTo(self.x,self.y)
 	self.shape:setRotation(self.rot)
 
