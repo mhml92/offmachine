@@ -163,8 +163,10 @@ function NewPlayer:handlePowerUp(shape,delta)
 	if powerup.alive then
 		if powerup.type == 4 then
 			self.weapon:gainLevel()
+			self.scene.hud:juiceLevel()
 		else
 			self.weapon:changeType(powerup.type)
+			self.scene.hud:juiceWeapon()
 		end
 		powerup:kill()
 	end
