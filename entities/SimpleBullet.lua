@@ -1,7 +1,7 @@
 local SimpleBullet = Class("SimpleBullet", Entity)
 
 
-function SimpleBullet:initialize(px,py,x,y,rot,deltaspeed,scene, color)
+function SimpleBullet:initialize(px,py,x,y,rot,deltaspeed,scene, color, time)
 	Entity.initialize(self,px,py,scene)
 	
 	self.color = color or 2
@@ -12,7 +12,7 @@ function SimpleBullet:initialize(px,py,x,y,rot,deltaspeed,scene, color)
 
 	self:setShape(HC:rectangle(100,100,20,10))
 	--self.color = G.color_theme[G_functions.rand(1,#G.color_theme)]
-	self.scene.timer:after(2,function() self:kill() end)
+	self.scene.timer:after(time or 2,function() self:kill() end)
 	
 	self.sprite = resmgr:getImg("bullets.png")
 	self.quad = love.graphics.newQuad((self.color-1)*2,0,2,10,6,10)

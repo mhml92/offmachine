@@ -45,6 +45,7 @@ function NewPlayer:initialize(x,y,scene)
 	self:addCollisionResponse("PowerUp",self.handlePowerUp,self)
 	self:addCollisionResponse("EnemyChaser",self.hitEnemyShip,self)
 	self:addCollisionResponse("EnemyZapper",self.hitEnemyShip,self)
+	self:addCollisionResponse("EnemyBullet",self.hitEnemyBullet,self)
 end
 
 function NewPlayer:hitEnemyShip(shape,delta)
@@ -56,10 +57,27 @@ function NewPlayer:hitEnemyShip(shape,delta)
 		
 		shake_screen(3)
 		if self.has_been_hit <= 0 then
+			self.scene.hud:loseTime(5)
 			self.has_been_hit = 0.5
 		end
 	end
 end
+
+function NewPlayer:hitEnemyBullet(shape,delta)
+	if shape.owner.alive then
+		if self.has_been_hit < 0 then
+			shake_screen(5)
+			self.scene.hud:loseTime(10)
+			self.has_been_hit = 1
+			shape.owner:kill()
+		else
+			if self.has_been_hit < 0.1 then
+				self.has_been_hit = 0.2
+			end
+		end
+	end
+end
+
 
 function NewPlayer:update(dt)
 
