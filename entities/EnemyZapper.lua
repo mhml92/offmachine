@@ -21,8 +21,11 @@ function EnemyZapper:initialize(x,y,scene)
 	self.front_dr = -math.pi
 end
 
-function EnemyZapper:test()
-	self:destroy()
+function EnemyZapper:test(shape,delta)
+	if shape.owner.alive then
+		shape.owner:kill()
+		self:destroy()
+	end
 end
 
 function EnemyZapper:getPlayerPos()

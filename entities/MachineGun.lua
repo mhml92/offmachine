@@ -8,10 +8,11 @@ function MachineGun:initialize(scene)
     self.ammo = 20
     self.shoot_delay = 0.1
     self.reload_time = 2
+	 self.max_ammo = 20
     self.level = 1
     self.name = "Pea shooter"
     self.splits = 1
-    self.recoil = 25
+    self.recoil = 3
 
     self.current_shoot_delay = 0
     self.start_reload_time = self.reload_time
@@ -37,7 +38,7 @@ function MachineGun:shoot(px,py,x,y,rot,momentum)
 
         self.splits = 1 + math.floor((self.level - 1)/2)
 
-        print(self.splits)
+        print(self.splits , "here")
         if self.splits == 1 then 
             self.scene:addEntity(SimpleBullet:new(px,py,x,y,rot,momentum,self.scene),self.scene.layers.objects)
         end

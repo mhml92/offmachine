@@ -23,8 +23,11 @@ function EnemyChaser:initialize(x,y,scene)
 	self.declutter_strenght = 2 
 end
 
-function EnemyChaser:test()
-	self:destroy()
+function EnemyChaser:test(shape,delta)
+	if shape.owner.alive then
+		shape.owner:kill()
+		self:destroy()
+	end
 end
 
 function EnemyChaser:decluster(shape, delta)

@@ -19,7 +19,8 @@ function WeaponInterface:initialize(player)
         self.quads[i] = love.graphics.newQuad((i-1)*10, 0, 10, 10, 50, 10)
     end
 
-    self.weapon = Shotgun:new(self.scene,self.quads[2])
+    --self.weapon = Shotgun:new(self.scene,self.quads[2])
+	 self:changeType(1)
 
 end
 
@@ -67,6 +68,10 @@ function WeaponInterface:draw()
     end
     lg.setColor(255,255,255)
     self.weapon:draw()
+<<<<<<< HEAD
+    --print(self.weapon)
+    lg.print(self.weapon.name,WIDTH/2+80,HEIGHT-45)
+=======
     lg.print(self.weapon.name,WIDTH/2+80,HEIGHT-45)]]
 end
 

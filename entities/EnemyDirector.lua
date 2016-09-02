@@ -19,22 +19,6 @@ function EnemyDirector:initialize(x, y, scene)
 				{
 					type = "enemy",
 					time_a = 5,
-					time_b = 30,
-					count = 10,
-					obj = EnemyChaser,
-					placement = "rnd"
-				},
-				{
-					type = "enemy",
-					time_a = 5,
-					time_b = 30,
-					count = 5,
-					obj = EnemyZapper,
-					placement = "rnd"
-				},
-				{
-					type = "enemy",
-					time_a = 35,
 					time_b = 60,
 					count = 10,
 					obj = EnemyChaser,
@@ -42,12 +26,35 @@ function EnemyDirector:initialize(x, y, scene)
 				},
 				{
 					type = "enemy",
-					time_a = 35,
-					time_b = 60,
+					time_a = 15,
+					time_b = 30,
 					count = 5,
 					obj = EnemyZapper,
 					placement = "rnd"
 				},
+				{
+					type      = "powerup",
+					time      = 1,
+					item      = 1,
+					obj       = PowerUp,
+					placement = "top"
+				},   
+				--{
+				--	type = "enemy",
+				--	time_a = 35,
+				--	time_b = 60,
+				--	count = 10,
+				--	obj = EnemyChaser,
+				--	placement = "rnd"
+				--},
+				--{
+				--	type = "enemy",
+				--	time_a = 35,
+				--	time_b = 60,
+				--	count = 5,
+				--	obj = EnemyZapper,
+				--	placement = "rnd"
+				--},
 				--{"enemy",0,6,EnemyZapper,"rnd"},
 				--{"enemy",2,1,EnemyChaser,"rnd"},
 				--{"enemy",3,1,EnemyChaser,"rnd"},
@@ -101,8 +108,15 @@ function EnemyDirector:update(dt)
 		for k,obj in ipairs(nw) do
 
 			if obj.type == "powerup"then
-				print("POWERUP")
-				print("type",obj.type)
+					t:after(
+						obj.time,
+						function() 
+							local px,py = self:getNewPosition(obj.placement)
+							local pu = obj.obj:new(px,py,self.scene)
+							pu.type = obj.item
+							self.scene:addEntity(pu)
+						end
+					)
 			else
 				for i = 1,obj.count do
 					local wait = love.math.random(obj.time_a,time_b)
@@ -111,8 +125,8 @@ function EnemyDirector:update(dt)
 							local placement = ""
 							if obj.placement == "rnd" then
 								local p = math.floor(love.math.random(1,3))
-								print(p)
-								assert(p < 4)
+								--print(p)
+								--assert(p < 4)
 								if p == 1 then
 									placement = "top"
 								elseif p == 2 then
