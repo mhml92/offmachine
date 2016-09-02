@@ -8,10 +8,18 @@ function EnemyBase:initialize(x, y, scene)
 	self.dy = 0
 	self.destroyed = false
 	self.has_been_inside = false
+	self.playedEnterSound = false
 end
 
 function EnemyBase:isInside()
+
 	self.has_been_inside = self.has_been_inside or (self.x > 0 and self.x < WIDTH and self.y > 0 and self.y < HEIGHT)
+	if self.has_been_inside then
+		if self.enterSound and not self.playedEnterSound then
+			self.playedEnterSound = true
+			self.scene.soundmgr:playSound(self.enterSound)
+		end
+	end
 end
 
 function EnemyBase:update(dt)
