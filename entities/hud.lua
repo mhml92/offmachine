@@ -31,7 +31,7 @@ function Hud:initialize(x,y,scene)
 	self.red_ratio = 1.0
 	self.weapon_i = self.scene.player.weapon
 	
-	self.start_time = 65
+	self.start_time = 300
 	self.local_timer = 0
 	
 	self.level_juice = 1
@@ -85,7 +85,7 @@ function Hud:drawBlueMeter()
 end
 
 function Hud:drawRedMeter()
-	local x,y = self.cx+97, self.cy-10
+	local x,y = self.cx+96, self.cy-10
 	local w = 81*self.red_ratio
 	if self.weapon_i.weapon.ammo <= 0 then
 		lg.setColor(255,255,255)
@@ -135,13 +135,13 @@ function Hud:juiceTime()
 end
 
 function Hud:juiceRed()
-	self.scene.timer:tween(0.2, self, {red_juice = 5}, "out-back", function()
+	self.scene.timer:tween(0.2, self, {red_juice = 10}, "out-back", function()
 		self.scene.timer:tween(0.2, self, {red_juice = 0}, "out-back")
 	end)
 end
 
 function Hud:juiceBlue()
-	self.scene.timer:tween(0.2, self, {blue_juice = 5}, "out-back", function()
+	self.scene.timer:tween(0.2, self, {blue_juice = 10}, "out-back", function()
 		self.scene.timer:tween(0.2, self, {blue_juice = 0}, "out-back")
 	end)
 end
