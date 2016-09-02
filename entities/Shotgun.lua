@@ -59,7 +59,7 @@ function MachineGun:shoot(px,py,x,y,rot,momentum)
         local bullets = 4 + 1 * self.level
 
         for i = 1,bullets do
-            local bullet = SimpleBullet:new(px,py,x,y,rot+math.rad(G_functions.rand(0,self.spread*2)-self.spread),momentum,self.scene, 3)
+            local bullet = SimpleBullet:new(px,py,x,y,rot+math.rad(G_functions.rand(0,self.spread*2)-self.spread),momentum,self.scene, 1)
             bullet:updateRelativeSpeed(G_functions.rand(-100,100))
             self.scene:addEntity(bullet,self.scene.layers.objects)
         end
