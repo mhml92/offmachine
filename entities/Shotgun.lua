@@ -15,6 +15,7 @@ function MachineGun:initialize(scene,img)
     self.reload_time = 2
     self.level = 1
     self.recoil = 5
+    self.recoil = 200
     self.spread = 5
 
 	 self.max_ammo = 3*self.level + 5 

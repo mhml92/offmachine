@@ -61,6 +61,11 @@ ess = 400
 
 local canvas, guicanvas
 
+local screen_shake = 0
+function shake_screen(str)
+	screen_shake = screen_shake + str
+end
+
 function love.load()
 lol1 = math.max(love.graphics.getWidth(),love.graphics.getHeight())
 lol2 = lol1
@@ -105,6 +110,7 @@ lol2 = lol1
 				return Texel(texture,texture_coords.xy).rgba;
 		  }
 	 ]]
+
 end
 
 
@@ -121,6 +127,7 @@ function love.update(dt)
 		part:setTrans(false)
 		scene:addEntity(part,scene.layers.objects)		
 	end
+	screen_shake = screen_shake / 1.02
 end
 
 function love.run()
@@ -199,7 +206,7 @@ function love.run()
 				else
 					lg.setCanvas(guicanvas)
 					lg.clear()
-					lg.draw(scene.layercanvases[gui_id])
+					lg.draw(scene.layercanvases[gui_id],G_functions.rand(-screen_shake,screen_shake),G_functions.rand(-screen_shake,screen_shake))
 					lg.setCanvas(canvas)
 				end
 			end
@@ -237,7 +244,7 @@ function love.run()
 		    --godsray
 		    
 		    love.graphics.setShader(shaders)
-			love.graphics.draw(canvas, 0, 0)
+			love.graphics.draw(canvas,G_functions.rand(-screen_shake,screen_shake),G_functions.rand(-screen_shake,screen_shake))
 			love.graphics.setShader()
 			
 			--gui
@@ -252,7 +259,7 @@ function love.run()
    			love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )),10, 10) 
 			love.graphics.present()
 		end
- 
+ 		
 		if love.timer then love.timer.sleep(0.001) end
 	end
 	-- PROFILER
