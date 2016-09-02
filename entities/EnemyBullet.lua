@@ -3,10 +3,10 @@ local EnemyBullet = Class("EnemyBullet", SimpleBullet)
 
 
 function EnemyBullet:initialize(px,py,x,y,rot,deltaspeed,scene)
-	SimpleBullet.initialize(self,px,py,x,y,rot,deltaspeed,scene)
+	SimpleBullet.initialize(self,px,py,x,y,rot,deltaspeed,scene,nil,3)
 
 	self.sprite = resmgr:getImg("bullets.png")
-	self.quad = love.graphics.newQuad(2,0,2,10,6,10)
+	self.quad = love.graphics.newQuad(3,0,3,10,9,10)
 end
 
 function EnemyBullet:draw()
