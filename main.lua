@@ -49,6 +49,7 @@ time.accum = 0
 
 
 local self = {}
+final_score = 0
 
 WIDTH = 960
 HEIGHT = 540
@@ -278,7 +279,7 @@ function love.run()
 
 			love.graphics.pop()
 			
-   		--	love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )),10, 10) 
+   			love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )),10, 10) 
 			love.graphics.present()
 		end
  		

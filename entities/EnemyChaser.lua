@@ -52,6 +52,7 @@ function EnemyChaser:test(shape,delta)
 		self.life = self.life - 1
 		if self.life <= 0 then
 			self:destroy()
+			shake_screen(G_functions.rand(0,30)/10)
 			for i=0,self.numy-1 do
 				for j=0,self.numx-1 do
 					self.scene:addEntity(enemydebris:new(self.x+j*(self.xsize/self.numx),self.y+i*(self.ysize/self.numy),self.scene,self.debris[i][j],5,self.sprite,(self.xsize/self.numx),(self.ysize/self.numy)), self.scene.layers.objects)

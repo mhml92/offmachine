@@ -84,23 +84,23 @@ end
 function NewPlayer:update(dt)
 
 	-- JERES MOVEMENT
-	local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
+	--local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
 	--	leftx,lefty,leftt,rightx,righty,rightt = 0,0,0,0,0,0
 	--	local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
-	local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
+	--local leftx,lefty,leftt,rightx,righty,rightt = self.joystick:getAxes( )
 	--leftx,lefty,leftt,rightx,righty,rightt = 0,0,0,0,0,0
 
 	-- JESPERS MOVEMENT
-	--local leftx,lefty,rightx,righty,leftt,rightt = self.joystick:getAxes( )
+	local leftx,lefty,rightx,righty,leftt,rightt = self.joystick:getAxes( )
 
 	self.weapon:update(dt)
 
 	if self.scene.hud.local_timer >= self.scene.hud.start_time then
 		if not self.finished then
-			FINAL_SCORE = self.scene.hud.local_timer
+			FINAL_SCORE = math.floor(self.scene.hud.real_timer)
 			self.finished = true
-			self.scene.timer:tween(3.0, self,{rot = Vectorl.angleTo(WIDTH/2,-50)},'in-quad')
-			self.scene.timer:tween(3.0, self,{x = WIDTH/2,y=-50},'in-quart', function() StateMangager.setState("EndScene") end)
+			self.scene.timer:tween(3.0, self,{rot = Vectorl.angleTo(0,-50)},'in-quad')
+			self.scene.timer:tween(3.0, self,{x = WIDTH/2,y=-50},'in-quart', function() StateManager.setScene("EndScene") end)
 		end 
 	else
 
