@@ -15,7 +15,7 @@ function SimpleBullet:initialize(px,py,x,y,rot,deltaspeed,scene, color, time)
 	self.scene.timer:after(time or 2,function() self:kill() end)
 	
 	self.sprite = resmgr:getImg("bullets.png")
-	self.quad = love.graphics.newQuad((self.color-1)*2,0,2,10,6,10)
+	self.quad = love.graphics.newQuad((self.color-1)*3,0,3,10,9,10)
 end
 
 function SimpleBullet:updateRelativeSpeed(ds)

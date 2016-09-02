@@ -58,6 +58,7 @@ end
 
 function Hud:loseTime(lost)
 	self.local_timer = self.local_timer + lost
+	self:juiceBlue()
 end
 
 local lg = love.graphics

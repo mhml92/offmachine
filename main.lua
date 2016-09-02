@@ -79,7 +79,7 @@ lol2 = lol1
    resmgr = ResourceManager:new()
    --love.graphics.setBackgroundColor(255,100,100)
    --love.graphics.setBackgroundColor(42,164,168)
-   StateManager.init("Moffeus")
+   StateManager.init("Menu")
 	--StateManager.init("TestScene")
 	shaders = love.graphics.newShader[[
 		  extern vec2 size;
@@ -116,6 +116,7 @@ end
 
 local addPixel = 0--G_functions.rand(1,5)
 function love.update(dt)
+	StateManager.update(dt)
 	local scene = StateManager.getScene()
 
 	addPixel = addPixel - dt
@@ -258,6 +259,7 @@ function love.run()
 			--scene.player.weapon:draw()
 			
 			lg.draw(guicanvas,0,0)
+			StateManager.draw()
 
 			--lg.draw(resmgr:getImg("black_hole.png"), 0, 0)
 
