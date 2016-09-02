@@ -48,7 +48,7 @@ end
 function SoundManager:update(dt)
 	local pitch = self.timemgr.timeScalar
 	pitch = math.max(0.2, math.min(2, pitch))
-    print(#self.sounds)
+    --print(#self.sounds)
     
 	for k, v in pairs(self.sounds) do
 		v:setPitch(pitch)
