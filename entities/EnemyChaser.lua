@@ -57,6 +57,24 @@ function EnemyChaser:test(shape,delta)
 					self.scene:addEntity(enemydebris:new(self.x+j*(self.xsize/self.numx),self.y+i*(self.ysize/self.numy),self.scene,self.debris[i][j],5,self.sprite,(self.xsize/self.numx),(self.ysize/self.numy)), self.scene.layers.objects)
 				end
 			end
+
+			for i=1,25 do
+				--+(G_functions.rand(0,40)-20)/10
+				local part = Particle:new(
+					self.x+G_functions.rand(-8,8),
+					self.y+G_functions.rand(-8,8),
+					self.scene,
+					G_functions.rand(-25,25),
+					G_functions.rand(-25,25),
+					G_functions.rand(-25,25),
+					G_functions.rand(-25,25),
+					math.rad(G_functions.rand(0,360)),
+					0,
+					G_functions.rand(0,1.5),
+					nil)
+				part:setColor(G_functions.deepcopy(G.fire_colors[G_functions.rand(1,3)]),G_functions.deepcopy(G.fire_colors[G_functions.rand(4,5)]))
+				self.scene:addEntity(part, self.scene.layers.objects)
+			end
 		end
 		self.has_been_hit = 1
 	end
