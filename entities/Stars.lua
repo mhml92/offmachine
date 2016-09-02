@@ -6,6 +6,7 @@ function Stars:initialize(x,y,scene)
 	self.layers = {}
 	self:addLayers(resmgr:getImg("stars_small.png"), 300)
 	self:addLayers(resmgr:getImg("stars_big.png"), 350)
+	self.nebula = resmgr:getImg("nebula.png")
 end
 
 function Stars:addLayers(img, speed)
@@ -35,6 +36,7 @@ function Stars:draw()
 		lg.draw(v.img, v.x+WIDTH, 0)
 	end
 	lg.setColor(255, 255, 255)
+	lg.draw(self.nebula, 0, 0)
 	lg.line(0,HEIGHT-1, WIDTH, HEIGHT-1)
 	lg.setColor(0,0,0)
 	lg.line(0,HEIGHT, WIDTH, HEIGHT)
