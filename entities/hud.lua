@@ -45,7 +45,7 @@ function Hud:update(dt)
 	end
 	
 	local dt_diff = self.scene.timemgr.last_dt - dt
-	print(dt_diff)
+	--print(dt_diff)
 	self.local_timer = self.local_timer + dt + dt_diff*10
 	self.blue_ratio = 1 - self.local_timer / self.start_time
 end

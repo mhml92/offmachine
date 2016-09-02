@@ -9,6 +9,8 @@ function EnemyZapper:initialize(x,y,scene)
 	self.radius = 10
 	self.loiter_time = 2
 	self.move_speed = 2
+	self.first = true
+	self.first_move = 5
 	self:setShape(HC:circle(self.x, self.y, self.radius))
 	self:addCollisionResponse("SimpleBullet", self.test, self)
 	self:loiter()
@@ -28,8 +30,10 @@ end
 
 function EnemyZapper:loiter()
 	self.tweenHandle = self.scene.timer:after(self.loiter_time,function()if self.alive then self:move()end end )
-	local shoot_time = (self.loiter_time/2) + (math.random()-0.5)/5
-	self.scene.timer:after(shoot_time,function() if self.alive then self:shoot()end end)
+	if not self.first then 
+		local shoot_time = (self.loiter_time/2) + (math.random()-0.5)/5
+		self.scene.timer:after(shoot_time,function() if self.alive then self:shoot()end end)
+	end
 end
 
 function EnemyZapper:shoot()
@@ -45,8 +49,13 @@ end
 
 function EnemyZapper:move()
 	local dx,dy = self:getRandPos()
+	if self.first then
+		self.first = false
+		self.tweenHandle = self.scene.timer:tween(self.first_move,self,{x = dx,y = dy},'in-out-back',function() self:loiter()end)
+	else
 
-	self.tweenHandle = self.scene.timer:tween(self.move_speed,self,{x = dx,y = dy},'in-out-back',function() self:loiter()end)
+		self.tweenHandle = self.scene.timer:tween(self.move_speed,self,{x = dx,y = dy},'in-out-back',function() self:loiter()end)
+	end
 end
 
 function EnemyZapper:update(dt)
