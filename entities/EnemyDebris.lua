@@ -16,6 +16,8 @@ function EnemyDebris:initialize(x,y,scene,image,life,sprites,w,h,quad)
     self.image = image
     self.grav = 100 + G_functions.rand(0,300) 
 
+    
+
     self.rot = 0
     self.rotSpeed = math.rad(G_functions.rand(-70,70))
     

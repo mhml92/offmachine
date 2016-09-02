@@ -114,7 +114,7 @@ lol2 = lol1
 end
 
 
-local addPixel = G_functions.rand(1,5)
+local addPixel = 0--G_functions.rand(1,5)
 function love.update(dt)
 	StateManager.update(dt)
 	local scene = StateManager.getScene()
@@ -129,6 +129,13 @@ function love.update(dt)
 		scene:addEntity(part,scene.layers.objects)		
 	end
 	screen_shake = screen_shake / 1.02
+
+	if scene.player and scene.player.joystick then
+
+
+		---scene.player.joystick:setVibration(2,2,1)
+		scene.player.joystick:setVibration(math.abs(screen_shake)/30,math.abs(screen_shake)/30,0.1)
+	end
 end
 
 function love.run()

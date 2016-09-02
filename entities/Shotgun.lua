@@ -9,16 +9,15 @@ function MachineGun:initialize(scene,img)
 
     self.sprites = resmgr:getImg("weapon_icons.png")
     self.name = "Shotgun"
-    self.ammo = 5
+    self.ammo = 3
 	 
-    self.shoot_delay = 0.75
+    self.shoot_delay = 0.5
     self.reload_time = 2
     self.level = 1
-    self.recoil = 5
-    self.recoil = 200
+    self.recoil = 10
     self.spread = 5
 
-	 self.max_ammo = 3*self.level + 5 
+	 self.max_ammo = 3 
 	 
     self.img = img
     
@@ -31,7 +30,7 @@ function MachineGun:update(dt)
         if self.reload_time > 0 then
             self.reload_time = self.reload_time - dt
         else
-            self.ammo = 5 + 3 * self.level
+            self.ammo = self.max_ammo
             self.reload_time = self.start_reload_time 
         end
     end
@@ -44,10 +43,12 @@ function MachineGun:levelUp()
 
     if self.level == 2 then
         self.name = "Powerfun Powergun"
+		  self.max_ammo = 5
     end
 
     if self.level == 3 then
         self.name = "Spreaddy shooter"
+		  self.max_ammo = 8
     end
 end
 

@@ -26,9 +26,9 @@ function MachineGun:levelUp()
 	if self.splits > 3 then selv.splits = 3 end
 
 	if self.level == 2 then
-		self.max_ammo = 2
+		self.max_ammo = 3
 	elseif self.level == 3 then
-		self.max_ammo = 1
+		self.max_ammo = 3
 	end
 	self.ammo = self.max_ammo
 end
