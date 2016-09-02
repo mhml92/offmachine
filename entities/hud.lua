@@ -33,6 +33,12 @@ function Hud:initialize(x,y,scene)
 	
 	self.start_time = 65
 	self.local_timer = 0
+	
+	self.level_juice = 1
+	self.weapon_juice = 1
+	self.time_juice = 1
+	self.red_juice = 0
+	self.blue_juice = 0
 end
 
 function Hud:update(dt)
@@ -62,7 +68,7 @@ function Hud:draw()
 	lg.draw(self.lines, self.x, self.y)
 	self:drawWeapon()
 	self:drawTimer()
-	lg.draw(self.icons, self.icons_q[7], self.cx-76, self.cy-10)
+	lg.draw(self.icons, self.icons_q[7], self.cx-76, self.cy-10, 0, self.time_juice, self.time_juice)
 	love.graphics.setColor(255,255,255, 255)
 end
 
@@ -70,11 +76,11 @@ function Hud:drawBlueMeter()
 	local w = 102*self.blue_ratio
 	local x,y = self.cx-76-w, self.cy-10
 	lg.setColor(blue[2])
-	lg.rectangle("fill", x, y, w, 20)
+	lg.rectangle("fill", x, y-self.blue_juice/2, w, 20+self.blue_juice)
 	lg.setColor(blue[1])
-	lg.rectangle("fill", x, y+15, w, 5)
+	lg.rectangle("fill", x, y+15, w, 5+self.blue_juice/2)
 	lg.setColor(blue[3])
-	lg.rectangle("fill", x, y, w, 5)
+	lg.rectangle("fill", x, y-self.blue_juice/2, w, 5+self.blue_juice/2)
 end
 
 function Hud:drawRedMeter()
@@ -85,11 +91,11 @@ function Hud:drawRedMeter()
 		lg.rectangle("fill", x, y, w, 20)
 	else
 		lg.setColor(red[2])
-		lg.rectangle("fill", x, y, w, 20)
+		lg.rectangle("fill", x, y-self.red_juice/2, w, 20+self.red_juice)
 		lg.setColor(red[1])
-		lg.rectangle("fill", x, y+15, w, 5)
+		lg.rectangle("fill", x, y+15, w, 5+self.red_juice/2)
 		lg.setColor(red[3])
-		lg.rectangle("fill", x, y, w, 5)
+		lg.rectangle("fill", x, y-self.red_juice/2, w, 5+self.red_juice/2)
 	end
 end
 
@@ -104,9 +110,39 @@ function Hud:drawWeapon()
 		quad = 2
 	end
 	if quad then
-		lg.draw(self.icons, self.icons_q[quad], self.cx+55, self.cy-10)
-		lg.draw(self.icons, self.icons_q[level+3], self.cx+75, self.cy-10)
+		lg.draw(self.icons, self.icons_q[level+3], self.cx+75, self.cy-10, 0, self.level_juice, self.level_juice)
+		lg.draw(self.icons, self.icons_q[quad], self.cx+55, self.cy-10, 0, self.weapon_juice, self.weapon_juice)
 	end
+end
+
+function Hud:juiceWeapon()
+	self.scene.timer:tween(0.2, self, {weapon_juice = 1.5}, "out-back", function()
+		self.scene.timer:tween(0.2, self, {weapon_juice = 1}, "out-back")
+	end)
+end
+
+function Hud:juiceLevel()
+	self.scene.timer:tween(0.2, self, {level_juice = 1.5}, "out-back", function()
+		self.scene.timer:tween(0.2, self, {level_juice = 1}, "out-back")
+	end)
+end
+
+function Hud:juiceTime()
+	self.scene.timer:tween(0.2, self, {time_juice = 1.5}, "out-back", function()
+		self.scene.timer:tween(0.2, self, {time_juice = 1}, "out-back")
+	end)
+end
+
+function Hud:juiceRed()
+	self.scene.timer:tween(0.2, self, {red_juice = 5}, "out-back", function()
+		self.scene.timer:tween(0.2, self, {red_juice = 0}, "out-back")
+	end)
+end
+
+function Hud:juiceBlue()
+	self.scene.timer:tween(0.2, self, {blue_juice = 5}, "out-back", function()
+		self.scene.timer:tween(0.2, self, {blue_juice = 0}, "out-back")
+	end)
 end
 
 function Hud:drawTimer()
@@ -124,9 +160,9 @@ end
 
 function Hud:keypressed(key)
 	if key == "b" then
-		self:loseTime(20)
+		self:juiceRed()
 	elseif key == "r" then
-		self.red_ratio = self.red_ratio - 0.1
+		self:juiceBlue()
 		
 	end
 end

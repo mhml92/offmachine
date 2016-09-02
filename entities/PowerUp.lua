@@ -41,7 +41,7 @@ end
 function PowerUp:draw()
 	love.graphics.setColor(255,255,255)
 	--self.shape:draw("fill")
-	love.graphics.draw(self.sprites, self.quads[self.type], self.x, self.y)
+	love.graphics.draw(self.sprites, self.quads[self.type], self.x, self.y, 0, 2, 2)
 end
 
 function PowerUp:keypressed(key)

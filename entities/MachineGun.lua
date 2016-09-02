@@ -54,21 +54,23 @@ function MachineGun:shoot(px,py,x,y,rot,momentum)
 
 		--print(self.splits , "here")
 		if self.splits == 1 then 
-			self.scene:addEntity(SimpleBullet:new(px,py,x,y,rot,momentum,self.scene),self.scene.layers.objects)
+			self.scene:addEntity(SimpleBullet:new(px,py,x,y,rot,momentum,self.scene, 1),self.scene.layers.objects)
 		end
 		if self.splits == 2 then
-			self.scene:addEntity(SimpleBullet:new(px,py,x,y,rot-math.rad(15),momentum,self.scene),self.scene.layers.objects)
-			self.scene:addEntity(SimpleBullet:new(px,py,x,y,rot,momentum,self.scene),self.scene.layers.objects)
-			self.scene:addEntity(SimpleBullet:new(px,py,x,y,rot+math.rad(15),momentum,self.scene),self.scene.layers.objects)
+			self.scene:addEntity(SimpleBullet:new(px,py,x,y,rot-math.rad(15),momentum,self.scene, 1),self.scene.layers.objects)
+			self.scene:addEntity(SimpleBullet:new(px,py,x,y,rot,momentum,self.scene, 1),self.scene.layers.objects)
+			self.scene:addEntity(SimpleBullet:new(px,py,x,y,rot+math.rad(15),momentum,self.scene, 1),self.scene.layers.objects)
 		end
 		if self.splits == 3 then
-			self.scene:addEntity(SimpleBullet:new(px,py,x,y,rot-math.rad(30),momentum,self.scene),self.scene.layers.objects)
-			self.scene:addEntity(SimpleBullet:new(px,py,x,y,rot-math.rad(15),momentum,self.scene),self.scene.layers.objects)
-			self.scene:addEntity(SimpleBullet:new(px,py,x,y,rot,momentum,self.scene),self.scene.layers.objects)
-			self.scene:addEntity(SimpleBullet:new(px,py,x,y,rot+math.rad(15),momentum,self.scene),self.scene.layers.objects)
-			self.scene:addEntity(SimpleBullet:new(px,py,x,y,rot+math.rad(30),momentum,self.scene),self.scene.layers.objects)
+			self.scene:addEntity(SimpleBullet:new(px,py,x,y,rot-math.rad(30),momentum,self.scene, 1),self.scene.layers.objects)
+			self.scene:addEntity(SimpleBullet:new(px,py,x,y,rot-math.rad(15),momentum,self.scene, 1),self.scene.layers.objects)
+			self.scene:addEntity(SimpleBullet:new(px,py,x,y,rot,momentum,self.scene, 1),self.scene.layers.objects)
+			self.scene:addEntity(SimpleBullet:new(px,py,x,y,rot+math.rad(15),momentum,self.scene, 1),self.scene.layers.objects)
+			self.scene:addEntity(SimpleBullet:new(px,py,x,y,rot+math.rad(30),momentum,self.scene, 1),self.scene.layers.objects)
 		end
-
+		
+		self.scene.hud:juiceRed()
+		
 		return self.recoil
 	end
 end
