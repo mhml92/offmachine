@@ -59,6 +59,8 @@ esr = 400
 esh = 400
 ess = 400
 
+on_endscreen = false
+
 local canvas, guicanvas
 
 local screen_shake = 0
@@ -111,7 +113,12 @@ lol2 = lol1
 		  }
 	 ]]
 
+	 local font_img = resmgr:getImg("font_bold.png")
+	font = love.graphics.newImageFont(font_img, " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789*:|=-<>./'\"+", 1)
+	love.graphics.setFont(font)
+	--fontMedium = lg.newImageFont(imgFontMedium, " 0123456789abcdefghijklmnopqrstuvxyzABCDEFGHIJKLMNOPQRSTUVXYZ!-.,$", 1)
 end
+
 
 
 local addPixel = 0--G_functions.rand(1,5)
@@ -242,8 +249,14 @@ function love.run()
 		        lol2 = lol2 + 1
 			end
 			
+			--print(lol1, lol2) -- 1961 	3916
+			
 			local width = math.max(love.graphics.getWidth(),love.graphics.getHeight())
+			if on_endscreen then
+				shaders:send('size', {1961, 3916})
+			else
 		    shaders:send('size',{lol1,lol2})
+			 end
 		    shaders:send('eventH',esh)
 		    shaders:send('escapeR',esr*1.5)
 		    shaders:send('holeColor',{0,0,0})
@@ -265,7 +278,7 @@ function love.run()
 
 			love.graphics.pop()
 			
-   			love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )),10, 10) 
+   		--	love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )),10, 10) 
 			love.graphics.present()
 		end
  		
